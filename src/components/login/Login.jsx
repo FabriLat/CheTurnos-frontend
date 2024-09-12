@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Form, Container, Button, Alert } from 'react-bootstrap';
+import { AuthenticationContext } from '../services/authentication/AuthenticationContext';
 import './login.css';
 const Login = () => {
     const [enteredEmail, setEnteredEmail] = useState('');
@@ -11,6 +12,8 @@ const Login = () => {
         pass: false,
         exists: false,
     })
+    
+    const { dataLoginHandler } = useContext(AuthenticationContext);
 
     const emailHandler = (event) => {
         setErrors({ ...errors, email: false })
@@ -71,8 +74,9 @@ const Login = () => {
                 console.log('User ID:', userId);
                 console.log('User Role:', userRole);
                 console.log('User Name:', userName);
-
-
+                
+                //Se guarda id, role, name en el localStorage, el token en una variable del context.  
+                dataLoginHandler(userName, userRole, userId, token);
             } else {
                 console.log('Invalid username or password');
                 setErrors({ ...errors, exists: true });
