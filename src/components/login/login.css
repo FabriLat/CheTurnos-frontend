@@ -1,0 +1,11 @@
+.login {
+    max-width: 400px;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    color: white;
+    text-align: center;
+    
+}
