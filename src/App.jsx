@@ -1,14 +1,18 @@
-import './App.css'
-import Register from './components/register/Register'
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
+import Login from "./components/login/Login";
+import { AuthenticationContextProvider } from "./services/authentication/AuthenticationContext";
 
 function App() {
-
+  const router = createBrowserRouter([{ path: "/login", element: <Login /> }]);
 
   return (
     <>
-      <Register/>
+      <AuthenticationContextProvider>
+        <RouterProvider router={router} />
+      </AuthenticationContextProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
