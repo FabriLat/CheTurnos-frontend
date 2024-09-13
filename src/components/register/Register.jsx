@@ -33,10 +33,7 @@ const RegisterForm = () => {
   };
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
-
-    
 
     const fullName = fullNameRef.current.value;
     const email = emailRef.current.value;
@@ -74,7 +71,7 @@ const RegisterForm = () => {
     }
    
 
-    console.log(formIsValid)
+
     if (formIsValid) {
       console.log("Formulario enviado", formData);
     }
