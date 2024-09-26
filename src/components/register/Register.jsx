@@ -1,5 +1,6 @@
 import { useState,useRef } from "react";
 import { Form, Button, Container } from "react-bootstrap";
+import UserNav from "../userNav/UserNav";
 
 const RegisterForm = () => {
 
@@ -78,6 +79,8 @@ const RegisterForm = () => {
   };
 
   return (
+    <>
+    <UserNav/>
     <Container className="mt-4">
       <h2>Registro</h2>
       <Form className="mt-5" onSubmit={handleSubmit}>
@@ -139,6 +142,7 @@ const RegisterForm = () => {
         </Button>
       </Form>
     </Container>
+    </>
   );
 };
 
