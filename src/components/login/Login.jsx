@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { Form, Container, Button, Alert } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import "./login.css";
+import UserNav from "../userNav/UserNav";
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPass, setEnteredPass] = useState("");
@@ -111,6 +112,8 @@ const Login = () => {
   }
 
   return (
+    <>
+    <UserNav/>
     <Container className="login">
       <Form className="form-login" onSubmit={loginHandler}>
         <Form.Group className="mb-3">
@@ -150,6 +153,7 @@ const Login = () => {
         )}
       </Form>
     </Container>
+    </>
   );
 };
 
