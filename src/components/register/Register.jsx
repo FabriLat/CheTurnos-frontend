@@ -4,13 +4,11 @@ import UserNav from "../userNav/UserNav";
 
 const RegisterForm = () => {
 
-
   const fullNameRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const confirmPassRef = useRef(null);
 
- 
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -33,6 +31,28 @@ const RegisterForm = () => {
     });
   };
 
+  const RegisterClient = async () => {
+    await fetch("https://localhost:7276/api/Client/CreateNewClient", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          "name": formData.fullName,
+          "email": formData.email,
+          "password": formData.password
+        })
+    })
+      .then((response) => {
+          if (response.ok) return response.json();
+          else {
+              throw new Error("The response has some errors");
+          }
+      })
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error))
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,7 +61,6 @@ const RegisterForm = () => {
     const password = passRef.current.value;
     const confirmPassword = confirmPassRef.current.value;
     
-
     let formIsValid = true;
     if (!fullName) {
       setErrors({ ...formData, fullName: true });
@@ -63,7 +82,6 @@ const RegisterForm = () => {
       setErrors({...formData, password: false});
     }
  
-
     if (password !== confirmPassword) {
       setErrors({ ...formData, confirmPassword: true });
       formIsValid = false;
@@ -71,11 +89,10 @@ const RegisterForm = () => {
       setErrors({...formData, confirmPassword: false});
     }
    
-
-
     if (formIsValid) {
-      console.log("Formulario enviado", formData);
-    }
+      console.log("Formulario enviado"/*, formData*/);
+      RegisterClient();
+    };
   };
 
   return (
