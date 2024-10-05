@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-const ShopCard = ({name, address, phone, timeStart, timeEnd, }) => {
+const ShopCard = ({name, address, phone, timeStart, timeEnd, key}) => {
     const formatTime = (time)=>{
         const [hour, minute] = time.split(":");
         return `${hour}:${minute}`;
     }
     
     return (
-        <Card>
+        <Card key="{key}">
         <Card.Header as="h5">{name}</Card.Header>
         <Card.Body>
           <Card.Title>{address}</Card.Title>
@@ -33,6 +33,7 @@ ShopCard.propType = {
     phone: PropTypes.string,
     timeStart: PropTypes.date,
     timeEnd: PropTypes.date,
+    key: PropTypes.number,
 
 }
 
