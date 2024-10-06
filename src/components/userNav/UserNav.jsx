@@ -1,18 +1,34 @@
+import { useState } from "react";
 import { Container, Navbar, Row, Col, Nav } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
+import logo from './CheTurnosLogo.png'
 const UserNav = () => {
+  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
+
+  
+  const navbarStyle = {
+    backgroundColor: darkMode ?  "#9AB7F0BA" : "#FFE9E2" , 
+    color: darkMode ? "#ffffff" : "#ffffff", 
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <Navbar style={{ backgroundColor: "#A7C6ED" }}>
+    <Navbar style={navbarStyle} variant={darkMode ? "dark" : "light"}>
       <Container fluid>
         <Row className="w-100">
           <Col md={5}>
             <Nav className="d-flex">
               <Navbar.Brand>
-                <img width="30" height="30" src="" alt="" />
+                <img width="100" height="50" className="d-block w-100"
+              src={logo}
+              alt="First slide"
+               />
               </Navbar.Brand>
-              <h1>Logo</h1>
+              
             </Nav>
           </Col>
           <Col md={1}></Col>
@@ -25,6 +41,9 @@ const UserNav = () => {
               </Nav.Link>
               <Nav.Link onClick={() => navigate("/register")}>
                 Registrarse
+              </Nav.Link>
+              <Nav.Link onClick={toggleDarkMode}>
+                {darkMode ? "Modo Claro" : "Modo Oscuro"}
               </Nav.Link>
             </Nav>
           </Col>
