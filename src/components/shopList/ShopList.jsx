@@ -126,11 +126,11 @@ import { Alert } from 'react-bootstrap';
 import Spiner from '../spiner/Spiner';
 
 const ShopList = () => {
-  const [shops, setShops] = useState(ShopsMock); //*** */
+  const [shops, setShops] = useState([]); //*** */
   const [textSearched, setTextSearched] = useState('');
-  const [loading, setLoading] = useState(false); //*** */
+  const [loading, setLoading] = useState(true); //*** */
   useEffect(() => {
-    // fetchShop(); //*** */
+    fetchShop(); //*** */
   }, []);
 
 
@@ -177,6 +177,7 @@ const ShopList = () => {
                   timeStart={s.timeStart}
                   timeEnd={s.timeEnd}
                   idShop={s.id}
+                  key={s.id}
                 />
               ))}
             </div>) : (

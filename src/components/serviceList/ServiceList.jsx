@@ -18,7 +18,7 @@ const serviceMock = [
         "status": "Active"
     },
     {
-        "id": 2,
+        "id": 3,
         "shopId": 2,
         "name": "LE pintan las cosas ",
         "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
@@ -28,16 +28,77 @@ const serviceMock = [
     },
 ]
 
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext'
-
+import ServiceCard from '../serviceCard/ServiceCard';
+import Spiner from '../spiner/Spiner';
 const ServiceList = () => {
-    const {shopId} = useContext(AuthenticationContext);
-    console.log(shopId)
+    const { shopId } = useContext(AuthenticationContext);
+
+    const [services, setServices] = useState([]); //*** */
+    const [loading, setLoading] = useState(true); //*** */
+    const [shopName, setShopName] = useState("");
+
+    useEffect(() => {
+        fetchNameShop()
+        fetchServices(); //** */
+    }, []);
+
+
+    const fetchServices = async () => {
+        try {
+            const response = await fetch(`https://localhost:7276/api/Service/GetAllByShopId/${shopId}`, {
+                method: "GET",
+                mode: "cors",
+            });
+            if (!response.ok) {
+                throw new Error("Error in obtaining Services")
+            }
+            const servicesData = await response.json();
+            setServices(servicesData);
+            setLoading(false); // desactiva el spiners
+        }
+        catch (error) {
+            console.error("Error:", error)
+        }
+    }
+
+    const fetchNameShop = async () => {
+        try {
+            const response = await fetch(`https://localhost:7276/api/Shop/GetById/${shopId}`, {
+                method: "GET",
+                mode: "cors",
+            });
+            if (!response.ok) {
+                throw new Error("Error in obtaining shop")
+            }
+            const ShopData = await response.json();
+            setShopName(ShopData);
+            setLoading(false); // desactiva el spiners
+        }
+        catch (error) {
+            console.error("Error:", error)
+        }
+    }
 
     return (
         <div>
-            <h1>{shopId}</h1>
+            {loading ? (
+                <Spiner />
+            ) : (<>
+                <h1>Negocio: {shopName.name}</h1>
+                {services.map(s => (
+                    <ServiceCard 
+                    idService={s.id}
+                    nameService={s.name}
+                    description={s.description}
+                    duration={s.duration}
+                    price={s.price}
+                    key={s.id} 
+                    />
+                ))}
+            </>
+            )}
         </div>
     )
 }

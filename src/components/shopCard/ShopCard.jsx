@@ -43,6 +43,7 @@ ShopCard.propType = {
     phone: PropTypes.string,
     timeStart: PropTypes.date,
     timeEnd: PropTypes.date,
+    idShop: PropTypes.number,
     key: PropTypes.number,
 
 }
