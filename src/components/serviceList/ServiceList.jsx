@@ -1,34 +1,34 @@
-const serviceMock = [
-    {
-        "id": 1,
-        "shopId": 2,
-        "name": "corete de cosas ",
-        "description": "LE cortan las cosas cortan las cosascortan las cosas cortan las cosas  cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas ",
-        "price": 223.45,
-        "duration": "02:20:00",
-        "status": "Active"
-    },
-    {
-        "id": 2,
-        "shopId": 2,
-        "name": "LE pintan las cosas ",
-        "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
-        "price": 203.45,
-        "duration": "02:20:00",
-        "status": "Active"
-    },
-    {
-        "id": 3,
-        "shopId": 2,
-        "name": "LE pintan las cosas ",
-        "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
-        "price": 203.45,
-        "duration": "02:20:00",
-        "status": "Active"
-    },
-]
+// const serviceMock = [
+//     {
+//         "id": 1,
+//         "shopId": 2,
+//         "name": "corete de cosas ",
+//         "description": "LE cortan las cosas cortan las cosascortan las cosas cortan las cosas  cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas ",
+//         "price": 223.45,
+//         "duration": "02:20:00",
+//         "status": "Active"
+//     },
+//     {
+//         "id": 2,
+//         "shopId": 2,
+//         "name": "LE pintan las cosas ",
+//         "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
+//         "price": 203.45,
+//         "duration": "02:20:00",
+//         "status": "Active"
+//     },
+//     {
+//         "id": 3,
+//         "shopId": 2,
+//         "name": "LE pintan las cosas ",
+//         "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
+//         "price": 203.45,
+//         "duration": "02:20:00",
+//         "status": "Active"
+//     },
+// ]
 
-import React, { useContext, useState, useEffect } from 'react'
+import  { useContext, useState, useEffect } from 'react'
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext'
 import ServiceCard from '../serviceCard/ServiceCard';
 import Spiner from '../spiner/Spiner';
@@ -80,7 +80,7 @@ const ServiceList = () => {
             console.error("Error:", error)
         }
     }
-
+    console.log(services);
     return (
         <div>
             {loading ? (

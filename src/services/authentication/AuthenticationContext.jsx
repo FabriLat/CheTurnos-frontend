@@ -25,6 +25,7 @@ export const AuthenticationContextProvider = ({ children }) => {
 
     }
 
+
     const logoutHandler = () => {
         localStorage.removeItem("userData");
         setUser(null);
@@ -33,7 +34,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     };
 
     return (
-        <AuthenticationContext.Provider value={{ token, dataLoginHandler, logoutHandler, shopId, setShopId: setShopIdHandler }}>
+        <AuthenticationContext.Provider value={{ token, dataLoginHandler, logoutHandler, shopId, setShopId: setShopIdHandler}}>
             {children}
         </AuthenticationContext.Provider>
     );

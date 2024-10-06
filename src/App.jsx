@@ -6,15 +6,15 @@ import ShopList from "./components/shopList/ShopList";
 
 import { AuthenticationContextProvider } from "./services/authentication/AuthenticationContext";
 import ServiceList from "./components/serviceList/ServiceList";
+import EmployeeList from "./components/employeeList/EmployeeList";
 
 function App() {
   const router = createBrowserRouter([
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
     { path: "/shopList", element: <ShopList /> },
-    
-    
     { path: "/serviceList", element: <ServiceList /> },
+    {path: "/employeeList", element:<EmployeeList/>}
   ]);
 
   return (
