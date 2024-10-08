@@ -1,6 +1,5 @@
 
-import React, { useContext } from 'react'
-import { Container } from 'react-bootstrap'
+import { useContext } from 'react'
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -31,7 +30,7 @@ const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
             Abre: {formatTime(timeStart)}<br/>
             Cierra: {formatTime(timeEnd)}<br/>
           </Card.Text>
-          <Button variant="primary" onClick={handlebutton}>Pedi Tu Tuno!</Button>
+          <Button variant="primary" onClick={handlebutton}>Pedi Tu Turno!</Button>
         </Card.Body>
       </Card>
     )

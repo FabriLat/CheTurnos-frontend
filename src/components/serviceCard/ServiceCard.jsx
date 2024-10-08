@@ -1,11 +1,14 @@
-import React from 'react'
+import { useContext } from 'react'
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useNavigate } from 'react-router-dom';
 
 const ServiceCard = ({ nameService, description, price, duration, idService }) => {
+    const navegate = useNavigate();
     const handlebutton = () => {
-        // navegate('/....')
+        navegate("/EmployeeList");
+        
     }
     return (
         <div>
