@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Form, Container, Button, Alert } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import "./login.css";
@@ -113,46 +113,46 @@ const Login = () => {
 
   return (
     <>
-    <UserNav/>
-    <Container className="login">
-      <Form className="form-login" onSubmit={loginHandler}>
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            ref={userEmailRef}
-            value={enteredEmail}
-            type="text"
-            placeholder="user@example.com"
-            onChange={emailHandler}
-            className={errors.email && "border border-danger"}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            ref={passRef}
-            value={enteredPass}
-            type="password"
-            placeholder="Contraseña"
-            onChange={passHandler}
-            className={errors.pass && "border border-danger"}
-          ></Form.Control>
-        </Form.Group>
-        <Button variant="success" type="submit">
-          Login
-        </Button>
-        {errors.exists && (
-          <Alert variant="danger" className="mt-3">
-            Credenciales inválidas
-          </Alert>
-        )}
-        {(errors.email || errors.pass) && (
-          <Alert variant="warning" className="mt-3">
-            Debes completar todos los campos
-          </Alert>
-        )}
-      </Form>
-    </Container>
+      <UserNav />
+      <Container className="login">
+        <Form className="form-login" onSubmit={loginHandler}>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              ref={userEmailRef}
+              value={enteredEmail}
+              type="text"
+              placeholder="user@example.com"
+              onChange={emailHandler}
+              className={errors.email && "border border-danger"}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              ref={passRef}
+              value={enteredPass}
+              type="password"
+              placeholder="Contraseña"
+              onChange={passHandler}
+              className={errors.pass && "border border-danger"}
+            ></Form.Control>
+          </Form.Group>
+          <Button variant="success" type="submit">
+            Login
+          </Button>
+          {errors.exists && (
+            <Alert variant="danger" className="mt-3">
+              Credenciales inválidas
+            </Alert>
+          )}
+          {(errors.email || errors.pass) && (
+            <Alert variant="warning" className="mt-3">
+              Debes completar todos los campos
+            </Alert>
+          )}
+        </Form>
+      </Container>
     </>
   );
 };
