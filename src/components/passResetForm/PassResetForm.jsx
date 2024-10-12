@@ -3,12 +3,14 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useRef, React, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import Spiner from '../spiner/Spiner';
 
 const PassResetForm = () => {
     const emailRef = useRef(null);
     const passRef = useRef(null);
     const confirmPassRef = useRef(null);
     const codeRef = useRef(null);
+    const [loading, setLoading] = useState(false);
 
     const [forms, setForm] = useState(1); // Cambia de formularios
     const [formData, setFormData] = useState({
@@ -42,6 +44,7 @@ const PassResetForm = () => {
         }
 
         // Llamada a la API Para enviar el correo!!!!!
+        sendEmailConfirmation()
         console.log("Email enviado a:", email);
         // Se Cambia al segundo form si la llamada a la api da todo OK!!!!!
         setForm(2);
@@ -79,83 +82,158 @@ const PassResetForm = () => {
 
         if (formIsValid) {
             // Segunda llamada a la API para cambiar la contraseña!!!!!!
+            ResetPassword();
             console.log("Contraseña cambiada correctamente, Ingrese normalmente");
         }
     };
 
+    //llamada a la api para enviar mail con clave
+    const sendEmailConfirmation = async () => {
+        setLoading(true)
+        try {
+            const response = await fetch(`https://localhost:7276/api/Email/RequestPasswordReset`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body:JSON.stringify({
+                    "email": formData.email
+                  })
+            });
+
+            if (!response.ok) {
+                throw new Error("Error, could not send email");
+                setLoading(false); // Desactiva el spinner
+
+            }
+
+            const dataResponse = await response.json();
+            console.log(dataResponse);
+            setLoading(false); // Desactiva el spinner
+
+            //¿mostrar un mensaje que avisa que se envio el mail?
+
+        } catch (error) {
+            console.error("Error:", error);
+            setLoading(false);
+        }
+    };
+
+
+    const ResetPassword = async () => {
+        setLoading(true)
+        try {
+            const response = await fetch(`https://localhost:7276/api/Email/ResetPassword`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "email": formData.email,
+                    "newPassword": formData.password,
+                    "code": formData.code
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Error, could not change password");
+                setLoading(false); // Desactiva el spinner
+            }
+
+            const dataResponse = await response.json();
+            console.log(dataResponse);
+            setLoading(false); // Desactiva el spinner
+
+            //¿mostrar un mensaje que avisa que se envio el mail?
+
+        } catch (error) {
+            console.error("Error:", error);
+            setLoading(false);
+        }
+    }
+
+
+
     return (
-        <div>
-            {forms === 1 ? (
-                <>
-                    <h3>Para recuperar su contraseña le enviaremos un codigo a su email.</h3>
-                    <Form onSubmit={handleEmailSubmit}>
-                        <InputGroup>
-                            <InputGroup.Text>Ingrese su email:</InputGroup.Text>
-                            <Form.Control
-                                ref={emailRef}
-                                type="email"
-                                name="email"
-                                placeholder="Introduce tu correo electrónico"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
-                        </InputGroup>
-                        {errors.email && <p style={{ color: 'red' }}>Por favor, ingresa un email valido.</p>}
-                        <Button className="mt-3" type="submit">Enviar correo para cambiar la contraseña</Button>
-                    </Form>
-                </>
+        <>
+            {loading ? (
+                <Spiner />
             ) : (
-                <>
-                    <h3>Introduce tu nueva contraseña y el codigo recibido tenes 10 minutos para hacerlo</h3>
-                    <Form onSubmit={handleResetPassSubmit}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Código de recuperación de 6 digitos</Form.Label>
-                            <Form.Control
-                                ref={codeRef}
-                                type="text"
-                                name="code"
-                                placeholder="Ingrese su código"
-                                value={formData.code}
-                                onChange={handleChange}
-                                required
-                            />
-                            {errors.code && <p style={{ color: 'red' }}>Por favor, ingresa el código.</p>}
-                        </Form.Group>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Nueva contraseña</Form.Label>
-                            <Form.Control
-                                ref={passRef}
-                                type="password"
-                                name="password"
-                                placeholder="Nueva contraseña"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                            {errors.password && <p style={{ color: 'red' }}>La contraseña debe tener al menos 8 caracteres. Al menos una letra minuscula, una letra mayuscual, y un numero.</p>}
-                        </Form.Group>
+                <div>
+                    {forms === 1 ? (
+                        <>
+                            <h3>Para recuperar su contraseña le enviaremos un codigo a su email.</h3>
+                            <Form onSubmit={handleEmailSubmit}>
+                                <InputGroup>
+                                    <InputGroup.Text>Ingrese su email:</InputGroup.Text>
+                                    <Form.Control
+                                        ref={emailRef}
+                                        type="email"
+                                        name="email"
+                                        placeholder="Introduce tu correo electrónico"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </InputGroup>
+                                {errors.email && <p style={{ color: 'red' }}>Por favor, ingresa un email valido.</p>}
+                                <Button className="mt-3" type="submit">Enviar correo para cambiar la contraseña</Button>
+                            </Form>
+                        </>
+                    ) : (
+                        <>
+                            <h3>Introduce tu nueva contraseña y el codigo recibido tenes 10 minutos para hacerlo</h3>
+                            <Form onSubmit={handleResetPassSubmit}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Código de recuperación de 6 digitos</Form.Label>
+                                    <Form.Control
+                                        ref={codeRef}
+                                        type="text"
+                                        name="code"
+                                        placeholder="Ingrese su código"
+                                        value={formData.code}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    {errors.code && <p style={{ color: 'red' }}>Por favor, ingresa el código.</p>}
+                                </Form.Group>
 
-                        <Form.Group className="mb-3">
-                            <Form.Label>Confirmar nueva contraseña</Form.Label>
-                            <Form.Control
-                                ref={confirmPassRef}
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="Repite la nueva contraseña"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                            />
-                            {errors.confirmPassword && <p style={{ color: 'red' }}>Las contraseñas no coinciden.</p>}
-                        </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Nueva contraseña</Form.Label>
+                                    <Form.Control
+                                        ref={passRef}
+                                        type="password"
+                                        name="password"
+                                        placeholder="Nueva contraseña"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    {errors.password && <p style={{ color: 'red' }}>La contraseña debe tener al menos 8 caracteres. Al menos una letra minuscula, una letra mayuscual, y un numero.</p>}
+                                </Form.Group>
 
-                        <Button type="submit">Cambiar contraseña</Button>
-                    </Form>
-                </>
-            )}
-        </div>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Confirmar nueva contraseña</Form.Label>
+                                    <Form.Control
+                                        ref={confirmPassRef}
+                                        type="password"
+                                        name="confirmPassword"
+                                        placeholder="Repite la nueva contraseña"
+                                        value={formData.confirmPassword}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                    {errors.confirmPassword && <p style={{ color: 'red' }}>Las contraseñas no coinciden.</p>}
+                                </Form.Group>
+
+                                <Button type="submit">Cambiar contraseña</Button>
+                            </Form>
+                        </>
+                    )}
+                </div>
+            )}</>
     );
 }
 

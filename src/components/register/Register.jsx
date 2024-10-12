@@ -48,6 +48,7 @@ const RegisterForm = () => {
         "email": formData.email,
         "password": formData.password
       })
+
     })
       .then((response) => {
         if (response.ok) return response.json();
