@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
 import UserNav from "../userNav/UserNav";
 
@@ -9,11 +8,7 @@ const RegisterForm = () => {
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const confirmPassRef = useRef(null);
-  const navegate = useNavigate();
-
-  const handlebuttonForgotPassword = () => {
-    navegate("/PassResetForm");
-  }
+  
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -164,8 +159,7 @@ const RegisterForm = () => {
           <Button className="mt-3" variant="primary" type="submit">
             Registrarse
           </Button>
-          <br />
-          <Button onClick={handlebuttonForgotPassword}> ¿Olvidaste tu contraseña? </Button>
+          
         </Form>
       </Container>
     </>
