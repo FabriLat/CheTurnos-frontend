@@ -1,13 +1,13 @@
 import Footer from "../footer/Footer";
 import UserNav from "../userNav/UserNav";
 import OurStory from "./OurStory";
-import TwoSquares from "./TwoSquares";
+import Carousel from "./Carousel";
 
 const Homepage = () => {
   return (
     <div>
       <UserNav/>
-      <TwoSquares/>
+      <Carousel/>
       <OurStory/>
       <Footer/>
     </div>

@@ -1,50 +1,50 @@
-import { useState } from "react";
-import { Container, Navbar, Row, Col, Nav } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Container, Navbar, Row, Col, Nav, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import logo from './CheTurnosLogo.png'
+import logo from './CheTurnosLogo.png';
+import './UserNav.css';
+
 const UserNav = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [navActive, setNavActive] = useState(false);
   const navigate = useNavigate();
 
-  
-  const navbarStyle = {
-    backgroundColor: darkMode ?  "#9AB7F0BA" : "#FFE9E2" , 
-    color: darkMode ? "#ffffff" : "#ffffff", 
-  };
+  // cambia el estado de la navbar al hacer scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setNavActive(window.scrollY > 50);
+    };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <Navbar style={navbarStyle} variant={darkMode ? "dark" : "light"}>
+    <Navbar className={`navbar-custom ${navActive ? 'active' : ''}`} variant="light">
       <Container fluid>
-        <Row className="w-100">
+        <Row className="w-100 align-items-center">
           <Col md={5}>
-            <Nav className="d-flex">
+            <Nav className="d-flex align-items-center">
               <Navbar.Brand>
-                <img width="100" height="50" className="d-block w-100"
-              src={logo}
-              alt="First slide"
-               />
+                <img
+                  width={navActive ? "80" : "100"} // cambia el tamaño del logo al hacer scroll
+                  height={navActive ? "40" : "50"} 
+                  className="d-block w-100 logo"
+                  src={logo}
+                  alt="Logo"
+                />
               </Navbar.Brand>
-              
             </Nav>
           </Col>
           <Col md={1}></Col>
           <Col md={6}>
-            <Nav className="d-flex justify-content-end">
-              <Nav.Link>Sobre nosotros</Nav.Link>
-              <Nav.Link>Contacto</Nav.Link>
-              <Nav.Link onClick={() => navigate("/login")}>
-                Iniciar sesión
-              </Nav.Link>
-              <Nav.Link onClick={() => navigate("/register")}>
-                Registrarse
-              </Nav.Link>
-              <Nav.Link onClick={toggleDarkMode}>
-                {darkMode ? "Modo Claro" : "Modo Oscuro"}
-              </Nav.Link>
+            <Nav className="d-flex justify-content-end align-items-center">
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/about")}>Sobre nosotros</Button>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/contact")}>Contacto</Button>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/login")}>Iniciar sesión</Button>
+              <Button variant="light" className="mx-2" onClick={() => navigate("/register")}>Registrarse</Button>
             </Nav>
           </Col>
         </Row>

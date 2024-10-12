@@ -1,12 +1,20 @@
-
 import './OurStory.css';
 import cheTurnosGif from './CheTurnos.gif';
+import AOS from 'aos'; 
+import 'aos/dist/aos.css'; 
+import { useEffect } from 'react';
 
 const OurStory = () => {
+  useEffect(() => {
+    AOS.init({
+        duration: 1000, 
+    });
+  }, []);
+
   return (
     <div className="our-story-container">
       <div className="our-story-content">
-        <div className="our-story-text-container">
+        <div data-aos="fade-right" className="our-story-text-container">
           <h2 className="our-story-title">¿Qué es CheTurnos?</h2>
           <p className="our-story-text">
             CheTurnos es una plataforma web en la que cualquier negocio que ofrezca servicios con citas 
@@ -15,15 +23,8 @@ const OurStory = () => {
             y acceder a la lista de negocios disponibles para reservar turnos fácilmente, eligiendo el horario 
             que mejor les convenga.
           </p>
-          <p className="our-story-text">
-            CheTurnos es una plataforma innovadora que nació como proyecto de estudiantes de la UTN 
-            (Universidad Tecnológica Nacional), con el propósito de simplificar la gestión de turnos 
-            para pequeños y medianos negocios en Argentina. La idea surgió durante una clase en la facultad, 
-            donde el equipo identificó un problema común: la dificultad de los comercios para organizar y administrar citas 
-            y la incomodidad de los usuarios al intentar reservar un turno.
-          </p>
         </div>
-        <div className="our-story-image-container">
+        <div data-aos="fade-left" className="our-story-image-container">
           <img src={cheTurnosGif} alt="CheTurnos" className="our-story-image" />
         </div>
       </div>

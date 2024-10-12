@@ -1,35 +1,42 @@
 .our-story-container {
-    background-color: #9AB7F0BA;
+    background-color: #E8E3DD;
     padding: 60px;
     max-width: 100%;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding-left: 10%;
+    padding-right: 10%;
+  
   }
   
   .our-story-content {
     display: flex;
     align-items: center; 
-    justify-content: space-between; 
+    justify-content: space-between;
+    
+    text-align: right;
   }
   
   .our-story-text-container {
     flex: 1;
     margin-right: 20px; 
+    text-align: right;
   }
   
   .our-story-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #1F1A37;
-    text-align: left;
+    color: #381a82;
+    text-align: right;
     margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
   }
   
   .our-story-text {
     font-size: 1.2rem;
-    color: #34495e;
+    color: #381a82;;
     line-height: 1.6;
     text-align: left;
     margin-bottom: 20px;
+    text-align: right;
   }
   
   .our-story-image-container {
