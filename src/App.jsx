@@ -8,11 +8,13 @@ import ShopForm from "./components/shopForm/ShopForm";
 import { AuthenticationContextProvider } from "./services/authentication/AuthenticationContext";
 import ServiceList from "./components/serviceList/ServiceList";
 import EmployeeList from "./components/employeeList/EmployeeList";
+import PassResetForm from "./components/passResetForm/PassResetForm";
 
 function App() {
   const router = createBrowserRouter([
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
+    { path: "/PassResetForm", element: <PassResetForm /> },
     { path: "/shopList", element: <ShopList /> },
     { path: "/serviceList", element: <ServiceList /> },
     {path: "/employeeList", element:<EmployeeList/>},
