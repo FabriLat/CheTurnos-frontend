@@ -5,13 +5,14 @@
   padding: 1rem 0; /* relleno inicial */
   background-color: #6d21dd; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 10;
+  z-index: 100;
 }
 
 .navbar-custom.active {
+  position: fixed;
   background: rgba(109, 33, 221, 0.7); 
   padding: 0.5rem 0; /* saca relleno al hacer scroll */
-  z-index: 10;
+  z-index: 100;
 }
 
 .navbar-custom .nav-link, 
@@ -23,7 +24,7 @@
 }
 
 .navbar-custom .btn-outline-light {
-  background-color: #6d21dd; 
+
   color: #ffffff;
   border: 2px solid #ffffff; 
 }
