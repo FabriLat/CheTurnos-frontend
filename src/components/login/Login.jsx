@@ -1,9 +1,10 @@
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import "./login.css";
 import UserNav from "../userNav/UserNav";
 import Footer from "../footer/Footer";
 import logo from './CheTurnosIco.png';
+import executive from './executive.png';
 
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -104,7 +105,12 @@ const Login = () => {
   return (
     <>
       <UserNav />
-      <div className="outer-container">
+      <div className="outer-container-login">
+      <img
+                  className="executive"
+                  src={executive}
+                  alt="Logo"
+                />
         <div className="login">
         <img
                   className="calendar"

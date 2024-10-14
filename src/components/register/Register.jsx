@@ -3,6 +3,7 @@ import UserNav from "../userNav/UserNav";
 import "./register.css";
 import Footer from "../footer/Footer";
 import logo from './CheTurnosIco.png';
+import executive from './executive.png';
 
 const RegisterForm = () => {
   const fullNameRef = useRef(null);
@@ -102,6 +103,11 @@ const RegisterForm = () => {
     <>
       <UserNav />
       <div className="outer-container">
+      <img
+                  className="executive"
+                  src={executive}
+                  alt="Logo"
+                />
         <div className="register">
           <h2>Registración <img
                   className="calendar"
