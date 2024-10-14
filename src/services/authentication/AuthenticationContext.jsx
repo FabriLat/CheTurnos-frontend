@@ -8,7 +8,7 @@ const userValueString = localStorage.getItem("userData");
 const userValue = userValueString ? JSON.parse(userValueString) : null;
 
 export const AuthenticationContextProvider = ({ children }) => {
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState("66");
     const [user, setUser] = useState(userValue);
     const [shopId, setShopId] = useState(null);
 
@@ -17,14 +17,12 @@ export const AuthenticationContextProvider = ({ children }) => {
         setUser({ username, role, id});
         setToken(token);
         console.log(token);
-        // console.log(user);
+        //console.log(user);
     };
 
     const setShopIdHandler = (id)=>{
         setShopId(id); //Actualiza el id del shop
-
     }
-
 
     const logoutHandler = () => {
         localStorage.removeItem("userData");
@@ -34,7 +32,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     };
 
     return (
-        <AuthenticationContext.Provider value={{ token, dataLoginHandler, logoutHandler, shopId, setShopId: setShopIdHandler}}>
+        <AuthenticationContext.Provider value={{ token, dataLoginHandler, logoutHandler, shopId, setShopId: setShopIdHandler, user}}>
             {children}
         </AuthenticationContext.Provider>
     );

@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Form, Container, Button, Alert } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 
@@ -16,14 +16,13 @@ const Login = () => {
     exists: false,
   });
 
-
   const navegate = useNavigate();
 
   const handlebuttonForgotPassword = () => {
     navegate("/PassResetForm");
   }
 
-  const { dataLoginHandler } = useContext(AuthenticationContext);
+  const { dataLoginHandler, user } = useContext(AuthenticationContext);
 
   const emailHandler = (event) => {
     setErrors({ ...errors, email: false });
@@ -80,8 +79,8 @@ const Login = () => {
         console.log("El Token:", token);
         const decodedToken = parseJwt(token);
         // ID, ROL y el nombre.
-        const userId = decodedToken.sub[0];
-        const userRole = decodedToken.sub[1];
+        const userId = decodedToken.sub;
+        const userRole = decodedToken.role;
         const userName = decodedToken.given_name;
         console.log("User ID:", userId);
         console.log("User Role:", userRole);
@@ -119,6 +118,14 @@ const Login = () => {
 
     return JSON.parse(jsonPayload);
   }
+
+  useEffect(() => {
+    if (user != null) {
+      if (user.role == "Owner") {
+        navegate("/ownerPage")
+      }
+    }
+  }, [user])
 
   return (
     <>

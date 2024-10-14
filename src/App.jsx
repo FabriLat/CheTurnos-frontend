@@ -9,6 +9,7 @@ import { AuthenticationContextProvider } from "./services/authentication/Authent
 import ServiceList from "./components/serviceList/ServiceList";
 import EmployeeList from "./components/employeeList/EmployeeList";
 import PassResetForm from "./components/passResetForm/PassResetForm";
+import OwnerPage from "./components/ownerPage/OwnerPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,8 +18,9 @@ function App() {
     { path: "/PassResetForm", element: <PassResetForm /> },
     { path: "/shopList", element: <ShopList /> },
     { path: "/serviceList", element: <ServiceList /> },
-    {path: "/employeeList", element:<EmployeeList/>},
+    { path: "/employeeList", element:<EmployeeList/>},
     { path: "/shopForm", element: <ShopForm /> },
+    { path: "/ownerPage", element: <OwnerPage /> }
   ]);
 
   return (
