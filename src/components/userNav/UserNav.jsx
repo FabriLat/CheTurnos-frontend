@@ -41,7 +41,7 @@ const UserNav = () => {
           <Col md={1}></Col>
           <Col md={6}>
             <Nav className="d-flex justify-content-end align-items-center">
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/about")}>Sobre nosotros</Button>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Sobre nosotros</Button>
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/contact")}>Contacto</Button>
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/register")}>Registrarse</Button>
               <Button variant="light" className="mx-2" onClick={() => navigate("/login")}>Iniciar Sesión</Button>
