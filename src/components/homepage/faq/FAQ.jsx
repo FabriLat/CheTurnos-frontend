@@ -1,7 +1,17 @@
-import  { useState } from "react";
+import { useState } from "react";
 import "./FAQ.css";
+import reservacita from "./reservacita.png"; 
+import AOS from 'aos'; 
+import 'aos/dist/aos.css'; 
+import { useEffect } from 'react'; 
 
 const FAQ = () => {
+  useEffect(() => {
+    AOS.init({
+        duration: 1000, 
+    });
+  }, []);
+
   const [activeIndex, setActiveIndex] = useState(null);
 
   const faqs = [
@@ -28,25 +38,32 @@ const FAQ = () => {
   };
 
   return (
-    <div className="faq-container">
-      <h2>Preguntas Frecuentes</h2>
-      <div className="faq-list">
-        {faqs.map((faq, index) => (
-          <div key={index} className="faq-item">
-            <div
-              className={`faq-question ${activeIndex === index ? 'active' : ''}`}
-              onClick={() => toggleAnswer(index)}
-            >
-              {faq.question}
-              <span className={`arrow ${activeIndex === index ? "up" : "down"}`}>
-                {activeIndex === index ? "−" : "+"}
-              </span>
-            </div>
-            {activeIndex === index && (
-              <div className="faq-answer">{faq.answer}</div>
-            )}
+    <div className="section-container">
+      <div data-aos="flip-down" className="faq-layout">
+        <div className="faq-image-container">
+          <img src={reservacita} alt="Reserva Cita" className="faq-image" />
+        </div>
+        <div className="faq-container">
+          <h2>Preguntas Frecuentes</h2>
+          <div className="faq-list">
+            {faqs.map((faq, index) => (
+              <div key={index} className="faq-item">
+                <div
+                  className={`faq-question ${activeIndex === index ? "active" : ""}`}
+                  onClick={() => toggleAnswer(index)}
+                >
+                  {faq.question}
+                  <span className={`arrow ${activeIndex === index ? "up" : "down"}`}>
+                    {activeIndex === index ? "−" : "+"}
+                  </span>
+                </div>
+                {activeIndex === index && (
+                  <div className="faq-answer">{faq.answer}</div>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

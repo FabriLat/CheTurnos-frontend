@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, Navbar, Row, Col, Nav, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import logo from './CheTurnosLogo.png';
+import logo from './CheTurnosLogoBlanco.png';
 import './UserNav.css';
 
 const UserNav = () => {
@@ -43,8 +43,8 @@ const UserNav = () => {
             <Nav className="d-flex justify-content-end align-items-center">
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/about")}>Sobre nosotros</Button>
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/contact")}>Contacto</Button>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/login")}>Iniciar sesión</Button>
-              <Button variant="light" className="mx-2" onClick={() => navigate("/register")}>Registrarse</Button>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/register")}>Registrarse</Button>
+              <Button variant="light" className="mx-2" onClick={() => navigate("/login")}>Iniciar Sesión</Button>
             </Nav>
           </Col>
         </Row>
