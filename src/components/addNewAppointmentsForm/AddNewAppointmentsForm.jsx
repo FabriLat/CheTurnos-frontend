@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Card, Row, Form, Button } from "react-bootstrap";
 
-const AddNewAppointmensForm = () => {
+const AddNewAppointmensForm = ({ lastShopAppointment }) => {
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
     const [errors, setErrors] = useState({
@@ -76,7 +76,7 @@ const AddNewAppointmensForm = () => {
         <Card className="w-50 m-auto bg-secondary bg-opacity-25">
             <Card.Body>
                 <Row className="mb-2 text-info">
-                    {/*lastAppointment ? <h4>(Nota: fecha del último turno {lastAppointment})</h4> : <h4>(Nota: no hay turnos previos almacenados)</h4>*/}
+                    {lastShopAppointment ? <h4>(Nota: fecha del último turno {lastShopAppointment})</h4> : <h4>(Nota: no hay turnos previos almacenados)</h4>}
                 </Row>
                 <Row className="mb-4">
                     <h4>Introduzca el rango de fechas en el que creará los nuevos turnos: </h4>

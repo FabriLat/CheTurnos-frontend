@@ -16,8 +16,6 @@ const OwnerPage = () => {
         } else {
             setShowForm(true);
         }
-        console.log(`el token: ${token}`)
-        console.log(`el usuario: ${user.role}`)
     };
 
     const getMyShopLastAppointment = async () => {
@@ -34,8 +32,9 @@ const OwnerPage = () => {
             .then((data) => {
                 if (data[0] != null) {
                     console.log(data)
+                    setLastShopAppointment(data[0])
                 } else {
-                    console.log("la info es null")
+                    console.log("No hay turnos almacenados (null)")
                 }
             })
             .catch((error) => console.log(error))
@@ -43,7 +42,11 @@ const OwnerPage = () => {
 
     useEffect(() => {
         if (user.role == "Owner") {
-            getMyShopLastAppointment()
+            getMyShopLastAppointment();
+
+            if (lastShopAppointment != "") {
+                //lógica
+            }
         }
     }, [user])
 
@@ -62,7 +65,7 @@ const OwnerPage = () => {
                 </Button>
             </Navbar>
             <Container className="bg-light border m-2 d-flex justify-content-center align-items-center">
-                {showForm ? <AddNewAppointmensForm /> : <h4>Sección de contenido</h4>}
+                {showForm ? <AddNewAppointmensForm value={lastShopAppointment}/> : <h4>Sección de contenido</h4>}
             </Container>
         </Container>
       </>
