@@ -119,7 +119,7 @@ const ShopsMock = [
 ];
 
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ShopCard from '../shopCard/ShopCard';
 import Search from '../../search/Search';
 import { Alert } from 'react-bootstrap';

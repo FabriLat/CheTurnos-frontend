@@ -1,12 +1,18 @@
 import { Button } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import { useContext } from "react";
 
 const EmployeeCard = ({ employeeId, name, email, state }) => {
-  //const navegate = useNavigate();
-  const handlebutton = (e) => {
-    console.log(e)
+  const {dataForRequest, setDataForRequest} = useContext (AuthenticationContext);
+  const navegate = useNavigate();
+
+  const handlebutton = () => {
+    setDataForRequest({ ...dataForRequest, providerId: employeeId });
+    navegate("/AppointmentList");
   };
+  
   return (
     <div className="mt-4">
       <Card key={employeeId}>

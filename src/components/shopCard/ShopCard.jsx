@@ -6,11 +6,13 @@ import Card from 'react-bootstrap/Card';
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
 const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
-  const {setShopId} = useContext (AuthenticationContext);  
+  const {setShopId} = useContext (AuthenticationContext);
+  const {dataForRequest, setDataForRequest} = useContext (AuthenticationContext);
   const navegate = useNavigate();
 
   const handlebutton = ()=>{
     setShopId(idShop); 
+    setDataForRequest({...dataForRequest, shopId: idShop});
     navegate('/serviceList')
   }
 
