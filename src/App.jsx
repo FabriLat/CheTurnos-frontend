@@ -8,6 +8,7 @@ import ShopForm from "./components/shopForm/ShopForm";
 import { AuthenticationContextProvider } from "./services/authentication/AuthenticationContext";
 import ServiceList from "./components/serviceList/ServiceList";
 import EmployeeList from "./components/employeeList/EmployeeList";
+import AppointmentsList from "./components/appointmentsList/AppointmentsList";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,8 +16,9 @@ function App() {
     { path: "/register", element: <Register /> },
     { path: "/shopList", element: <ShopList /> },
     { path: "/serviceList", element: <ServiceList /> },
-    {path: "/employeeList", element:<EmployeeList/>},
+    { path: "/employeeList", element:<EmployeeList/>},
     { path: "/shopForm", element: <ShopForm /> },
+    { path: "/AppointmentList", element: <AppointmentsList/>},
   ]);
 
   return (

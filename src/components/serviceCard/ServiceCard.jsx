@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 
 const ServiceCard = ({ nameService, description, price, duration, idService }) => {
+    const {dataForRequest, setDataForRequest} = useContext (AuthenticationContext);
     const navegate = useNavigate();
     const handlebutton = () => {
+        setDataForRequest({ ...dataForRequest, serviceId: idService });
         navegate("/EmployeeList");
         
     }
