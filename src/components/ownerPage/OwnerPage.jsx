@@ -9,7 +9,17 @@ const OwnerPage = () => {
     const [showForm, setShowForm] = useState(false)
     const [hypenLastShopApp, setHypenLastShopApp] = useState("");
     const [slashLastShopApp, setSlashLastShopApp] = useState("");
+    const [lastAppFlag, setLastAppFlag] = useState(false);
+
     const { token, user } = useContext(AuthenticationContext);
+
+    const changeFlag = () => {
+        if (lastAppFlag) {
+            setLastAppFlag(false)
+        } else {
+            setLastAppFlag(true)
+        }
+    };
 
     const onClickShowForm = () => {
         if (!showForm) {
@@ -52,7 +62,7 @@ const OwnerPage = () => {
         if (user.role == "Owner") {
             getMyShopLastAppointment();
         }
-    }, [user])
+    }, [user, lastAppFlag])
 
     return (
       <>
@@ -72,6 +82,8 @@ const OwnerPage = () => {
                 {showForm ? <AddNewAppointmensForm 
                     hypenLastShopApp={hypenLastShopApp}
                     slashLastShopApp={slashLastShopApp}
+                    token={token}
+                    changeFlag={changeFlag}
                     onClickOccultForm={onClickOcultForm}
                     /> : <h4>Sección de contenido</h4>}
             </Container>
