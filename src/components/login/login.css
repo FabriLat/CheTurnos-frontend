@@ -43,6 +43,7 @@
     padding: 10px;
     cursor: pointer; 
     width: 100%; 
+    margin-bottom: 2vh;
   }
   
   .login-button:hover {

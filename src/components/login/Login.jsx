@@ -151,10 +151,10 @@ const Login = () => {
               />
             </div>
             <button type="submit" className="login-button">
-            <br />
-          <Button onClick={handlebuttonForgotPassword}> ¿Olvidaste tu contraseña? </Button>
               Login
             </button>
+            <br />
+            <a href="#" onClick={handlebuttonForgotPassword} className="forgot-password-link">¿Olvidaste tu contraseña?</a>
             {errors.exists && <div className="alert alert-danger">Credenciales inválidas</div>}
             {(errors.email || errors.pass) && <div className="alert alert-warning">Debes completar todos los campos</div>}
           </form>
