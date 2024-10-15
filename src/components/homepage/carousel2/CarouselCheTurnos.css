@@ -1,0 +1,58 @@
+.carousel-content {
+    position: relative;
+  }
+  
+  .carousel-image {
+    width: 100%;
+    height: 80vh;
+    object-fit: cover;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+  
+  .opinion {
+    max-width: 50%;
+    font-size: 2em;
+    font-style: italic;
+  }
+  
+  .opinion p {
+    font-size: 30px;
+    color: white;
+  }
+  
+  .stars {
+    margin-top: 10px;
+  }
+  
+  .star {
+    color: rgb(241, 218, 86);
+    font-size: 0.8em;
+    margin-right: 5px;
+  }
+  
+  .user-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .user-info p {
+    margin-top: 10px;
+    font-size: 0.8em;
+    color: #ddd;
+  }
+  
