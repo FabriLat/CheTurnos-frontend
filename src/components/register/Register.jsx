@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Form, Button, Container } from "react-bootstrap";
 import UserNav from "../userNav/UserNav";
 import "./register.css";
 import Footer from "../footer/Footer";
@@ -10,6 +11,7 @@ const RegisterForm = () => {
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const confirmPassRef = useRef(null);
+  
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -37,13 +39,14 @@ const RegisterForm = () => {
     await fetch("https://localhost:7276/api/Client/CreateNewClient", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        "content-type": "application/json"
       },
       body: JSON.stringify({
-        name: formData.fullName,
-        email: formData.email,
-        password: formData.password,
-      }),
+        "name": formData.fullName,
+        "email": formData.email,
+        "password": formData.password
+      })
+
     })
       .then((response) => {
         if (response.ok) return response.json();
@@ -69,28 +72,27 @@ const RegisterForm = () => {
       setErrors((prevErrors) => ({ ...prevErrors, fullName: true }));
       formIsValid = false;
     } else {
-      setErrors((prevErrors) => ({ ...prevErrors, fullName: false }));
+      setErrors({ ...formData, fullName: false });
     }
 
     if (!email) {
       setErrors((prevErrors) => ({ ...prevErrors, email: true }));
       formIsValid = false;
     } else {
-      setErrors((prevErrors) => ({ ...prevErrors, email: false }));
+      setErrors({ ...formData, email: false });
     }
-
-    if (!password || password.length < 8 || !isAlphanumeric(password)) {
-      setErrors((prevErrors) => ({ ...prevErrors, password: true }));
+    if (!password || password.length < 8 || isAlphanumeric(password) == false) {
+      setErrors({ ...formData, password: true });
       formIsValid = false;
     } else {
-      setErrors((prevErrors) => ({ ...prevErrors, password: false }));
+      setErrors({ ...formData, password: false });
     }
 
     if (password !== confirmPassword) {
       setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: true }));
       formIsValid = false;
     } else {
-      setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: false }));
+      setErrors({ ...formData, confirmPassword: false });
     }
 
     if (formIsValid) {

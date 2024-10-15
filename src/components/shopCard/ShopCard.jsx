@@ -1,18 +1,27 @@
 
-import React from 'react'
-import { Container } from 'react-bootstrap'
+import { useContext } from 'react'
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
+import { useNavigate } from 'react-router-dom';
+const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
+  const {setShopId} = useContext (AuthenticationContext);  
+  const navegate = useNavigate();
 
-const ShopCard = ({name, address, phone, timeStart, timeEnd, key}) => {
-    const formatTime = (time)=>{
+  const handlebutton = ()=>{
+    setShopId(idShop); 
+    navegate('/serviceList')
+  }
+
+
+  const formatTime = (time)=>{
         const [hour, minute] = time.split(":");
         return `${hour}:${minute}`;
     }
     
     return (
-        <Card key="{key}">
+        <Card key={idShop}>
         <Card.Header as="h5">{name}</Card.Header>
         <Card.Body>
           <Card.Title>{address}</Card.Title>
@@ -21,7 +30,7 @@ const ShopCard = ({name, address, phone, timeStart, timeEnd, key}) => {
             Abre: {formatTime(timeStart)}<br/>
             Cierra: {formatTime(timeEnd)}<br/>
           </Card.Text>
-          <Button variant="primary">Pedi Tu Tuno!</Button>
+          <Button variant="primary" onClick={handlebutton}>Pedi Tu Turno!</Button>
         </Card.Body>
       </Card>
     )
@@ -33,6 +42,7 @@ ShopCard.propType = {
     phone: PropTypes.string,
     timeStart: PropTypes.date,
     timeEnd: PropTypes.date,
+    idShop: PropTypes.number,
     key: PropTypes.number,
 
 }

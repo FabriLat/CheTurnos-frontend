@@ -1,5 +1,8 @@
 import { useContext, useRef, useState } from "react";
+import { Form, Container, Button, Alert } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 import UserNav from "../userNav/UserNav";
 import Footer from "../footer/Footer";
@@ -16,6 +19,13 @@ const Login = () => {
     pass: false,
     exists: false,
   });
+
+
+  const navegate = useNavigate();
+
+  const handlebuttonForgotPassword = () => {
+    navegate("/PassResetForm");
+  }
 
   const { dataLoginHandler } = useContext(AuthenticationContext);
 
@@ -141,6 +151,8 @@ const Login = () => {
               />
             </div>
             <button type="submit" className="login-button">
+            <br />
+          <Button onClick={handlebuttonForgotPassword}> ¿Olvidaste tu contraseña? </Button>
               Login
             </button>
             {errors.exists && <div className="alert alert-danger">Credenciales inválidas</div>}
