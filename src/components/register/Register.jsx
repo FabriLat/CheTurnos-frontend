@@ -1,9 +1,11 @@
-import { useState,useRef } from "react";
-import { Form, Button, Container } from "react-bootstrap";
+import { useState, useRef } from "react";
 import UserNav from "../userNav/UserNav";
+import "./register.css";
+import Footer from "../footer/Footer";
+import logo from './CheTurnosIco.png';
+import executive from './executive.png';
 
 const RegisterForm = () => {
-
   const fullNameRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
@@ -17,10 +19,10 @@ const RegisterForm = () => {
   });
 
   const [errors, setErrors] = useState({
-    fullName: true,
-    email: true,
-    password: true,
-    confirmPassword: true,
+    fullName: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
   });
 
   const handleChange = (e) => {
@@ -33,24 +35,24 @@ const RegisterForm = () => {
 
   const RegisterClient = async () => {
     await fetch("https://localhost:7276/api/Client/CreateNewClient", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-          "name": formData.fullName,
-          "email": formData.email,
-          "password": formData.password
-        })
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      }),
     })
       .then((response) => {
-          if (response.ok) return response.json();
-          else {
-              throw new Error("The response has some errors");
-          }
+        if (response.ok) return response.json();
+        else {
+          throw new Error("The response has some errors");
+        }
       })
       .then((data) => console.log(data))
-      .catch((error) => console.log(error))
+      .catch((error) => console.log(error));
   };
 
   const handleSubmit = (e) => {
@@ -60,105 +62,134 @@ const RegisterForm = () => {
     const email = emailRef.current.value;
     const password = passRef.current.value;
     const confirmPassword = confirmPassRef.current.value;
-    
+
     let formIsValid = true;
+
     if (!fullName) {
-      setErrors({ ...formData, fullName: true });
+      setErrors((prevErrors) => ({ ...prevErrors, fullName: true }));
       formIsValid = false;
-    } else{
-      setErrors({...formData, fullName: false});
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, fullName: false }));
     }
 
     if (!email) {
-      setErrors({ ...formData, email: true });
+      setErrors((prevErrors) => ({ ...prevErrors, email: true }));
       formIsValid = false;
-    }else{
-      setErrors({...formData, email: false});
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, email: false }));
     }
-    if (!password ||password.length < 8 ||isAlphanumeric(password) == false) {
-      setErrors({ ...formData, password: true });
+
+    if (!password || password.length < 8 || !isAlphanumeric(password)) {
+      setErrors((prevErrors) => ({ ...prevErrors, password: true }));
       formIsValid = false;
-    }else{
-      setErrors({...formData, password: false});
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, password: false }));
     }
- 
+
     if (password !== confirmPassword) {
-      setErrors({ ...formData, confirmPassword: true });
+      setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: true }));
       formIsValid = false;
-    }else{
-      setErrors({...formData, confirmPassword: false});
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: false }));
     }
-   
+
     if (formIsValid) {
-      console.log("Formulario enviado"/*, formData*/);
+      console.log("Formulario enviado");
       RegisterClient();
-    };
+    }
   };
 
   return (
     <>
-    <UserNav/>
-    <Container className="mt-4">
-      <h2>Registro</h2>
-      <Form className="mt-5" onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Nombre Completo</Form.Label>
-          <Form.Control
-            ref={fullNameRef}
-            type="text"
-            placeholder="Introduce tu nombre completo"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-          />
-          {errors.fullName ? "" : "Completa el campo."}
-          
-        </Form.Group>
+      <UserNav />
+      <div className="outer-container">
+      <img
+                  className="executive"
+                  src={executive}
+                  alt="Logo"
+                />
+        <div className="register">
+          <h2>Registración <img
+                  className="calendar"
+                  src={logo}
+                  alt="Logo"
+                /></h2>
+          <form className="form-register" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Nombre Completo:</label>
+              <input
+                ref={fullNameRef}
+                type="text"
+                name="fullName"
+                placeholder="Introduce tu nombre completo"
+                value={formData.fullName}
+                onChange={handleChange}
+                className={errors.fullName ? "input-error" : ""}
+              />
+              {errors.fullName && (
+                <div className="alert alert-warning">Completa el campo.</div>
+              )}
+            </div>
 
-        <Form.Group className="mt-4">
-          <Form.Label>Correo Electrónico</Form.Label>
-          <Form.Control
-            ref={emailRef}
-            type="email"
-            placeholder="Introduce tu correo electrónico"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          {errors.email ? "" : "Completa el campo."}
-        </Form.Group>
+            <div className="form-group">
+              <label>Correo Electrónico:</label>
+              <input
+                ref={emailRef}
+                type="email"
+                name="email"
+                placeholder="Introduce tu correo electrónico"
+                value={formData.email}
+                onChange={handleChange}
+                className={errors.email ? "input-error" : ""}
+              />
+              {errors.email && (
+                <div className="alert alert-warning">Completa el campo.</div>
+              )}
+            </div>
 
-        <Form.Group className="mt-4">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control
-            ref={passRef}
-            type="password"
-            placeholder="Introduce tu contraseña"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-          {errors.password ? "" : "Completa el campo."}
-        </Form.Group>
+            <div className="form-group">
+              <label>Contraseña:</label>
+              <input
+                ref={passRef}
+                type="password"
+                name="password"
+                placeholder="Introduce tu contraseña"
+                value={formData.password}
+                onChange={handleChange}
+                className={errors.password ? "input-error" : ""}
+              />
+              {errors.password && (
+                <div className="alert alert-warning">
+                  La contraseña debe tener al menos 8 caracteres y ser alfanumérica.
+                </div>
+              )}
+            </div>
 
-        <Form.Group className="mt-4">
-          <Form.Label>Confirmar Contraseña</Form.Label>
-          <Form.Control
-            ref={confirmPassRef}
-            type="password"
-            placeholder="Confirma tu contraseña"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          {errors.confirmPassword ? "Las claves no coinciden." : ""}
-        </Form.Group>
+            <div className="form-group">
+              <label>Confirmar Contraseña:</label>
+              <input
+                ref={confirmPassRef}
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirma tu contraseña"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className={errors.confirmPassword ? "input-error" : ""}
+              />
+              {errors.confirmPassword && (
+                <div className="alert alert-warning">
+                  Las contraseñas no coinciden.
+                </div>
+              )}
+            </div>
 
-        <Button className="mt-3" variant="primary" type="submit">
-          Registrarse
-        </Button>
-      </Form>
-    </Container>
+            <button type="submit" className="register-button">
+              Registrarse
+            </button>
+          </form>
+        </div>
+      </div>
+      <Footer />
     </>
   );
 };

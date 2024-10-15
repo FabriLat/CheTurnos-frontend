@@ -1,0 +1,49 @@
+.navbar-custom {
+  position: fixed;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out; /* agrega padding a la transicion */
+  padding: 1rem 0; /* relleno inicial */
+  background-color: #6d21dd; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.navbar-custom.active {
+  position: fixed;
+  background: rgba(109, 33, 221, 0.7); 
+  padding: 0.5rem 0; /* saca relleno al hacer scroll */
+  z-index: 100;
+}
+
+.navbar-custom .nav-link, 
+.navbar-custom .btn { 
+  color: #ffffff;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.navbar-custom .btn-outline-light {
+
+  color: #ffffff;
+  border: 2px solid #ffffff; 
+}
+
+.navbar-custom .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #6d21dd; 
+}
+
+.navbar-custom .btn-light {
+  background-color: #ffffff;
+  color: #6d21dd;
+}
+
+.navbar-custom .btn-light:hover {
+  background-color: #f0f0f0;
+}
+
+.logo {
+  margin-left: 30%;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out; /* transicion para logo */
+}
