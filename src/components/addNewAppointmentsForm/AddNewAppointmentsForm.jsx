@@ -1,27 +1,33 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card, Row, Form, Button } from "react-bootstrap";
 
-const AddNewAppointmensForm = ({ lastShopAppointment }) => {
+const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, onClickOccultForm }) => {
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
     const [errors, setErrors] = useState({
         dateStart: false,
         dateEnd: false,
+        dateOrder: false,
+        datePast: false,
+        dateOverlap: false,
     });
+    const [errorMessagge, setErrorMessagge] = useState("")
 
     const dateStartRef = useRef(null);
     const dateEndRef = useRef(null);
 
     const onChangeDateStart = (event) => {
-        setErrors({ ...errors, dateStart: false });
+        setErrors({ ...errors, dateStart: false, dateOrder: false, datePast: false, dateOverlap: false });
         const inputDateStart = event.target.value;
         setDateStart(inputDateStart);
+        setErrorMessagge("")
     };
 
     const onChangeDateEnd = (event) => {
-        setErrors({ ...errors, dateEnd: false });
+        setErrors({ ...errors, dateEnd: false, dateOrder: false, datePast: false, dateOverlap: false });
         const inputDateEnd = event.target.value;
         setDateEnd(inputDateEnd);
+        setErrorMessagge("")
     };
 
     const validateInputDates = (start, end, lastAppDate) => {
@@ -31,21 +37,46 @@ const AddNewAppointmensForm = ({ lastShopAppointment }) => {
         const splitAuxDay = auxDay.split("/");
         const today = new Date(`${splitAuxDay[2]}-${splitAuxDay[1]}-${splitAuxDay[0]}T00:00:00`);
 
-
         if (day1 > day2) {
+            setErrors({ ...errors, dateOrder: true });
             return false;
         }
 
         if (day1 < today) {
+            setErrors({ ...errors, datePast: true });
             return false;
         }
 
         if (lastAppDate != "") {
-            
+            const auxLastAppDate = new Date(`${lastAppDate}T00:00:00`)
+            if (day1 <= auxLastAppDate) {
+                setErrors({ ...errors, dateOverlap: true });
+                return false;
+            }
         }
 
         return true;
     };
+
+    const assignErrorMessagge = () => {
+        if (errors.dateOrder) {
+            setErrorMessagge("La fecha de fin no puede ser menor a la fecha de inicio")
+        }
+
+        if (errors.datePast) {
+            setErrorMessagge("La fecha de inicio no puede ser menor a la fecha de hoy")
+        }
+
+        if (errors.dateOverlap) {
+            setErrorMessagge("La fecha de inicio debe ser mayor a la fecha del último turno almacenado")
+        }
+    };
+
+    useEffect(() => {
+        if (errors.dateOrder || errors.datePast || errors.dateOverlap) {
+            assignErrorMessagge();
+        }
+    }, [errors])
 
     const onSubmitHandler = (event) => {
         event.preventDefault();
@@ -62,21 +93,21 @@ const AddNewAppointmensForm = ({ lastShopAppointment }) => {
             return;
         }
 
-        getLastAppointment(1);
-
-        //if (validateInputDates(dateStart, dateEnd, lastAppointment)) {
+        if (validateInputDates(dateStart, dateEnd, hypenLastShopApp)) {
+            console.log("Operación exitosa!")
             //fetch
-        //}
+        }
         
         setDateStart("");
         setDateEnd("");
+        setErrorMessagge("");
     };
 
     return (
-        <Card className="w-50 m-auto bg-secondary bg-opacity-25">
+        <Card className="w-75 m-auto bg-secondary bg-opacity-25">
             <Card.Body>
                 <Row className="mb-2 text-info">
-                    {lastShopAppointment ? <h4>(Nota: fecha del último turno {lastShopAppointment})</h4> : <h4>(Nota: no hay turnos previos almacenados)</h4>}
+                    {hypenLastShopApp ? <h4>(Nota: fecha del último turno {slashLastShopApp})</h4> : <h4>(Nota: no hay turnos previos almacenados)</h4>}
                 </Row>
                 <Row className="mb-4">
                     <h4>Introduzca el rango de fechas en el que creará los nuevos turnos: </h4>
@@ -113,7 +144,13 @@ const AddNewAppointmensForm = ({ lastShopAppointment }) => {
                             ""
                         )}
                     <Row>
-                        <Button className="w-50 mx-auto mt-4" type="submit">
+                        {errorMessagge ? <p className="mt-3 text-danger">{errorMessagge}</p> : ""}
+                    </Row>
+                    <Row className="d-flex justify-content-center">
+                        <Button className="w-25 mx-2 mt-3" variant="danger" onClick={onClickOccultForm}>
+                            VOLVER
+                        </Button>
+                        <Button className="w-25 mx-2 mt-3" type="submit">
                             CONFIRMAR
                         </Button>
                     </Row>

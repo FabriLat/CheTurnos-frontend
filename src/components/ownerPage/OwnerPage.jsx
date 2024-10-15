@@ -7,14 +7,19 @@ import { AuthenticationContext } from "../../services/authentication/Authenticat
 const OwnerPage = () => {
 
     const [showForm, setShowForm] = useState(false)
-    const [lastShopAppointment, setLastShopAppointment] = useState("");
+    const [hypenLastShopApp, setHypenLastShopApp] = useState("");
+    const [slashLastShopApp, setSlashLastShopApp] = useState("");
     const { token, user } = useContext(AuthenticationContext);
 
-    const onClickAddNewAppHandler = () => {
+    const onClickShowForm = () => {
+        if (!showForm) {
+            setShowForm(true);
+        }
+    };
+
+    const onClickOcultForm = () => {
         if (showForm) {
             setShowForm(false);
-        } else {
-            setShowForm(true);
         }
     };
 
@@ -31,8 +36,11 @@ const OwnerPage = () => {
             })
             .then((data) => {
                 if (data[0] != null) {
-                    console.log(data)
-                    setLastShopAppointment(data[0])
+                    console.log(data[0].dateAndHour)
+                    const auxDate1 = data[0].dateAndHour.split("T")
+                    setHypenLastShopApp(auxDate1[0])
+                    const auxDate2 = auxDate1[0].split("-")
+                    setSlashLastShopApp(`${auxDate2[2]}/${auxDate2[1]}/${auxDate2[0]}`)
                 } else {
                     console.log("No hay turnos almacenados (null)")
                 }
@@ -43,10 +51,6 @@ const OwnerPage = () => {
     useEffect(() => {
         if (user.role == "Owner") {
             getMyShopLastAppointment();
-
-            if (lastShopAppointment != "") {
-                //lógica
-            }
         }
     }, [user])
 
@@ -58,14 +62,18 @@ const OwnerPage = () => {
         <Container className="d-flex">
             <Navbar className="bg-secondary m-2 d-flex-column justify-content-start" style={{height: "600px"}}>
                 <Button 
-                    onClick={onClickAddNewAppHandler}
+                    onClick={onClickShowForm}
                     className="m-3"
                 >
                     AGREGAR NUEVOS TURNOS
                 </Button>
             </Navbar>
             <Container className="bg-light border m-2 d-flex justify-content-center align-items-center">
-                {showForm ? <AddNewAppointmensForm value={lastShopAppointment}/> : <h4>Sección de contenido</h4>}
+                {showForm ? <AddNewAppointmensForm 
+                    hypenLastShopApp={hypenLastShopApp}
+                    slashLastShopApp={slashLastShopApp}
+                    onClickOccultForm={onClickOcultForm}
+                    /> : <h4>Sección de contenido</h4>}
             </Container>
         </Container>
       </>
