@@ -184,7 +184,6 @@ const ShopForm = () => {
 
     return (
         <>
-            <UserNav />
             <Container className="mt-4">
                 <h2>Registro de Tienda</h2>
                 <Form className="mt-5" onSubmit={handleSubmit}>

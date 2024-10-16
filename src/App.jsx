@@ -13,20 +13,98 @@ import EmployeeList from "./components/employeeList/EmployeeList";
 import AppointmentsList from "./components/appointmentsList/AppointmentsList";
 import PassResetForm from "./components/passResetForm/PassResetForm";
 import OwnerPage from "./components/ownerPage/OwnerPage";
+import MainLayout from "./components/mainLayout/MainLayout";
+import NotFound from "./routes/NotFound";
 
 
 function App() {
   const router = createBrowserRouter([
-    { path: "/", element: <Homepage /> },
-    { path: "/login", element: <Login /> },
-    { path: "/register", element: <Register /> },
-    { path: "/PassResetForm", element: <PassResetForm /> },
-    { path: "/shopList", element: <ShopList /> },
-    { path: "/serviceList", element: <ServiceList /> },
-    { path: "/employeeList", element:<EmployeeList/>},
-    { path: "/shopForm", element: <ShopForm /> },
-    { path: "/ownerPage", element: <OwnerPage /> }
-    { path: "/AppointmentList", element: <AppointmentsList/>},
+    {
+      path: "/",
+      element: (
+        <MainLayout>
+          <Homepage />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/login",
+      element: (
+        <MainLayout>
+          <Login />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <MainLayout>
+          <Register />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/PassResetForm",
+      element: (
+        <MainLayout>
+          <PassResetForm />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/shopList",
+      element: (
+        <MainLayout>
+          <ShopList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/serviceList",
+      element: (
+        <MainLayout>
+          <ServiceList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/employeeList",
+      element: (
+        <MainLayout>
+          <EmployeeList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/shopForm",
+      element: (
+        <MainLayout>
+          <ShopForm />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/ownerPage",
+      element: (
+        <MainLayout>
+          <OwnerPage />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/AppointmentList",
+      element: (
+        <MainLayout>
+          <AppointmentsList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: (
+        <NotFound />
+      ),
+    }
   ]);
 
   return (

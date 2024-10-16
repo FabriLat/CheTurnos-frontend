@@ -9,13 +9,11 @@ import FAQ from "./faq/FAQ";
 const Homepage = () => {
   return (
     <div>
-      <UserNav/>
       <Carousel/>
       <OurStory/>
       <CarouselCheTurnos/>
       <Card/>
       <FAQ/>
-      <Footer/>
     </div>
   )
 }

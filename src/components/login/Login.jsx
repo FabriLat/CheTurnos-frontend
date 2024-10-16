@@ -122,7 +122,6 @@ const Login = () => {
 
   return (
     <>
-      <UserNav />
       <div className="outer-container-login">
       <img
                   className="executive"
@@ -168,7 +167,6 @@ const Login = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
