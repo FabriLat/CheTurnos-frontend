@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { Button, Container, Navbar } from "react-bootstrap";
 import AddNewAppointmensForm from "../addNewAppointmentsForm/AddNewAppointmentsForm";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import OwnerAppointmentsList from "../ownerAppointmentsList/OwnerAppointmentsList";
 
 
 const OwnerPage = () => {
@@ -10,6 +11,7 @@ const OwnerPage = () => {
     const [hypenLastShopApp, setHypenLastShopApp] = useState("");
     const [slashLastShopApp, setSlashLastShopApp] = useState("");
     const [lastAppFlag, setLastAppFlag] = useState(false);
+    const [showList, setShowList] = useState(false);
 
     const { token, user } = useContext(AuthenticationContext);
 
@@ -24,12 +26,26 @@ const OwnerPage = () => {
     const onClickShowForm = () => {
         if (!showForm) {
             setShowForm(true);
+            setShowList(false);
         }
     };
 
     const onClickOcultForm = () => {
         if (showForm) {
             setShowForm(false);
+        }
+    };
+
+    const onClickShowList = () => {
+        if (!showList) {
+            setShowList(true);
+            setShowForm(false);
+        }
+    };
+
+    const onClickOcultList = () => {
+        if (showList) {
+            setShowList(false);
         }
     };
 
@@ -66,28 +82,35 @@ const OwnerPage = () => {
 
     return (
       <>
-        <Container className="bg-secondary bg-opacity-25 m-2 d-flex justify-content-center align-items-center">
+        <div className="bg-secondary bg-opacity-25 m-2 d-flex justify-content-center align-items-center">
             <h3>Pagína de dueño</h3>
-        </Container>
-        <Container className="d-flex">
-            <Navbar className="bg-secondary m-2 d-flex-column justify-content-start" style={{height: "600px"}}>
+        </div>
+        <div className="d-flex w-100">
+            <div className="bg-secondary m-2" style={{height: "90vh", width: "15%"}}>
+                <Button 
+                    onClick={onClickShowList}
+                    className="m-3">
+                    MOSTRAR TODOS LOS TURNOS
+                </Button>
                 <Button 
                     onClick={onClickShowForm}
                     className="m-3"
                 >
                     AGREGAR NUEVOS TURNOS
                 </Button>
-            </Navbar>
-            <Container className="bg-light border m-2 d-flex justify-content-center align-items-center">
+            </div>
+            <div className="bg-light border w-75 m-2 d-flex justify-content-center align-items-center" style={{height: "90vh", width: "85%"}}>
+                {!showForm && !showList ? <h4>Sección de contenido</h4> : ""}
                 {showForm ? <AddNewAppointmensForm 
                     hypenLastShopApp={hypenLastShopApp}
                     slashLastShopApp={slashLastShopApp}
                     token={token}
                     changeFlag={changeFlag}
                     onClickOccultForm={onClickOcultForm}
-                    /> : <h4>Sección de contenido</h4>}
-            </Container>
-        </Container>
+                    /> : "" }
+                {showList ? <OwnerAppointmentsList /> : "" }
+            </div>
+        </div>
       </>
     );
   };

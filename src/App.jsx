@@ -25,7 +25,7 @@ function App() {
     { path: "/serviceList", element: <ServiceList /> },
     { path: "/employeeList", element:<EmployeeList/>},
     { path: "/shopForm", element: <ShopForm /> },
-    { path: "/ownerPage", element: <OwnerPage /> }
+    { path: "/ownerPage", element: <OwnerPage /> },
     { path: "/AppointmentList", element: <AppointmentsList/>},
   ]);
 
