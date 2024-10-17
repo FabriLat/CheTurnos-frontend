@@ -101,7 +101,6 @@ const RegisterForm = () => {
 
   return (
     <>
-      <UserNav />
       <div className="outer-container">
       <img
                   className="executive"
@@ -189,7 +188,6 @@ const RegisterForm = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
