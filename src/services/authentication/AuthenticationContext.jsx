@@ -24,7 +24,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         setUser({ username, role, id});
         setToken(token);
         console.log(token);
-        //console.log(user);
+        console.log(user);
     };
 
     const setShopIdHandler = (id)=>{

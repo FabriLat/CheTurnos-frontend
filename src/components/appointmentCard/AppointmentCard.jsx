@@ -15,13 +15,14 @@ const AppointmentCard = ({ idAppointment, date, id }) => {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const userValueString = localStorage.getItem("userData");
+  const userValue = userValueString ? JSON.parse(userValueString) : null;
 
   const reserveAppointmentRequest = async () => {
     const transformedData = {
       idAppointment: idAppointment,
       serviceId: dataForRequest.serviceId,
-      clientId: 10,
-      
+      clientId: userValue.id,
     };
     console.log(transformedData);
     console.log("Inicio de fetch");
@@ -38,6 +39,7 @@ const AppointmentCard = ({ idAppointment, date, id }) => {
           body: JSON.stringify(transformedData),
         }
       );
+      console.log("DATA ENVIADA: ",JSON.stringify(transformedData))
       if (!response.ok) {
         throw new Error("Error in assign appointment");
       }
@@ -51,7 +53,7 @@ const AppointmentCard = ({ idAppointment, date, id }) => {
     setDataForRequest({ ...dataForRequest, appointmentId: idAppointment });
     reserveAppointmentRequest();
     setDataForRequest({ ...dataForRequest, dateAndHour: date });
-    console.log("la request se ha realizado con los datos enviados: "+ dataForRequest.clientId, dataForRequest.serviceId, dataForRequest.idAppointment);
+    console.log("la request se ha realizado con los datos enviados: "+ dataForRequest);
   };
 
   return (
