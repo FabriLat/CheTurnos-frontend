@@ -12,6 +12,8 @@ const OwnerPage = () => {
     const [slashLastShopApp, setSlashLastShopApp] = useState("");
     const [lastAppFlag, setLastAppFlag] = useState(false);
     const [showList, setShowList] = useState(false);
+    const [myShopAppointments, setMyShopAppointments] = useState("");
+    const [myShopEmployees, setMyShopEmployees] = useState("");
 
     const { token, user } = useContext(AuthenticationContext);
 
@@ -37,6 +39,7 @@ const OwnerPage = () => {
     };
 
     const onClickShowList = () => {
+        getMyShopAppointments()
         if (!showList) {
             setShowList(true);
             setShowForm(false);
@@ -62,7 +65,7 @@ const OwnerPage = () => {
             })
             .then((data) => {
                 if (data[0] != null) {
-                    console.log(data[0].dateAndHour)
+                    console.log(`My shop last appointment: ${data[0].dateAndHour}`);
                     const auxDate1 = data[0].dateAndHour.split("T")
                     setHypenLastShopApp(auxDate1[0])
                     const auxDate2 = auxDate1[0].split("-")
@@ -76,9 +79,54 @@ const OwnerPage = () => {
 
     useEffect(() => {
         if (user.role == "Owner") {
+            getMyShopEmployees();
             getMyShopLastAppointment();
         }
     }, [user, lastAppFlag])
+
+    const getMyShopAppointments = async () => {
+        await fetch(`https://localhost:7276/api/Appointment/GetAllApointmentsOfMyShop`, {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "authorization": `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    throw new Error("The response has some errors");
+                }
+            })
+            .then((data) => {
+                console.log(`My shop appointments: ${data}`);
+                setMyShopAppointments(data);
+            })
+            .catch((error) => console.log(error))
+    };
+
+    const getMyShopEmployees = async () => {
+        await fetch(`https://localhost:7276/api/Employee/GetMyShopEmployees`, {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "authorization": `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    throw new Error("The response has some errors");
+                }
+            })
+            .then((data) => {
+                console.log(`My shop employees: ${data}`);
+                setMyShopEmployees(data);
+            })
+            .catch((error) => console.log(error))
+    };
 
     return (
       <>
@@ -99,7 +147,7 @@ const OwnerPage = () => {
                     AGREGAR NUEVOS TURNOS
                 </Button>
             </div>
-            <div className="bg-light border rounded m-2 pt-4 pb-5 d-flex justify-content-center align-items-center overflow-auto" style={{height: "85vh", width: "85%"}}>
+            <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "85vh", width: "95%"}}>
                 {!showForm && !showList ? <h4>Sección de contenido del dueño</h4> : ""}
                 {showForm ? <AddNewAppointmensForm
                     hypenLastShopApp={hypenLastShopApp}
@@ -108,7 +156,10 @@ const OwnerPage = () => {
                     changeFlag={changeFlag}
                     onClickOccultForm={onClickOcultForm}
                     /> : "" }
-                {showList ? <OwnerAppointmentsList /> : "" }
+                {showList ? <OwnerAppointmentsList
+                    appointmentsArray={myShopAppointments}
+                    employeesArray={myShopEmployees}
+                /> : "" }
             </div>
         </div>
       </>

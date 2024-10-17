@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const OwnerAppointmentItem = ({ diaYHora, proveedor, servicio, cliente }) => {
 
     return (
