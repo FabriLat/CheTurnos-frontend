@@ -82,26 +82,26 @@ const OwnerPage = () => {
 
     return (
       <>
-        <div className="bg-secondary bg-opacity-25 m-2 d-flex justify-content-center align-items-center">
+        <div className="bg-secondary bg-opacity-25 m-2 p-3 d-flex justify-content-center align-items-center rounded">
             <h3>Pagína de dueño</h3>
         </div>
         <div className="d-flex w-100">
-            <div className="bg-secondary m-2" style={{height: "90vh", width: "15%"}}>
+            <div className="bg-secondary m-2 rounded" style={{height: "85vh", width: "15%"}}>
                 <Button 
                     onClick={onClickShowList}
-                    className="m-3">
+                    className="mx-3 mt-3">
                     MOSTRAR TODOS LOS TURNOS
                 </Button>
                 <Button 
                     onClick={onClickShowForm}
-                    className="m-3"
+                    className="mx-3 mt-3"
                 >
                     AGREGAR NUEVOS TURNOS
                 </Button>
             </div>
-            <div className="bg-light border w-75 m-2 d-flex justify-content-center align-items-center" style={{height: "90vh", width: "85%"}}>
-                {!showForm && !showList ? <h4>Sección de contenido</h4> : ""}
-                {showForm ? <AddNewAppointmensForm 
+            <div className="bg-light border rounded m-2 pt-4 pb-5 d-flex justify-content-center align-items-center overflow-auto" style={{height: "85vh", width: "85%"}}>
+                {!showForm && !showList ? <h4>Sección de contenido del dueño</h4> : ""}
+                {showForm ? <AddNewAppointmensForm
                     hypenLastShopApp={hypenLastShopApp}
                     slashLastShopApp={slashLastShopApp}
                     token={token}
