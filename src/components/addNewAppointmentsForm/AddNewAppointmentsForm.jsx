@@ -156,7 +156,7 @@ const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, token, chan
 
     return (
         <>
-            <Card className="w-75 m-auto bg-secondary bg-opacity-25">
+            <Card className="m-auto bg-secondary bg-opacity-25" style={{ width: "50%" }}>
                 <Card.Body>
                     <Row className="mb-2 text-info">
                         {hypenLastShopApp ? <h4>(Nota: fecha del último turno {slashLastShopApp})</h4> : <h4>(Nota: no hay turnos previos almacenados)</h4>}
