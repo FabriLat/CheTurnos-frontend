@@ -82,6 +82,7 @@ const Login = () => {
         const userName = decodedToken.given_name;
 
         dataLoginHandler(userName, userRole, userId, token);
+        
       } else {
         setErrors({ ...errors, exists: true });
         setEnteredEmail("");
@@ -116,6 +117,12 @@ const Login = () => {
     if (user != null) {
       if (user.role == "Owner") {
         navegate("/ownerPage")
+      }
+      if(user.role == "Client"){
+        navegate('/shopList');
+      }
+      if(user.role == "Employee"){
+        navegate('????');
       }
     }
   }, [user])

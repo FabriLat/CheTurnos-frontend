@@ -1,15 +1,16 @@
 import { useState, useRef } from "react";
-import UserNav from "../userNav/UserNav";
 import "./register.css";
-import Footer from "../footer/Footer";
 import logo from './CheTurnosIco.png';
 import executive from './executive.png';
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const fullNameRef = useRef(null);
   const emailRef = useRef(null);
   const passRef = useRef(null);
   const confirmPassRef = useRef(null);
+
+  const navegate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -46,7 +47,10 @@ const RegisterForm = () => {
       }),
     })
       .then((response) => {
-        if (response.ok) return response.json();
+        if (response.ok) {
+          navegate('/login');
+          return response.json();
+        }
         else {
           throw new Error("The response has some errors");
         }
@@ -101,18 +105,21 @@ const RegisterForm = () => {
 
   return (
     <>
+    
+    <button>Como Cliente</button>
+    <button>Como Negocio</button>
       <div className="outer-container">
-      <img
-                  className="executive"
-                  src={executive}
-                  alt="Logo"
-                />
+        <img
+          className="executive"
+          src={executive}
+          alt="Logo"
+        />
         <div className="register">
           <h2>Registración <img
-                  className="calendar"
-                  src={logo}
-                  alt="Logo"
-                /></h2>
+            className="calendar"
+            src={logo}
+            alt="Logo"
+          /></h2>
           <form className="form-register" onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Nombre Completo:</label>
