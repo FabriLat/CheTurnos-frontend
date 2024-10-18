@@ -1,7 +1,8 @@
-import { useState, useRef, useNavigate } from "react";
+import { useState, useRef } from "react";
 import "./register.css";
 import logo from './CheTurnosIco.png';
 import executive from './executive.png';
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const fullNameRef = useRef(null);
@@ -104,6 +105,9 @@ const RegisterForm = () => {
 
   return (
     <>
+    
+    <button>Como Cliente</button>
+    <button>Como Negocio</button>
       <div className="outer-container">
         <img
           className="executive"

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 import ClientsAppointmentItem from '../clientsAppointmentItem/ClientsAppointmentItem';
 import Spiner from '../spiner/Spiner';
@@ -22,6 +22,7 @@ const ClientsAppointmentList = () => {
         }
         catch (error) {
             console.error("Error:", error)
+            setLoading(false); // desactiva el spiners
         }
     };
 

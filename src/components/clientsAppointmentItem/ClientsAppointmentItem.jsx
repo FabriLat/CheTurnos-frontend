@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Card } from "react-bootstrap";
 import Spiner from '../spiner/Spiner';
 
-const ClientsAppointmentItem = ({ idShop, idService, dateAndHour, }) => {
+const ClientsAppointmentItem = ({ id, idShop, idService, dateAndHour, }) => {
 
     const [nameShop, setNameShop] = useState('');
     const [nameService, setNameService] = useState('');
@@ -12,7 +12,7 @@ const ClientsAppointmentItem = ({ idShop, idService, dateAndHour, }) => {
     useEffect(() => {
         getNameShop();
         getnNameService();
-    },[]);
+    }, []);
 
     const getNameShop = async () => {
         try {
@@ -49,43 +49,48 @@ const ClientsAppointmentItem = ({ idShop, idService, dateAndHour, }) => {
         }
     }
 
-    const dateObj = new Date(dateAndHour);
-    const formatedDay = dateObj.toLocaleDateString("es-AR",{weeday:"long",day:"numeric",month:"long"});
-    const formattedHour = dateObj.toLocaleTimeString("es-AR", { hour: '2-digit', minute: '2-digit' });
-
-    const handlebutton = () => {
-        console.log("Cancelar un turno?")
-    };
-    return (
-        <div>
-            {loading ? (
-                <Spiner />
-            ) : (<>
-                <h1>{id}</h1>
-                <Card key={id}>
-                    <Card.Header as="h5">Turno</Card.Header>
-                    <Card.Body>
-                        <Card.Title>
-                            Servicio: {nameService}
-                            <br />
-                            Negocio: {nameShop}
-                            <br />
-                            Fecha: {formatedDay}
-                            <br />
-                            Hora: {formattedHour}
-                        </Card.Title>
-                        <Button onClick={handlebutton} variant="primary">
-                            ¿Cancelar turno?
-                        </Button>
-                    </Card.Body>
-                </Card>
-            </>
-            )}
-        </div>
-    )
+    let formatedDay = 'Loading...';
+    let formattedHour = 'Loading...';
+    if (dateAndHour) {
+    const [date, time] = dateAndHour.split('T');
+    formatedDay = new Date(date).toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" });
+    formattedHour = time.slice(0, 5); //agarra los primeros 5 caracteres.
 }
 
-ClientsAppointmentItem.PropTypes = {
+const handlebutton = () => {
+    console.log("Cancelar un turno?")
+};
+return (
+    <div>
+        {loading ? (
+            <Spiner />
+        ) : (<>
+            <h1>{id}</h1>
+            <Card key={id}>
+                <Card.Header as="h5">Turno</Card.Header>
+                <Card.Body>
+                    <Card.Title>
+                        Servicio: {nameService}
+                        <br />
+                        Negocio: {nameShop}
+                        <br />
+                        Fecha: {formatedDay}
+                        <br />
+                        Hora: {formattedHour}
+                    </Card.Title>
+                    <Button onClick={handlebutton} variant="primary">
+                        ¿Cancelar turno?
+                    </Button>
+                </Card.Body>
+            </Card>
+        </>
+        )}
+    </div>
+)
+}
+
+ClientsAppointmentItem.propTypes = {
+    id: PropTypes.number,
     idShop: PropTypes.number,
     idService: PropTypes.number,
     dateAndHour: PropTypes.string,

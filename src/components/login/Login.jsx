@@ -119,7 +119,7 @@ const Login = () => {
         navegate("/ownerPage")
       }
       if(user.role == "Client"){
-        navegate('/ClientAppointmentsList');
+        navegate('/shopList');
       }
       if(user.role == "Employee"){
         navegate('????');
