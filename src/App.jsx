@@ -15,6 +15,8 @@ import PassResetForm from "./components/passResetForm/PassResetForm";
 import OwnerPage from "./components/ownerPage/OwnerPage";
 import MainLayout from "./components/mainLayout/MainLayout";
 import NotFound from "./routes/NotFound";
+import OwnerAppointmentsList from "./components/ownerAppointmentsList/OwnerAppointmentsList";
+import ClientsAppointmentList from "./components/clientsAppointmentList/ClientsAppointmentList";
 
 
 function App() {
@@ -92,10 +94,18 @@ function App() {
       ),
     },
     {
-      path: "/AppointmentList",
+      path: "/OwnerEmployeeAppointments",
       element: (
         <MainLayout>
-          <AppointmentsList />
+          <OwnerAppointmentsList/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/ClientAppointmentsList",
+      element: (
+        <MainLayout>
+          <ClientsAppointmentList/>
         </MainLayout>
       ),
     },
