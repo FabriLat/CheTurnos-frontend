@@ -3,17 +3,20 @@ import { Button, Container, Navbar } from "react-bootstrap";
 import AddNewAppointmensForm from "../addNewAppointmentsForm/AddNewAppointmentsForm";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import OwnerAppointmentsList from "../ownerAppointmentsList/OwnerAppointmentsList";
-
+import OwnerProviderButtonList from "../ownerProviderButtonList/OwnerProviderButtonList";
 
 const OwnerPage = () => {
 
-    const [showForm, setShowForm] = useState(false)
+    const [showDateAppointmentForm, setShowDateAppointmentForm] = useState(false);
     const [hypenLastShopApp, setHypenLastShopApp] = useState("");
     const [slashLastShopApp, setSlashLastShopApp] = useState("");
     const [lastAppFlag, setLastAppFlag] = useState(false);
     const [showList, setShowList] = useState(false);
     const [myShopAppointments, setMyShopAppointments] = useState("");
     const [myShopEmployees, setMyShopEmployees] = useState("");
+    const [providerAppointments, setProviderAppointments] = useState("");
+    const [providerFlag, setProviderFlag] = useState(false);
+    const [showProvList, setShowProvList] = useState(false);
 
     const { token, user } = useContext(AuthenticationContext);
 
@@ -25,30 +28,51 @@ const OwnerPage = () => {
         }
     };
 
-    const onClickShowForm = () => {
-        if (!showForm) {
-            setShowForm(true);
+    const onClickShowDateAppointmentsForm = () => {
+        if (!showDateAppointmentForm) {
+            setShowDateAppointmentForm(true);
             setShowList(false);
+            setShowProvList(false);
         }
     };
 
-    const onClickOcultForm = () => {
-        if (showForm) {
-            setShowForm(false);
+    const onClickOcultDateAppointmentsForm = () => {
+        if (showDateAppointmentForm) {
+            setShowDateAppointmentForm(false);
         }
     };
 
     const onClickShowList = () => {
         getMyShopAppointments()
         if (!showList) {
+            setShowProvList(false);
             setShowList(true);
-            setShowForm(false);
+            setShowDateAppointmentForm(false);
         }
     };
 
     const onClickOcultList = () => {
         if (showList) {
             setShowList(false);
+        }
+    };
+
+    const onClickOcultOtherViews = () => {
+        onClickOcultDateAppointmentsForm();
+        onClickOcultList();
+        //setShowProvList(false);
+    };
+
+    const setProviderAppArray = (data) => {
+        setProviderAppointments(data);
+        setShowProvList(true)
+    };
+
+    const onClickShowAppByProvider = () => {
+        if (!providerFlag) {
+            setProviderFlag(true);
+        } else {
+            setProviderFlag(false);
         }
     };
 
@@ -76,13 +100,6 @@ const OwnerPage = () => {
             })
             .catch((error) => console.log(error))
     };
-
-    useEffect(() => {
-        if (user.role == "Owner") {
-            getMyShopEmployees();
-            getMyShopLastAppointment();
-        }
-    }, [user, lastAppFlag])
 
     const getMyShopAppointments = async () => {
         await fetch(`https://localhost:7276/api/Appointment/GetAllApointmentsOfMyShop`, {
@@ -128,11 +145,15 @@ const OwnerPage = () => {
             .catch((error) => console.log(error))
     };
 
+    useEffect(() => {
+        if (user.role == "Owner") {
+            getMyShopEmployees();
+            getMyShopLastAppointment();
+        }
+    }, [user, lastAppFlag]);
+
     return (
       <>
-        <div className="bg-secondary bg-opacity-25 m-2 p-3 d-flex justify-content-center align-items-center rounded">
-            <h3>Pagína de dueño</h3>
-        </div>
         <div className="d-flex w-100">
             <div className="bg-secondary m-2 rounded" style={{height: "85vh", width: "15%"}}>
                 <Button 
@@ -141,29 +162,48 @@ const OwnerPage = () => {
                     MOSTRAR TODOS LOS TURNOS
                 </Button>
                 <Button 
-                    onClick={onClickShowForm}
+                    onClick={onClickShowAppByProvider}
+                    className="mx-3 mt-3">
+                    MOSTRAR TURNOS POR PROVEEDOR
+                </Button>
+                {providerFlag 
+                    ? <OwnerProviderButtonList
+                        me={user}
+                        myShopEmployees={myShopEmployees}
+                        token={token}
+                        setProviderAppArray={setProviderAppArray}
+                        ocultOtherviews={onClickOcultOtherViews}
+                    />
+                    : ""
+                }
+                <Button 
+                    onClick={onClickShowDateAppointmentsForm}
                     className="mx-3 mt-3"
                 >
                     AGREGAR NUEVOS TURNOS
                 </Button>
             </div>
             <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "85vh", width: "95%"}}>
-                {!showForm && !showList ? <h4>Sección de contenido del dueño</h4> : ""}
-                {showForm ? <AddNewAppointmensForm
+                {!showDateAppointmentForm && !showList && !showProvList ? <h4>Sección de contenido del dueño</h4> : ""}
+                {showDateAppointmentForm ? <AddNewAppointmensForm
                     hypenLastShopApp={hypenLastShopApp}
                     slashLastShopApp={slashLastShopApp}
                     token={token}
                     changeFlag={changeFlag}
-                    onClickOccultForm={onClickOcultForm}
+                    onClickOccultForm={onClickOcultDateAppointmentsForm}
                     /> : "" }
                 {showList ? <OwnerAppointmentsList
                     appointmentsArray={myShopAppointments}
+                    employeesArray={myShopEmployees}
+                /> : "" }
+                {showProvList ? <OwnerAppointmentsList
+                    appointmentsArray={providerAppointments}
                     employeesArray={myShopEmployees}
                 /> : "" }
             </div>
         </div>
       </>
     );
-  };
+};
   
-  export default OwnerPage;
+export default OwnerPage;
