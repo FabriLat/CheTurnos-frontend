@@ -97,26 +97,22 @@ const PassResetForm = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body:JSON.stringify({
+                body: JSON.stringify({
                     "email": formData.email
-                  })
+                })
             });
 
             if (!response.ok) {
                 throw new Error("Error, could not send email");
-                setLoading(false); // Desactiva el spinner
-
             }
 
             const dataResponse = await response.json();
             console.log(dataResponse);
             setLoading(false); // Desactiva el spinner
-
             //¿mostrar un mensaje que avisa que se envio el mail?
 
         } catch (error) {
             console.error("Error:", error);
-            setLoading(false);
         }
     };
 
@@ -138,7 +134,6 @@ const PassResetForm = () => {
             });
             if (!response.ok) {
                 throw new Error("Error, could not change password");
-                setLoading(false); // Desactiva el spinner
             }
 
             const dataResponse = await response.json();
@@ -149,7 +144,6 @@ const PassResetForm = () => {
 
         } catch (error) {
             console.error("Error:", error);
-            setLoading(false);
         }
     }
 
