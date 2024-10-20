@@ -1,9 +1,6 @@
-
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { useRef, React, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { useRef, useState } from 'react';
 import Spiner from '../spiner/Spiner';
+import './passResetForm.css'
 
 const PassResetForm = () => {
     const emailRef = useRef(null);
@@ -155,75 +152,92 @@ const PassResetForm = () => {
                 <Spiner />
             ) : (
 
-                <div>
+
+           <div className={forms === 1 ? 'outer-container-pass' : 'outer-container-newpass'}>
                     {forms === 1 ? (
                         <>
-                            <h3>Para recuperar su contraseña le enviaremos un codigo a su email.</h3>
-                            <Form onSubmit={handleEmailSubmit}>
-                                <InputGroup>
-                                    <InputGroup.Text>Ingrese su email:</InputGroup.Text>
-                                    <Form.Control
+                        <div className="passReset">
+                            <h3>Recuperar contraseña.</h3>
+                            <form className="form-passReset" onSubmit={handleEmailSubmit}>
+                            <div className="form-group">
+                                    <label>Ingrese su email:</label>
+                                    <input
                                         ref={emailRef}
                                         type="email"
                                         name="email"
                                         placeholder="Introduce tu correo electrónico"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        required
+                                        
+                                        className={errors.email ? "input-error" : ""}
                                     />
-                                </InputGroup>
-                                {errors.email && <p style={{ color: 'red' }}>Por favor, ingresa un email valido.</p>}
-                                <Button className="mt-3" type="submit">Enviar correo para cambiar la contraseña</Button>
-                            </Form>
+                                
+                                {errors.email && (
+                <div className="alert alert-warning">Completa el campo.</div>
+              )}
+                                </div>
+                                <button type="submit" className="register-button">Enviar correo para cambiar la contraseña</button>
+                            </form>
+                            </div>
                         </>
                     ) : (
                         <>
-                            <h3>Introduce tu nueva contraseña y el codigo recibido tenes 10 minutos para hacerlo</h3>
-                            <Form onSubmit={handleResetPassSubmit}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Código de recuperación de 6 digitos</Form.Label>
-                                    <Form.Control
+                       
+                        <div className="passReset">
+                            <h4>Ingresar nueva contraseña. <br /> Código válido por 10 minutos</h4>
+                            <form className="form-passReset" onSubmit={handleResetPassSubmit}>
+                            <div className="form-group">
+                                    <label>Código de recuperación de 6 digitos:</label>
+                                    <input
                                         ref={codeRef}
                                         type="text"
                                         name="code"
                                         placeholder="Ingrese su código"
                                         value={formData.code}
                                         onChange={handleChange}
-                                        required
+                                        className={errors.code ? "input-error" : ""}
                                     />
-                                    {errors.code && <p style={{ color: 'red' }}>Por favor, ingresa el código.</p>}
-                                </Form.Group>
+                                   
+                                    {errors.code && (
+                                        <div className="alert alert-warning">Por favor, ingresa el código.</div>)}
+                                </div>
 
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Nueva contraseña</Form.Label>
-                                    <Form.Control
+                                <div className="form-group">
+                                    <label>Nueva contraseña:</label>
+                                    <input
                                         ref={passRef}
                                         type="password"
                                         name="password"
                                         placeholder="Nueva contraseña"
                                         value={formData.password}
                                         onChange={handleChange}
-                                        required
+                                        className={errors.password ? "input-error" : ""}
+                                        
                                     />
-                                    {errors.password && <p style={{ color: 'red' }}>La contraseña debe tener al menos 8 caracteres. Al menos una letra minuscula, una letra mayuscual, y un numero.</p>}
-                                </Form.Group>
+                                    {errors.password && (
+                                        <div className="alert alert-warning">La contraseña debe tener al menos 8 caracteres. Al menos una letra minuscula, una letra mayuscual, y un numero.</div>)}
+                                </div>
 
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Confirmar nueva contraseña</Form.Label>
-                                    <Form.Control
+                                <div className="form-group">
+                                    <label>Confirmar nueva contraseña:</label>
+                                    <input
                                         ref={confirmPassRef}
                                         type="password"
                                         name="confirmPassword"
                                         placeholder="Repite la nueva contraseña"
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
-                                        required
+                                        className={errors.confirmPassword ? "input-error" : ""}
+                                        
                                     />
-                                    {errors.confirmPassword && <p style={{ color: 'red' }}>Las contraseñas no coinciden.</p>}
-                                </Form.Group>
+                                    {errors.confirmPassword && (
+                                        <div className="alert alert-warning">Las contraseñas no coinciden</div>)}
+                                </div>
 
-                                <Button type="submit">Cambiar contraseña</Button>
-                            </Form>
+                                <button type="submit" className="register-button">Cambiar contraseña</button>
+                            </form>
+                            </div>
+                           
                         </>
                     )}
                 </div>

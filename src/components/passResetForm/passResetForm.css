@@ -1,4 +1,12 @@
-.outer-container {
+.outer-container-pass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    background-color: #f8f9fa;
+  }
+
+  .outer-container-newpass {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +14,7 @@
     background-color: #f8f9fa;
   }
   
-  .register {
+  .passReset {
     max-width: 400px;
     border: 1px solid #6d21dd;
     border-radius: 20px;
