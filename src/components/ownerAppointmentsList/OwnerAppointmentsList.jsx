@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import OwnerAppointmentItem from "../ownerAppointmentItem/OwnerAppointmentItem";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import './ownerAppointmentsList.css';
 
 const OwnerAppointmentsList = ({ appointmentsArray, employeesArray }) => {
 
@@ -23,7 +24,7 @@ const OwnerAppointmentsList = ({ appointmentsArray, employeesArray }) => {
       while (!flag) {
         if (providerId == employeesArray[index].id) {
           flag = true;
-          return employeesArray[index].name
+          return employeesArray[index].name;
         }
         index = index + 1;
       }
@@ -31,18 +32,19 @@ const OwnerAppointmentsList = ({ appointmentsArray, employeesArray }) => {
   };
 
   return (
-    <div className="overflow-auto" style={{ width: "95%", maxHeight: "85%" }}>
+    <div className="appointments-container">
+      {appointmentsArray ? (
+        <div className="appointments-header">
+          <div className="header-item">Día y Hora</div>
+          <div className="header-item">Proveedor</div>
+          <div className="header-item">Servicio</div>
+          <div className="header-item">Cliente</div>
+        </div>
+      ) : (
+        <h3 className="no-appointments">No hay turnos almacenados</h3>
+      )}
       {appointmentsArray
-        ? <div className=" w-75 mx-auto mb-3 p-2 d-flex h3 border-bottom border-2">
-            <div className="w-25 text-center">Día y Hora</div>
-            <div className="w-25 text-center">Proveedor</div>
-            <div className="w-25 text-center">Servicio</div>
-            <div className="w-25 text-center">Cliente</div>
-          </div>
-        : <h3 className="text-center">No hay turnos almacenados</h3>
-      }
-      {appointmentsArray
-        ? appointmentsArray.map((a) => 
+        ? appointmentsArray.map((a) => (
             <OwnerAppointmentItem
               key={a.id}
               diaYHora={formatDateTime(a.dateAndHour)}
@@ -50,11 +52,10 @@ const OwnerAppointmentsList = ({ appointmentsArray, employeesArray }) => {
               servicio={a.serviceId}
               cliente={a.clientId}
             />
-          )
-        : ""
-      }
+          ))
+        : ""}
     </div>
   );
-  };
-  
-  export default OwnerAppointmentsList;
+};
+
+export default OwnerAppointmentsList;

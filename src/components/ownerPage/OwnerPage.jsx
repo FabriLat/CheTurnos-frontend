@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import { Button} from "react-bootstrap";
 import AddNewAppointmensForm from "../addNewAppointmentsForm/AddNewAppointmentsForm";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import OwnerAppointmentsList from "../ownerAppointmentsList/OwnerAppointmentsList";
@@ -155,7 +154,7 @@ const OwnerPage = () => {
 
     return (
       <>
-        <div className="d-flex w-100">
+        <div className="d-flex w-100 "  style={{height: "95vh", width: "95%"}}>
         <div className="sidebar">
         <button 
                 onClick={onClickShowList}
@@ -183,7 +182,7 @@ const OwnerPage = () => {
                 AGREGAR NUEVOS TURNOS
             </button>
         </div>
-            <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "85vh", width: "95%"}}>
+            <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "87vh", width: "95%"}}>
                 {!showDateAppointmentForm && !showList && !showProvList ? <h4>Sección de contenido del dueño</h4> : ""}
                 {showDateAppointmentForm ? <AddNewAppointmensForm
                     hypenLastShopApp={hypenLastShopApp}
