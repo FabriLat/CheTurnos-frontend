@@ -66,7 +66,6 @@ const UserNav = () => {
               </>
               }
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Sobre nosotros</Button>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/contact")}>Contacto</Button>
               {(!(isClient() || isEmployee() || isOwner() || isAdmin())) &&
                 <>
                   <Button variant="outline-light" className="mx-2" onClick={() => navigate("/register")}>Registrarse</Button>
