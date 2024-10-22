@@ -1,9 +1,11 @@
 import { useState, useContext, useEffect } from "react";
-import { Button, Container, Navbar } from "react-bootstrap";
 import AddNewAppointmensForm from "../addNewAppointmentsForm/AddNewAppointmentsForm";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import OwnerAppointmentsList from "../ownerAppointmentsList/OwnerAppointmentsList";
 import OwnerProviderButtonList from "../ownerProviderButtonList/OwnerProviderButtonList";
+import './Sidebar.css';
+import OwnerSection from "./OwnerSection";
+import sidebar from './executiveSidebar.png';
 
 const OwnerPage = () => {
 
@@ -154,37 +156,41 @@ const OwnerPage = () => {
 
     return (
       <>
-        <div className="d-flex w-100">
-            <div className="bg-secondary m-2 rounded" style={{height: "85vh", width: "15%"}}>
-                <Button 
-                    onClick={onClickShowList}
-                    className="mx-3 mt-3">
-                    MOSTRAR TODOS LOS TURNOS
-                </Button>
-                <Button 
-                    onClick={onClickShowAppByProvider}
-                    className="mx-3 mt-3">
-                    MOSTRAR TURNOS POR PROVEEDOR
-                </Button>
-                {providerFlag 
-                    ? <OwnerProviderButtonList
-                        me={user}
-                        myShopEmployees={myShopEmployees}
-                        token={token}
-                        setProviderAppArray={setProviderAppArray}
-                        ocultOtherviews={onClickOcultOtherViews}
-                    />
-                    : ""
-                }
-                <Button 
-                    onClick={onClickShowDateAppointmentsForm}
-                    className="mx-3 mt-3"
-                >
-                    AGREGAR NUEVOS TURNOS
-                </Button>
-            </div>
-            <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "85vh", width: "95%"}}>
-                {!showDateAppointmentForm && !showList && !showProvList ? <h4>Sección de contenido del dueño</h4> : ""}
+        <div className="d-flex w-100 "  style={{height: "95vh", width: "95%"}}>
+        <div className="sidebar">
+        <button 
+                onClick={onClickShowList}
+                className="sidebar-button">
+                MOSTRAR TODOS LOS TURNOS
+            </button>
+            <button 
+                onClick={onClickShowAppByProvider}
+                className="sidebar-button">
+                MOSTRAR TURNOS POR PROVEEDOR
+            </button>
+            {providerFlag && (
+                <OwnerProviderButtonList
+                    me={user}
+                    myShopEmployees={myShopEmployees}
+                    token={token}
+                    setProviderAppArray={setProviderAppArray}
+                    ocultOtherviews={onClickOcultOtherViews}
+                />
+            )}
+            <button 
+                onClick={onClickShowDateAppointmentsForm}
+                className="sidebar-button"
+            >
+                AGREGAR NUEVOS TURNOS
+            </button>
+            <img
+                  className="executiveSidebar"
+                  src={sidebar}
+                  alt="Logo"
+                />
+        </div>
+            <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "87vh", width: "95%"}}>
+                {!showDateAppointmentForm && !showList && !showProvList ? <OwnerSection/>: ""}
                 {showDateAppointmentForm ? <AddNewAppointmensForm
                     hypenLastShopApp={hypenLastShopApp}
                     slashLastShopApp={slashLastShopApp}

@@ -1,4 +1,6 @@
 import { Button } from "react-bootstrap";
+import '../ownerPage/Sidebar.css';
+
 
 const OwnerProviderButtonList = ({ me, myShopEmployees, token, setProviderAppArray, ocultOtherviews }) => {
 
@@ -26,7 +28,7 @@ const OwnerProviderButtonList = ({ me, myShopEmployees, token, setProviderAppArr
 
     return (
       <div className="w-100 my-2 d-flex flex-column align-items-center gap-1">
-        <Button className="w-75"
+        <button className="sidebar-button-options"
             key={me.id}
             onClick={() => {
                 ocultOtherviews()
@@ -34,10 +36,10 @@ const OwnerProviderButtonList = ({ me, myShopEmployees, token, setProviderAppArr
             }}
         >
             {me.username}
-        </Button>
+        </button>
         {myShopEmployees
             ? myShopEmployees.map((emp) =>
-                <Button className="w-75"
+                <button className="sidebar-button-options"
                     key={emp.id}
                     onClick={() => {
                         ocultOtherviews()
@@ -45,7 +47,7 @@ const OwnerProviderButtonList = ({ me, myShopEmployees, token, setProviderAppArr
                     }}
                 >
                     {emp.name}
-                </Button>
+                </button>
             )
             : ""
         }

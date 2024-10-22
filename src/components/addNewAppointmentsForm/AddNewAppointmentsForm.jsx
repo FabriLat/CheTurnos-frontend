@@ -156,13 +156,17 @@ const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, token, chan
 
     return (
         <>
-            <Card className="m-auto bg-secondary bg-opacity-25" style={{ width: "50%" }}>
+            <Card className="m-auto" style={{ width: "75%", backgroundColor:"#f0f0f0", border: "2px solid #6d21dd" }}>
                 <Card.Body>
-                    <Row className="mb-2 text-info">
-                        {hypenLastShopApp ? <h4>(Nota: fecha del último turno {slashLastShopApp})</h4> : <h4>(Nota: no hay turnos previos almacenados)</h4>}
+                <Row className="mb-4 p-3 rounded bg-secondary bg-opacity-25">
+                        <h4 className="text-dark">
+                            {hypenLastShopApp
+                                ? `Nota: fecha del último turno ${slashLastShopApp}`
+                                : "Nota: no hay turnos previos almacenados"}
+                        </h4>
                     </Row>
                     <Row className="mb-4">
-                        <h4>Introduzca el rango de fechas en el que creará los nuevos turnos: </h4>
+                        <h3>Introduzca el rango de fechas en el que creará los nuevos turnos: </h3>
                     </Row>
                     <Form className="d-flex-column" onSubmit={onSubmitHandler}>
                         <Form.Group className="d-flex justify-content-center m-2 gap-2">
@@ -198,12 +202,12 @@ const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, token, chan
                         <Row>
                             {errorMessagge ? <p className="mt-3 text-danger">{errorMessagge}</p> : ""}
                         </Row>
-                        <Row className="d-flex justify-content-center">
+                        <Row className="d-flex justify-content-center" style={{marginLeft: "20px"}}>
                             <Button className="w-25 mx-2 mt-3" variant="danger" onClick={onClickOccultForm}>
-                                VOLVER
+                                Volver
                             </Button>
-                            <Button className="w-25 mx-2 mt-3" type="submit">
-                                CONFIRMAR
+                            <Button className="w-25 mx-2 mt-3" type="submit" style={{backgroundColor:"#44ad49"}}>
+                                Confirmar
                             </Button>
                         </Row>
                     </Form>
