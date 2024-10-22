@@ -1,11 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Form, Container, Button, Alert } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
-
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import UserNav from "../userNav/UserNav";
-import Footer from "../footer/Footer";
 import logo from './CheTurnosIco.png';
 import executive from './executive.png';
 

@@ -1,0 +1,17 @@
+
+.bg-appointment {
+  background-color:#9da2c0; 
+  color: black; 
+}
+
+.bg-no-client {
+    background-color: #9da2c0; 
+    color: black;
+  }
+  
+
+  .appointment-item {
+    font-weight:normal;
+  }
+  
+ 

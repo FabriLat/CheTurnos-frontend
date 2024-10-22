@@ -4,6 +4,8 @@ import { AuthenticationContext } from "../../services/authentication/Authenticat
 import OwnerAppointmentsList from "../ownerAppointmentsList/OwnerAppointmentsList";
 import OwnerProviderButtonList from "../ownerProviderButtonList/OwnerProviderButtonList";
 import './Sidebar.css';
+import OwnerSection from "./OwnerSection";
+import sidebar from './executiveSidebar.png';
 
 const OwnerPage = () => {
 
@@ -181,9 +183,14 @@ const OwnerPage = () => {
             >
                 AGREGAR NUEVOS TURNOS
             </button>
+            <img
+                  className="executiveSidebar"
+                  src={sidebar}
+                  alt="Logo"
+                />
         </div>
             <div className="bg-light border rounded m-2 py-4 d-flex justify-content-center align-items-center overflow-auto" style={{height: "87vh", width: "95%"}}>
-                {!showDateAppointmentForm && !showList && !showProvList ? <h4>Sección de contenido del dueño</h4> : ""}
+                {!showDateAppointmentForm && !showList && !showProvList ? <OwnerSection/>: ""}
                 {showDateAppointmentForm ? <AddNewAppointmensForm
                     hypenLastShopApp={hypenLastShopApp}
                     slashLastShopApp={slashLastShopApp}
