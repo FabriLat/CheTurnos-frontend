@@ -118,75 +118,94 @@ const ShopsMock = [
   }
 ];
 
-
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import ShopCard from '../shopCard/ShopCard';
 import Search from '../../search/Search';
 import { Alert } from 'react-bootstrap';
 import Spiner from '../spiner/Spiner';
+import './shopList.css'; 
+import logo from './CheTurnosIco.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const ShopList = () => {
-  const [shops, setShops] = useState([]); //*** */
+  const [shops, setShops] = useState([]);
   const [textSearched, setTextSearched] = useState('');
-  const [loading, setLoading] = useState(true); //*** */
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    fetchShop(); //*** */
+    fetchShop();
   }, []);
 
-
   const fetchShop = async () => {
-    console.log("Inicio de fetch")
     try {
       const response = await fetch("https://localhost:7276/api/Shop/GetAll", {
         method: "GET",
         mode: "cors",
       });
       if (!response.ok) {
-        throw new Error("Error in obtaining shops")
+        throw new Error("Error in obtaining shops");
       }
       const shopData = await response.json();
       setShops(shopData);
-      setLoading(false); // desactiva el spiners
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
     }
-    catch (error) {
-      console.error("Error:", error)
-    }
-  }
+  };
 
   const searchHandle = (text) => {
     setTextSearched(text);
-  }
+  };
 
-  const shopSearched = shops.filter((shop) => shop.name.toLowerCase().includes(textSearched.toLowerCase()));
+  const shopSearched = shops.filter((shop) =>
+    shop.name.toLowerCase().includes(textSearched.toLowerCase())
+  );
 
   return (
     <>
       {loading ? (
         <Spiner />
       ) : (
-        <div>
-          <h1>Lista de negocios</h1>
-          <Search onSearch={searchHandle} />
-          {shopSearched.length > 0 ? (
-            <div>
-              {shopSearched.map(s => (
-                <ShopCard
-                  name={s.name}
-                  address={s.address}
-                  phone={s.phone}
-                  timeStart={s.timeStart}
-                  timeEnd={s.timeEnd}
-                  idShop={s.id}
-                  key={s.id}
+        <div className="outer-container">
+          <div className="shop-list-container">
+            <div className="title-container">
+            <img
+                  className="calendarShop"
+                  src={logo}
+                  alt="Logo"
                 />
-              ))}
-            </div>) : (
-            <Alert key="danger" variant='danger'>
-              No se encontro el negocio
-            </Alert>)}
-        </div>)};
+              <h1 className="shop-title">¡Encuentra negocios online y agenda turnos al instante!</h1>
+            </div>
+            <div className="search-input">
+              <FontAwesomeIcon icon={faSearch} className="search-icon" />
+              <Search onSearch={searchHandle} />
+            </div>
+            {shopSearched.length > 0 ? (
+              <div className="card-container">
+                {shopSearched.map((s) => (
+                  <ShopCard
+                    name={s.name}
+                    address={s.address}
+                    phone={s.phone}
+                    timeStart={s.timeStart}
+                    timeEnd={s.timeEnd}
+                    idShop={s.id}
+                    key={s.id}
+                   
+                  />
+                ))}
+              </div>
+            ) : (
+              <Alert key="danger" variant="danger" style={{width: "30%", marginLeft: "35%"}}>
+                No se encontró el negocio
+              </Alert>
+            )}
+          </div>
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default ShopList
+export default ShopList;
