@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import UserNav from "../userNav/UserNav";
+import "./ShopForm.css";
 
 const daysOfWeek = [
     { value: 1, label: "Lunes" },
@@ -184,7 +185,7 @@ const ShopForm = () => {
 
     return (
         <>
-            <Container className="mt-4">
+            <Container className="outer-container">
                 <h2>Registro de Tienda</h2>
                 <Form className="mt-5" onSubmit={handleSubmit}>
                     <Form.Group>
@@ -364,7 +365,7 @@ const ShopForm = () => {
                         ))}
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" className="mt-4">
+                    <Button variant="primary" type="submit" className="button-shop">
                         Registrar Tienda
                     </Button>
                 </Form>
