@@ -15,16 +15,12 @@ const EmployeeCard = ({ employeeId, name, email, state }) => {
   
   return (
     <div className="mt-4">
-      <Card key={employeeId}>
-        <Card.Header as="h5">{name}</Card.Header>
+      <Card style={{border: '2px solid #2d9ae3'}}key={employeeId}>
+        <Card.Header style={{color:'#2d9ae3',backgroundColor: 'white', borderBottom: '3px solid #2d9ae3'}}as="h5">{name}</Card.Header>
         <Card.Body>
-          <Card.Title>estado: {state}</Card.Title>
           <Card.Text>
-            {email} <br />
-            <br />
-            <br />
           </Card.Text>
-          <Button variant="primary" onClick={handlebutton}>
+          <Button style={{backgroundColor:'#2d9ae3'}} variant="primary" onClick={handlebutton}>
             Elegir Empleado
           </Button>
         </Card.Body>

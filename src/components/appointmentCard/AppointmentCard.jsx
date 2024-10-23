@@ -59,17 +59,16 @@ const AppointmentCard = ({ idAppointment, date, id }) => {
   return (
     <div>
       <h1>{id}</h1>
-      <Card key={idAppointment}>
-        <Card.Header as="h5">Turno</Card.Header>
+      <Card key={idAppointment} style={{border:' 1px solid #0b9c08'}} >
         <Card.Body>
           <Card.Title>
-            <br /> Fecha: {formattedDate}
+             Fecha: {formattedDate}
             <br />
             <br /> Hora: {formattedHour}
             <br />
             <br />
           </Card.Title>
-          <Button onClick={handlebutton} variant="primary">
+          <Button style={{backgroundColor:'#0b9c08'}}onClick={handlebutton} variant="primary">
             Elegir turno
           </Button>
         </Card.Body>

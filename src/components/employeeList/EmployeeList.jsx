@@ -65,19 +65,24 @@ const EmployeeList = () => {
       {loading ? (
         <Spiner />
       ) : (
-        <>
-          <h1>Negocio: {shopName.name}</h1>
-          <h2 className="mt-5">Selecciona empleado</h2>
-          {employees.map((e) => (
-            <EmployeeCard
-              key={e.id}
-              employeeId={e.id}
-              name={e.name}
-              email={e.email}
-              state={e.status}
-            />
-          ))}
-        </>
+        <div className="outer-container">
+          <div className="shop-list-container">
+            <div className="title-service">
+              <h1 className="service-title"> Selecciona un empleado de {shopName.name}</h1>
+            </div>
+            <div className="card-service">
+              {employees.map((e) => (
+                <EmployeeCard
+                  key={e.id}
+                  employeeId={e.id}
+                  name={e.name}
+                  email={e.email}
+                  state={e.status}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
