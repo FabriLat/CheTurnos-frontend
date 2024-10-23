@@ -62,10 +62,12 @@ const UserNav = () => {
               {(isOwner()) &&
               <>
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/ownerPage")}>Info del Negocio</Button>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/employeeList")}>Empleados</Button>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/OwnersEmployeeList")}>Empleados</Button>
               </>
               }
+              { (!isOwner()) &&
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Sobre nosotros</Button>
+              }
               {(!(isClient() || isEmployee() || isOwner() || isAdmin())) &&
                 <>
                   <Button variant="outline-light" className="mx-2" onClick={() => navigate("/register")}>Registrarse</Button>
