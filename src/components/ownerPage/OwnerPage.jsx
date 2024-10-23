@@ -81,10 +81,10 @@ const OwnerPage = () => {
     const getMyShopLastAppointment = async () => {
         await fetch(`https://localhost:7276/api/Appointment/GetMyLastShopAppointment${user.id}`, {
             method: "GET",
-            headers: {
-                "content-type": "application/json",
-                "authorization": `Bearer ${token}`
-            }
+            // headers: {
+            //     "content-type": "application/json",
+            //     "authorization": `Bearer ${token}`
+            // }
         })
             .then((response) => {
                 if (response.ok) return response.json();

@@ -96,6 +96,7 @@ const OwnersEmployeeList = () => {
                                 employeeId={e.id}
                                 name={e.name}
                                 email={e.email}
+                                //onfetch={} //funcion o bander para refrescar los empelado!!
                             />
                         ))}
                     </>
