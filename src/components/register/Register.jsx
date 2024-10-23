@@ -106,8 +106,8 @@ const RegisterForm = () => {
   return (
     <>
     
-    <button>Como Cliente</button>
-    <button>Como Negocio</button>
+    {/*<button>Como Cliente</button>
+    <button>Como Negocio</button>*/}
       <div className="outer-container">
         <img
           className="executive"

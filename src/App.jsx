@@ -132,7 +132,17 @@ function App() {
       element: (
         <NotFound />
       ),
-    }
+    },
+    {
+      path: "/appointmentList",
+      element: (
+        <MainLayout>
+          <AppointmentsList />
+        </MainLayout>
+      ),
+    },
+
+    
   ]);
 
   return (

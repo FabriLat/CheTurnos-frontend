@@ -16,16 +16,16 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
     return (
         <div>
             <h1>{idService}</h1>
-            <Card key={idService}>
-                <Card.Header as="h5">{nameService}</Card.Header>
+            <Card key={idService} style={{border: '2px solid #33d4c3'}}>
+                <Card.Header style={{color:'#33d4c3',backgroundColor: 'white', borderBottom: '3px solid #33d4c3'}}as="h5">{nameService}</Card.Header>
                 <Card.Body>
                     <Card.Title>
-                        duracion: {duration}
+                        Duración: {duration}hs
                     </Card.Title>
                     <Card.Text>
-                        {description} <br /> precio: {price}<br /><br />
+                        {description} <br /> Precio: {price}<br /><br />
                     </Card.Text>
-                    <Button variant="primary" onClick={handlebutton}>Elegir Servicio</Button>
+                    <Button style={{backgroundColor: '#33d4c3', border:'#45a69d'}}variant="primary" onClick={handlebutton}>Elegir Servicio</Button>
                 </Card.Body>
             </Card>
         </div>

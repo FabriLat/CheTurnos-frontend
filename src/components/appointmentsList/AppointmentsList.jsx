@@ -34,24 +34,31 @@ const AppointmentsList = () => {
         fetchAppointments();
         console.log(appointments);
     }, []);
-    return (
-        <div>
-            {loading ? (
-                <Spiner />
-            ) : (<>
-                <h1>Turnos disponibles del empleado</h1>
-                {appointments.map(a => (
-                    <AppointmentCard
-                    idAppointment={a.id}
-                    service={a.name}
-                    date={a.dateAndHour}
-                    key={a.id} 
-                    />
-                ))}
-            </>
-            )}
+     return (
+    <div>
+      {loading ? (
+        <Spiner />
+      ) : (
+        <div className="outer-container">
+          <div className="shop-list-container">
+            <div className="title-service">
+              <h1 className="service-title">Turnos disponibles del empleado</h1>
+            </div>
+            <div className="card-service">
+              {appointments.map((a) => (
+                <AppointmentCard
+                  key={a.id}
+                  idAppointment={a.id}
+                  service={a.name}
+                  date={a.dateAndHour}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 
 export default AppointmentsList;

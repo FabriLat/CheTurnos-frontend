@@ -30,7 +30,7 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onfetch }) => {
 
     return (
         <div className="mt-4">
-            <Card key={employeeId}>
+            <Card key={employeeId} style={{border: '2px solid #0d6efd'}}>
                 <Card.Header as="h5">{name}</Card.Header>
                 <Card.Body>
                     <Card.Title>Email: {email}</Card.Title>
