@@ -9,7 +9,7 @@ const ClientsAppointmentList = () => {
 
     const fetchClientAppointments = async () => {
         try {
-            const response = await fetch(`https://localhost:7276/api/Appointment/GetAvailableAppointmentsByClientId/${user.id}`, {
+            const response = await fetch(`https://localhost:7276/api/Appointment/GetAvailableAppointmentsByClient/${user.id}`, {
                 method: "GET",
                 mode: "cors",
             });
@@ -35,7 +35,7 @@ const ClientsAppointmentList = () => {
             {loading ? (
                 <Spiner />
             ) : (<>
-                <h1>Turnos disponibles del empleado</h1>
+                <h1>Mis turnos</h1>
                 {appointments.map(a => (
                     <ClientsAppointmentItem
                         key={a.id}
