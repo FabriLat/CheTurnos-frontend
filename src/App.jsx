@@ -17,6 +17,8 @@ import MainLayout from "./components/mainLayout/MainLayout";
 import NotFound from "./routes/NotFound";
 import OwnerAppointmentsList from "./components/ownerAppointmentsList/OwnerAppointmentsList";
 import ClientsAppointmentList from "./components/clientsAppointmentList/ClientsAppointmentList";
+import OwnersEmployeeList from "./components/ownersEmployeeList/OwnersEmployeeList";
+import OwnersEmployeeRegister from "./components/ownersEmployeeRegister/ownersEmployeeRegister";
 
 
 function App() {
@@ -106,6 +108,22 @@ function App() {
       element: (
         <MainLayout>
           <ClientsAppointmentList/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/OwnersEmployeeList",
+      element: (
+        <MainLayout>
+          <OwnersEmployeeList/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/OwnersEmployeeRegister",
+      element: (
+        <MainLayout>
+          <OwnersEmployeeRegister/>
         </MainLayout>
       ),
     },

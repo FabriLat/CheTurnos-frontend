@@ -13,7 +13,7 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }} key={1}>
       <img src={carousel1fondo} style={{ width: '100%' }} alt="Fondo del Carrusel" />
       <div data-aos="fade-down" className="carousel-text">
         ¡Tu propia app para gestionar los turnos de tu negocio!
