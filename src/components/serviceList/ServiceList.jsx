@@ -28,84 +28,93 @@
 //     },
 // ]
 
-import { useContext, useState, useEffect } from 'react';
-import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
-import ServiceCard from '../serviceCard/ServiceCard';
-import Spiner from '../spiner/Spiner';
-import './serviceList.css'
+import { useContext, useState, useEffect } from "react";
+import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import ServiceCard from "../serviceCard/ServiceCard";
+import Spiner from "../spiner/Spiner";
+import "./serviceList.css";
 const ServiceList = () => {
-    const { shopId } = useContext(AuthenticationContext);
+  const { shopId } = useContext(AuthenticationContext);
 
-    const [services, setServices] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [shopName, setShopName] = useState("");
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [shopName, setShopName] = useState("");
 
-    useEffect(() => {
-        fetchNameShop();
-        fetchServices();
-    }, []);
+  useEffect(() => {
+    fetchNameShop();
+    fetchServices();
+  }, []);
 
-    const fetchServices = async () => {
-        try {
-            const response = await fetch(`https://localhost:7276/api/Service/GetAllByShopId/${shopId}`, {
-                method: "GET",
-                mode: "cors",
-            });
-            if (!response.ok) {
-                throw new Error("Error in obtaining Services");
-            }
-            const servicesData = await response.json();
-            setServices(servicesData);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error:", error);
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(
+        `https://localhost:7276/api/Service/GetAllByShopId/${shopId}`,
+        {
+          method: "GET",
+          mode: "cors",
         }
-    };
+      );
+      if (!response.ok) {
+        throw new Error("Error in obtaining Services");
+      }
+      const servicesData = await response.json();
+      setServices(servicesData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-    const fetchNameShop = async () => {
-        try {
-            const response = await fetch(`https://localhost:7276/api/Shop/GetById/${shopId}`, {
-                method: "GET",
-                mode: "cors",
-            });
-            if (!response.ok) {
-                throw new Error("Error in obtaining shop");
-            }
-            const ShopData = await response.json();
-            setShopName(ShopData);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error:", error);
+  const fetchNameShop = async () => {
+    try {
+      const response = await fetch(
+        `https://localhost:7276/api/Shop/GetById/${shopId}`,
+        {
+          method: "GET",
+          mode: "cors",
         }
-    };
+      );
+      if (!response.ok) {
+        throw new Error("Error in obtaining shop");
+      }
+      const ShopData = await response.json();
+      setShopName(ShopData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-    return (
-        <div>
-            {loading ? (
-                <Spiner />
-            ) : (
-                <div className="outer-container">
-                    <div className="shop-list-container">
-                    <div className="title-service">
-                    <h1 className="service-title"> Selecciona un servicio de {shopName.name}</h1>
-                    </div>
-                    <div className="card-service">
-                        {services.map(s => (
-                            <ServiceCard
-                                nameService={s.name}
-                                description={s.description}
-                                duration={s.duration}
-                                price={s.price}
-                                key={s.id}
-                            />
-                        ))}
-                    </div>
-                  </div>
-                </div>
-            )}
+  return (
+    <div>
+      {loading ? (
+        <Spiner />
+      ) : (
+        <div className="outer-container">
+          <div className="shop-list-container">
+            <div className="title-service">
+              <h1 className="service-title">
+                {" "}
+                Selecciona un servicio de {shopName.name}
+              </h1>
+            </div>
+            <div className="card-service">
+              {services.map((s) => (
+                <ServiceCard
+                  key={s.id}
+                  idService={s.id}
+                  nameService={s.name}
+                  description={s.description}
+                  duration={s.duration}
+                  price={s.price}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default ServiceList;
-

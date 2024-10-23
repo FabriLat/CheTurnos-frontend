@@ -21,13 +21,13 @@ const AppointmentCard = ({ idAppointment, date, id }) => {
   const reserveAppointmentRequest = async () => {
     const transformedData = {
       idAppointment: idAppointment,
-      serviceId: dataForRequest.serviceId,
-      clientId: userValue.id,
+      serviceId: dataForRequest?.serviceId,
+      clientId: userValue?.id,
     };
     console.log(transformedData);
-    console.log("Inicio de fetch");
+    console.log("Inicio de fetch", transformedData.serviceId);
     try {
-      console.log(transformedData.appointmentId,transformedData.clientId,transformedData.serviceId);
+      console.log(transformedData.appointmentId, transformedData.clientId, transformedData.serviceId);
       const response = await fetch(
         "https://localhost:7276/api/Appointment/AssignClient",
         {
@@ -39,10 +39,11 @@ const AppointmentCard = ({ idAppointment, date, id }) => {
           body: JSON.stringify(transformedData),
         }
       );
-      console.log("DATA ENVIADA: ",JSON.stringify(transformedData))
+      console.log("DATA ENVIADA: ", JSON.stringify(transformedData));
       if (!response.ok) {
         throw new Error("Error in assign appointment");
       }
+      alert("Se ha asignado el turno correctamente");
       navigate("/shoplist");
     } catch (error) {
       console.error("Error:", error);
