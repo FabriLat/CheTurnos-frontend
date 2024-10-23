@@ -23,8 +23,8 @@ const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
     }
     
     return (
-        <Card key={idShop}>
-        <Card.Header as="h5">{name}</Card.Header>
+        <Card key={idShop} style={{border: '1px solid #6d21dd' }}>
+        <Card.Header style={{color:'#6d21dd',backgroundColor: 'white', borderBottom: '3px solid #6d21dd'}}as="h5">{name}</Card.Header>
         <Card.Body>
           <Card.Title>{address}</Card.Title>
           <Card.Text>
@@ -32,7 +32,7 @@ const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
             Abre: {formatTime(timeStart)}<br/>
             Cierra: {formatTime(timeEnd)}<br/>
           </Card.Text>
-          <Button variant="primary" onClick={handlebutton}>Pedi Tu Turno!</Button>
+          <Button variant="primary" onClick={handlebutton} style={{backgroundColor: '#6d21dd'}}>Pedi tu Turno!</Button>
         </Card.Body>
       </Card>
     )
