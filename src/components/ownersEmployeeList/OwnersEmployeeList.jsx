@@ -80,31 +80,35 @@ const OwnersEmployeeList = () => {
 
     return (
         <div>
-            <h2 className="mt-5">Empleados</h2>
-
-            <Button variant="primary" onClick={handleButton}>
-                Agregar nuevo empleado
-            </Button>
+        
             <div>
                 {loading ? (
                     <Spiner />
                 ) : (
-                    <>
-                        {employees.map((e) => (
-                            <OwnersEmployeeCard
-                                key={e.id}
-                                employeeId={e.id}
-                                name={e.name}
-                                email={e.email}
-                                //onfetch={} //funcion o bander para refrescar los empelado!!
-                            />
-                        ))}
-                    </>
+                    <div className="outer-container">
+                        <div className="shop-list-container">
+                            <div className="title-service">
+                                <h1 className="service-title">Lista de Empleados</h1> {/* Changed title for clarity */}
+                            </div>
+                            <Button variant="primary" onClick={handleButton}>
+                Agregar nuevo empleado
+            </Button>
+                            <div className="card-service">
+                                {employees.map((e) => (
+                                    <OwnersEmployeeCard
+                                        key={e.id}
+                                        employeeId={e.id}
+                                        name={e.name}
+                                        email={e.email}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default OwnersEmployeeList
+export default OwnersEmployeeList;

@@ -120,7 +120,7 @@ const OwnersEmployeeRegister = () => {
                 alt="Logo"
             />
             <div className="register">
-                <h2>Regista Tu Empleado <img
+                <h2>Registro Empleados <img
                     className="calendar"
                     src={logo}
                     alt="Logo"
@@ -195,7 +195,7 @@ const OwnersEmployeeRegister = () => {
                     </div>
 
                     <button type="submit" className="register-button">
-                        Registrarse
+                        Registrar empleado
                     </button>
                 </form>
             </div>
