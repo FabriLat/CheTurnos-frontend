@@ -66,7 +66,7 @@ return (
             <Spiner />
         ) : (<>
             <h1>{id}</h1>
-            <Card key={id}>
+            <Card key={id} style={{border: '2px solid #0d6efd'}}>
                 <Card.Header as="h5">Turno</Card.Header>
                 <Card.Body>
                     <Card.Title>
