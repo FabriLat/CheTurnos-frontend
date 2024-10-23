@@ -31,23 +31,30 @@ const ClientsAppointmentList = () => {
     }, [user.id]);
 
     return (
-        <>
+        <div>
             {loading ? (
                 <Spiner />
-            ) : (<>
-                <h1>Mis turnos</h1>
-                {appointments.map(a => (
-                    <ClientsAppointmentItem
-                        key={a.id}
-                        idShop={a.shopId}
-                        IdService={a.serviceId}
-                        dateAndhour={a.dateAndhour}
-                    />
-                ))}
-            </>
+            ) : (
+                <div className="outer-container">
+                    <div className="shop-list-container">
+                        <div className="title-service">
+                            <h1 className="service-title">Mis turnos</h1>
+                        </div>
+                        <div className="card-service">
+                            {appointments.map(a => (
+                                <ClientsAppointmentItem
+                                    key={a.id}
+                                    idShop={a.shopId}
+                                    IdService={a.serviceId}
+                                    dateAndhour={a.dateAndhour}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
             )}
-        </>
+        </div>
     );
 };
 
-export default ClientsAppointmentList
+export default ClientsAppointmentList;
