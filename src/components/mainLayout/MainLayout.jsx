@@ -1,15 +1,19 @@
 import React from 'react';
 import Footer from '../footer/Footer';
 import UserNav from '../userNav/UserNav';
-
+import './mainLayout.css';
 const MainLayout = ({ children }) => {
     return (
-        <>
-            <UserNav/>
+        <div className='main-layout'>
+            <UserNav />
+            <div className="main-content">
             {children}
-            <Footer/>
-        </>
+            </div>
+            <Footer />
+        </div>
+
     )
 }
+
 
 export default MainLayout
