@@ -1,32 +1,3 @@
-// const serviceMock = [
-//     {
-//         "id": 1,
-//         "shopId": 2,
-//         "name": "corete de cosas ",
-//         "description": "LE cortan las cosas cortan las cosascortan las cosas cortan las cosas  cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas cortan las cosas ",
-//         "price": 223.45,
-//         "duration": "02:20:00",
-//         "status": "Active"
-//     },
-//     {
-//         "id": 2,
-//         "shopId": 2,
-//         "name": "LE pintan las cosas ",
-//         "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
-//         "price": 203.45,
-//         "duration": "02:20:00",
-//         "status": "Active"
-//     },
-//     {
-//         "id": 3,
-//         "shopId": 2,
-//         "name": "LE pintan las cosas ",
-//         "description": "Le pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosasLe pintan las cosas.Le pintan las cosasLe pintan las cosas. ",
-//         "price": 203.45,
-//         "duration": "02:20:00",
-//         "status": "Active"
-//     },
-// ]
 
 import { useContext, useState, useEffect } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
@@ -38,17 +9,15 @@ const ServiceList = () => {
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [shopName, setShopName] = useState("");
-
   useEffect(() => {
-    fetchNameShop();
     fetchServices();
   }, []);
 
+  const shopName = services.map(item => item.shopName)[0];
+
   const fetchServices = async () => {
     try {
-      const response = await fetch(
-        `https://localhost:7276/api/Service/GetAllByShopId/${shopId}`,
+      const response = await fetch(`https://localhost:7276/api/Service/GetAllServicesByShopWithNameShop/${shopId}`,
         {
           method: "GET",
           mode: "cors",
@@ -57,31 +26,12 @@ const ServiceList = () => {
       if (!response.ok) {
         throw new Error("Error in obtaining Services");
       }
-      const servicesData = await response.json();
-      setServices(servicesData);
+      const data = await response.json();
+      setServices(data);
       setLoading(false);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const fetchNameShop = async () => {
-    try {
-      const response = await fetch(
-        `https://localhost:7276/api/Shop/GetById/${shopId}`,
-        {
-          method: "GET",
-          mode: "cors",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Error in obtaining shop");
-      }
-      const ShopData = await response.json();
-      setShopName(ShopData);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error:", error);
+    } 
+    catch(error){
+      console.error("Error:", error)
     }
   };
 
@@ -95,15 +45,15 @@ const ServiceList = () => {
             <div className="title-service">
               <h1 className="service-title">
                 {" "}
-                Selecciona un servicio de {shopName.name}
+                Selecciona un servicio de {shopName}
               </h1>
             </div>
             <div className="card-service">
               {services.map((s) => (
                 <ServiceCard
-                  key={s.id}
-                  idService={s.id}
-                  nameService={s.name}
+                  key={s.serviceId}
+                  idService={s.serviceId}
+                  nameService={s.serviceName}
                   description={s.description}
                   duration={s.duration}
                   price={s.price}
