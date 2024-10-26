@@ -27,32 +27,33 @@ const OwnerProviderButtonList = ({ me, myShopEmployees, token, setProviderAppArr
     };
 
     return (
-      <div className="w-100 my-2 d-flex flex-column align-items-center gap-1">
-        <button className="sidebar-button-options"
-            key={me.id}
-            onClick={() => {
-                ocultOtherviews()
-                getAllAppointmentsByProviderId(me.id)
-            }}
-        >
-            {me.username}
-        </button>
-        {myShopEmployees
-            ? myShopEmployees.map((emp) =>
-                <button className="sidebar-button-options"
-                    key={emp.id}
-                    onClick={() => {
-                        ocultOtherviews()
-                        getAllAppointmentsByProviderId(emp.id)
-                    }}
-                >
-                    {emp.name}
-                </button>
-            )
-            : ""
-        }
-      </div>
+        <div className="w-100 my-2 d-flex flex-column align-items-center gap-1">
+            <button className="sidebar-button-options"
+                key={me.id}
+                onClick={() => {
+                    ocultOtherviews()
+                    getAllAppointmentsByProviderId(me.id)
+                }}
+            >
+                {me.username}
+            </button>
+            {myShopEmployees
+                ? myShopEmployees.map((emp) =>
+                    <button className="sidebar-button-options"
+                        key={emp.id}
+                        onClick={() => {
+                            ocultOtherviews()
+                            getAllAppointmentsByProviderId(emp.id)
+                        }}
+                    >
+                        {emp.name}
+                    </button>
+                )
+                : ""
+            }
+        </div>
     );
-  };
-  
-  export default OwnerProviderButtonList;
+};
+
+export default OwnerProviderButtonList;
+

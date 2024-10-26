@@ -8,46 +8,20 @@ import { useNavigate } from 'react-router-dom';
 
 const OwnersEmployeeList = () => {
 
-    const { user, token, setShopId, shopId} = useContext(AuthenticationContext);
-    
+    const { user, token, shopId } = useContext(AuthenticationContext);
+
     const [employees, setEmployees] = useState([]);
     const [loading, setLoading] = useState(true);
     const navegate = useNavigate();
 
 
     useEffect(() => {
-        fetchData();
+        fetchEmployees()
+
         console.log(shopId);
         console.log(employees);
     }, []);
 
-    const fetchData = async () => {
-        await fetchDataUser();
-        if (shopId != null) {
-            await fetchEmployees();
-        }
-    }
-
-    const fetchDataUser = async () => {
-        try {
-            const response = await fetch(
-                `https://localhost:7276/api/Owner/GetOwnerById/${user.id}`,
-                {
-                    method: "GET",
-                    mode: "cors"
-                }
-            );
-            if (!response.ok) {
-                throw new Error("Error in obtaining user");
-            }
-            const data = await response.json();
-            
-            setShopId(data.shopId);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
 
     const fetchEmployees = async () => {
         try {
@@ -80,7 +54,7 @@ const OwnersEmployeeList = () => {
 
     return (
         <div>
-        
+
             <div>
                 {loading ? (
                     <Spiner />
@@ -91,8 +65,10 @@ const OwnersEmployeeList = () => {
                                 <h1 className="service-title">Lista de Empleados</h1> {/* Changed title for clarity */}
                             </div>
                             <Button variant="primary" onClick={handleButton}>
-                Agregar nuevo empleado
-            </Button>
+
+                                Agregar nuevo empleado
+                            </Button>
+
                             <div className="card-service">
                                 {employees.map((e) => (
                                     <OwnersEmployeeCard

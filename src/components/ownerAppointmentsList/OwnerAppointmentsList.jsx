@@ -55,9 +55,11 @@ const OwnerAppointmentsList = ({ appointmentsArray, employeesArray }) => {
             <OwnerAppointmentItem
               key={a.id}
               diaYHora={formatDateTime(a.dateAndHour)}
-              proveedor={selectProviderName(a.providerId)}
-              servicio={a.serviceId}
-              cliente={a.clientId}
+
+              proveedor={a.providerId}
+              servicio={a.serviceName}
+              cliente={a.clientName}
+
             />
           ))}
         </div>
