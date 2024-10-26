@@ -1,35 +1,155 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
+import Login from "./components/login/Login";
+import Register from "./components/register/Register";
+import ShopList from "./components/shopList/ShopList";
+import ShopForm from "./components/shopForm/ShopForm";
+
+import { AuthenticationContextProvider } from "./services/authentication/AuthenticationContext";
+import Homepage from "./components/homepage/Homepage";
+
+import ServiceList from "./components/serviceList/ServiceList";
+import EmployeeList from "./components/employeeList/EmployeeList";
+import AppointmentsList from "./components/appointmentsList/AppointmentsList";
+import PassResetForm from "./components/passResetForm/PassResetForm";
+import OwnerPage from "./components/ownerPage/OwnerPage";
+import MainLayout from "./components/mainLayout/MainLayout";
+import NotFound from "./routes/NotFound";
+import OwnerAppointmentsList from "./components/ownerAppointmentsList/OwnerAppointmentsList";
+import ClientsAppointmentList from "./components/clientsAppointmentList/ClientsAppointmentList";
+import OwnersEmployeeList from "./components/ownersEmployeeList/OwnersEmployeeList";
+import OwnersEmployeeRegister from "./components/ownersEmployeeRegister/ownersEmployeeRegister";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <MainLayout>
+          <Homepage />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/login",
+      element: (
+        <MainLayout>
+          <Login />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <MainLayout>
+          <Register />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/PassResetForm",
+      element: (
+        <MainLayout>
+          <PassResetForm />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/shopList",
+      element: (
+        <MainLayout>
+          <ShopList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/serviceList",
+      element: (
+        <MainLayout>
+          <ServiceList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/employeeList",
+      element: (
+        <MainLayout>
+          <EmployeeList />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/shopForm",
+      element: (
+        <MainLayout>
+          <ShopForm />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/ownerPage",
+      element: (
+        <MainLayout>
+          <OwnerPage />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/OwnerEmployeeAppointments",
+      element: (
+        <MainLayout>
+          <OwnerAppointmentsList/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/ClientAppointmentsList",
+      element: (
+        <MainLayout>
+          <ClientsAppointmentList/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/OwnersEmployeeList",
+      element: (
+        <MainLayout>
+          <OwnersEmployeeList/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/OwnersEmployeeRegister",
+      element: (
+        <MainLayout>
+          <OwnersEmployeeRegister/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/*",
+      element: (
+        <NotFound />
+      ),
+    },
+    {
+      path: "/appointmentList",
+      element: (
+        <MainLayout>
+          <AppointmentsList />
+        </MainLayout>
+      ),
+    },
+
+    
+  ]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AuthenticationContextProvider>
+      <RouterProvider router={router} />
+    </AuthenticationContextProvider>
+  );
 }
 
-export default App
+export default App;

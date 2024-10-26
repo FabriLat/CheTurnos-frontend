@@ -1,0 +1,89 @@
+.outer-container-login {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 74vh; 
+    background-color: #f8f9fa; 
+  }
+  
+  .login {
+    max-width: 400px; 
+    border: 1px solid #6d21dd; 
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px; 
+    color: black;
+    text-align: center;
+    background-color: white; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    z-index: 10;
+  }
+  
+  .form-group {
+    margin-bottom: 15px; 
+    text-align: left;
+  }
+  
+  input {
+    width: 100%; 
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+  }
+  
+  .input-error {
+    border-color: red; 
+  }
+  
+  .login-button {
+    background-color: #6d21dd; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px;
+    cursor: pointer; 
+    width: 100%; 
+    margin-bottom: 2vh;
+  }
+  
+  .login-button:hover {
+    background-color: #5a1bba; 
+  }
+  
+  .alert {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .alert-danger {
+    color: white;
+    background-color: red; 
+  }
+  
+  .alert-warning {
+    color: black;
+    background-color: rgb(250, 250, 140); 
+  }
+
+  .calendar{
+    width: 40px;
+    margin-bottom: 10px;
+  }
+
+  .executive {
+    position: absolute;
+    top: 20px;  
+    right: 20px; 
+    width: 50vh;
+    height: 50vh;
+    z-index: 1;
+  }
+  
+  
+  @media (max-width: 480px) {
+    .login {
+      width: 90%; 
+    }
+  }
+  

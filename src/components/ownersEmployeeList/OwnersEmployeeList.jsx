@@ -17,9 +17,11 @@ const OwnersEmployeeList = () => {
 
     useEffect(() => {
         fetchEmployees()
+
         console.log(shopId);
         console.log(employees);
     }, []);
+
 
     const fetchEmployees = async () => {
         try {
@@ -63,8 +65,10 @@ const OwnersEmployeeList = () => {
                                 <h1 className="service-title">Lista de Empleados</h1> {/* Changed title for clarity */}
                             </div>
                             <Button variant="primary" onClick={handleButton}>
+
                                 Agregar nuevo empleado
                             </Button>
+
                             <div className="card-service">
                                 {employees.map((e) => (
                                     <OwnersEmployeeCard

@@ -20,6 +20,7 @@ const OwnerPage = () => {
     const [providerFlag, setProviderFlag] = useState(false);
     const [showProvList, setShowProvList] = useState(false);
 
+
     const { token, user, setShopId } = useContext(AuthenticationContext);
 
     //Guardar el shopId del Owner
@@ -41,6 +42,7 @@ const OwnerPage = () => {
             console.error("Error:", error);
         }
     };
+
 
 
 
@@ -104,6 +106,7 @@ const OwnerPage = () => {
         await fetch(`https://localhost:7276/api/Appointment/GetMyLastShopAppointment/${user.id}`, {
             method: "GET",
             mode: "cors"
+
             // headers: {
             //     "content-type": "application/json",
             //     "authorization": `Bearer ${token}`
@@ -126,7 +129,9 @@ const OwnerPage = () => {
             .catch((error) => console.log(error))
     };
 
+
     const getMyShopAppointments = async () => { //devuevle nombres de proveedores, clientes, y servicios//
+
         await fetch(`https://localhost:7276/api/Appointment/GetAllApointmentsOfMyShop`, {
             method: "GET",
             headers: {
@@ -149,6 +154,7 @@ const OwnerPage = () => {
     };
 
     const getMyShopEmployees = async () => {
+
         try {
             const response = await fetch(`https://localhost:7276/api/Employee/GetMyShopEmployees/${user.id}`,
                 {
@@ -170,6 +176,7 @@ const OwnerPage = () => {
             console.log(error)
         }
     };
+
 
 
     useEffect(() => {
@@ -240,5 +247,4 @@ const OwnerPage = () => {
         </>
     );
 };
-
 export default OwnerPage;
