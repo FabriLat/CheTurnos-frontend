@@ -53,6 +53,13 @@ const UserNav = () => {
           <Col md={6}>
             <Nav className="d-flex justify-content-end align-items-center">
 
+            {(isAdmin()) &&
+              <>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/Users")}>Usuarios</Button>
+              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Negocios</Button>
+              </>
+              }
+
               {(isClient()) &&
               <>
               <Button variant="outline-light" className="mx-2" onClick={() => navigate("/shopList")}>Busca Negocio</Button>
