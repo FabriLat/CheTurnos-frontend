@@ -19,6 +19,7 @@ import OwnerAppointmentsList from "./components/ownerAppointmentsList/OwnerAppoi
 import ClientsAppointmentList from "./components/clientsAppointmentList/ClientsAppointmentList";
 import OwnersEmployeeList from "./components/ownersEmployeeList/OwnersEmployeeList";
 import OwnersEmployeeRegister from "./components/ownersEmployeeRegister/ownersEmployeeRegister";
+import Users from "./components/users/Users";
 
 
 function App() {
@@ -141,7 +142,14 @@ function App() {
         </MainLayout>
       ),
     },
-
+    {
+      path: "/Users",
+      element: (
+        <MainLayout>
+          <Users/>
+        </MainLayout>
+      ),
+    },
     
   ]);
 
