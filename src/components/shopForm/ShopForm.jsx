@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import executive from './executive.png';
+import { Form} from "react-bootstrap";
+import logo from './CheTurnosIco.png';
 import './shopForm.css'
 
 const daysOfWeek = [
@@ -30,6 +32,7 @@ const ShopForm = () => {
         phone: "",
         email: "",
         type: "",
+        imgUrl: "",
         isPremium: false,
         appointmentFrequency: "",
         timeStart: { hours: "", minutes: "" },
@@ -47,6 +50,7 @@ const ShopForm = () => {
         timeStart: false,
         timeEnd: false,
         workDays: false, 
+        imgUrl: false,
     });
 
     const handleChange = (e) => {
@@ -64,6 +68,17 @@ const ShopForm = () => {
                 : [...prev.workDays, day];
             return { ...prev, workDays };
         });
+    };
+
+    const handleTimeChange = (e, field) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [field]: {
+                ...prev[field],
+                [name]: value,
+            },
+        }));
     };
 
     const registerShop = async () => {
@@ -84,6 +99,7 @@ const ShopForm = () => {
                     timeStart: `${formData.timeStart.hours}:${formData.timeStart.minutes}:00`,
                     timeEnd: `${formData.timeEnd.hours}:${formData.timeEnd.minutes}:00`,
                     workDays: formData.workDays,
+                    imgUrl: formData.imgUrl,
                 }),
             });
 
@@ -119,6 +135,7 @@ const ShopForm = () => {
         const timeStartMinutes = timeStartMinRef.current.value;
         const timeEndHours = timeEndHourRef.current.value;
         const timeEndMinutes = timeEndMinRef.current.value;
+        
 
         let formIsValid = true;
 
@@ -184,6 +201,12 @@ const ShopForm = () => {
         } else {
             setErrors((prevErrors) => ({ ...prevErrors, workDays: false }));
         }
+        if (!formData.imgUrl) {
+            setErrors((prevErrors) => ({ ...prevErrors, imgUrl: true }));
+            formIsValid = false;
+        } else {
+            setErrors((prevErrors) => ({ ...prevErrors, imgUrl: false }));
+        }
 
         if (formIsValid) {
             registerShop();
@@ -199,7 +222,14 @@ const ShopForm = () => {
                     alt="Logo"
                 />
                 <div className="registerShop">
-                    <h2>Registro de negocio</h2>
+                    <h2>Registro Negocio      
+                    <img
+                    style={{marginLeft: '5%'}}
+                    className="calendar"
+                    src={logo}
+                    alt="Logo"
+          />
+                    </h2>
                     <form className="form-register" onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label>Nombre del Negocio:</label>
@@ -264,6 +294,20 @@ const ShopForm = () => {
                                 <div className="alert alert-warning">Completa el campo.</div>
                             )}
                         </div>
+                        <div className="form-group">
+    <label>URL de la Imagen:</label>
+    <input
+        type="text"
+        placeholder="Introduce la URL de la imagen"
+        name="imgUrl"
+        value={formData.imgUrl}
+        onChange={handleChange}
+        className={errors.imgUrl ? "input-error" : ""}
+    />
+    {errors.imgUrl && (
+        <div className="alert alert-warning">Completa el campo.</div>
+    )}
+</div>
 
                         <div className="form-group">
                         <label>Tipo de Negocio:</label>
@@ -303,75 +347,70 @@ const ShopForm = () => {
                             <label>Hora de Inicio:</label>
                             <div className="time-picker">
                                 <input
-                                    ref={timeStartHourRef}
-                                    type="number"
-                                    placeholder="Horas"
-                                    name="timeStart-hours"
-                                    value={formData.timeStart.hours}
-                                    onChange={handleChange}
-                                    className={errors.timeStart ? "input-error" : ""}
+                                ref={timeStartHourRef}
+                                type="number"
+                                placeholder="Horas"
+                                name="hours"
+                                value={formData.timeStart.hours}
+                                onChange={(e) => handleTimeChange(e, "timeStart")}
+                                className={errors.timeStart ? "input-error" : ""}
                                 />
                                 <input
-                                    ref={timeStartMinRef}
-                                    type="number"
-                                    placeholder="Minutos"
-                                    name="timeStart-minutes"
-                                    value={formData.timeStart.minutes}
-                                    onChange={handleChange}
-                                    className={errors.timeStart ? "input-error" : ""}
+                                ref={timeStartMinRef}
+                                type="number"
+                                placeholder="Minutos"
+                                name="minutes"
+                                value={formData.timeStart.minutes}
+                                onChange={(e) => handleTimeChange(e, "timeStart")}
+                                className={errors.timeStart ? "input-error" : ""}
                                 />
-                            </div>
-                            {errors.timeStart && (
-                                <div className="alert alert-warning">Completa el campo.</div>
-                            )}
-                        </div>
-
-                        <div className="form-group">
-                            <label>Hora de Fin:</label>
-                            <div className="time-picker">
-                                <input
-                                    ref={timeEndHourRef}
-                                    type="number"
-                                    placeholder="Horas"
-                                    name="timeEnd-hours"
-                                    value={formData.timeEnd.hours}
-                                    onChange={handleChange}
-                                    className={errors.timeEnd ? "input-error" : ""}
-                                />
-                                <input
-                                    ref={timeEndMinRef}
-                                    type="number"
-                                    placeholder="Minutos"
-                                    name="timeEnd-minutes"
-                                    value={formData.timeEnd.minutes}
-                                    onChange={handleChange}
-                                    className={errors.timeEnd ? "input-error" : ""}
-                                />
-                            </div>
-                            {errors.timeEnd && (
-                                <div className="alert alert-warning">Completa el campo.</div>
-                            )}
-                        </div>
-
-                        <div className="form-group">
-                            <label>Días de Trabajo:</label>
-                            <div className="days-container">
-                                {daysOfWeek.map((day) => (
-                                    <label key={day.value}>
-                                        <input
-                                            type="checkbox"
-                                            checked={formData.workDays.includes(day.value)}
-                                            onChange={() => handleWorkDaysChange(day.value)}
-                                        />
-                                        {day.label}
-                                    </label>
-                                ))}
-                            </div>
-                            {errors.workDays && (
-                                <div className="alert alert-warning">Selecciona al menos un día de trabajo.</div>
-                            )}
-                        </div>
-
+                                </div>
+                                {errors.timeStart && (
+                                    <div className="alert alert-warning">Completa el campo.</div>
+                                    )}
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Hora de Fin:</label>
+                                        <div className="time-picker">
+                                            <input
+                                            ref={timeEndHourRef}
+                                            type="number"
+                                            placeholder="Horas"
+                                            name="hours"
+                                            value={formData.timeEnd.hours}
+                                            onChange={(e) => handleTimeChange(e, "timeEnd")}
+                                            className={errors.timeEnd ? "input-error" : ""}
+                                             />
+                                             <input
+                                             ref={timeEndMinRef}
+                                             type="number"
+                                             placeholder="Minutos"
+                                             name="minutes"
+                                             value={formData.timeEnd.minutes}
+                                             onChange={(e) => handleTimeChange(e, "timeEnd")}
+                                             className={errors.timeEnd ? "input-error" : ""}
+                                             />
+                                             </div>
+                                             {errors.timeEnd && (
+                                                <div className="alert alert-warning">Completa el campo.</div>
+                                                )}
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>Días de Trabajo:</label>
+                                                    {daysOfWeek.map((day) => (
+                                                        <Form.Check
+                                                        key={day.value}
+                                                        type="checkbox"
+                                                        label={day.label}
+                                                        checked={formData.workDays.includes(day.value)}
+                                                        onChange={() => handleWorkDaysChange(day.value)}
+                                                        className={errors.workDays ? "input-error" : ""}
+                                                         />
+                                                         ))}
+                                                         {errors.workDays && (
+                                                            <div className="alert alert-warning">Completa el campo.</div>
+                                                            )}
+                                                            </div>
                         <button type="submit" className="register-button">Registrar Negocio</button>
                     </form>
                 </div>
