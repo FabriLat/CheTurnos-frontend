@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { Form, Button, Container } from "react-bootstrap";
-import UserNav from "../userNav/UserNav";
+import executive from './executive.png';
+import './shopForm.css'
 
 const daysOfWeek = [
     { value: 1, label: "Lunes" },
@@ -38,14 +38,15 @@ const ShopForm = () => {
     });
 
     const [errors, setErrors] = useState({
-        name: true,
-        address: true,
-        phone: true,
-        email: true,
-        type: true,
-        appointmentFrequency: true,
-        timeStart: true,
-        timeEnd: true,
+        name: false,
+        address: false,
+        phone: false,
+        email: false,
+        type: false,
+        appointmentFrequency: false,
+        timeStart: false,
+        timeEnd: false,
+        workDays: false, 
     });
 
     const handleChange = (e) => {
@@ -122,59 +123,66 @@ const ShopForm = () => {
         let formIsValid = true;
 
         if (!name) {
-            setErrors((prev) => ({ ...prev, name: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, name: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, name: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, name: false }));
         }
 
         if (!address) {
-            setErrors((prev) => ({ ...prev, address: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, address: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, address: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, address: false }));
         }
 
         if (!phone) {
-            setErrors((prev) => ({ ...prev, phone: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, phone: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, phone: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, phone: false }));
         }
 
         if (!email) {
-            setErrors((prev) => ({ ...prev, email: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, email: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, email: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, email: false }));
         }
 
         if (!type) {
-            setErrors((prev) => ({ ...prev, type: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, type: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, type: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, type: false }));
         }
 
         if (!appointmentFrequency || isNaN(appointmentFrequency)) {
-            setErrors((prev) => ({ ...prev, appointmentFrequency: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, appointmentFrequency: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, appointmentFrequency: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, appointmentFrequency: false }));
         }
 
         if (!timeStartHours || !timeStartMinutes) {
-            setErrors((prev) => ({ ...prev, timeStart: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, timeStart: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, timeStart: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, timeStart: false }));
         }
 
         if (!timeEndHours || !timeEndMinutes) {
-            setErrors((prev) => ({ ...prev, timeEnd: true }));
+            setErrors((prevErrors) => ({ ...prevErrors, timeEnd: true }));
             formIsValid = false;
         } else {
-            setErrors((prev) => ({ ...prev, timeEnd: false }));
+            setErrors((prevErrors) => ({ ...prevErrors, timeEnd: false }));
+        }
+
+        if (formData.workDays.length === 0) {
+            setErrors((prevErrors) => ({ ...prevErrors, workDays: true }));
+            formIsValid = false;
+        } else {
+            setErrors((prevErrors) => ({ ...prevErrors, workDays: false }));
         }
 
         if (formIsValid) {
@@ -184,191 +192,190 @@ const ShopForm = () => {
 
     return (
         <>
-            <Container className="mt-4">
-                <h2>Registro de Tienda</h2>
-                <Form className="mt-5" onSubmit={handleSubmit}>
-                    <Form.Group>
-                        <Form.Label>Nombre de la Tienda</Form.Label>
-                        <Form.Control
-                            ref={nameRef}
-                            type="text"
-                            placeholder="Introduce el nombre de la tienda"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                        />
-                        {errors.name && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
+            <div className="outer-container-shop-register">
+                <img
+                    className="executive"
+                    src={executive}
+                    alt="Logo"
+                />
+                <div className="registerShop">
+                    <h2>Registro de negocio</h2>
+                    <form className="form-register" onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>Nombre del Negocio:</label>
+                            <input
+                                ref={nameRef}
+                                type="text"
+                                placeholder="Introduce el nombre del negocio"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className={errors.name ? "input-error" : ""}
+                            />
+                            {errors.name && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Dirección</Form.Label>
-                        <Form.Control
-                            ref={addressRef}
-                            type="text"
-                            placeholder="Introduce la dirección"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                        />
-                        {errors.address && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
+                        <div className="form-group">
+                            <label>Dirección:</label>
+                            <input
+                                ref={addressRef}
+                                type="text"
+                                placeholder="Introduce la dirección"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                className={errors.address ? "input-error" : ""}
+                            />
+                            {errors.address && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Teléfono</Form.Label>
-                        <Form.Control
-                            ref={phoneRef}
-                            type="text"
-                            placeholder="Introduce el teléfono"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                        />
-                        {errors.phone && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
+                        <div className="form-group">
+                            <label>Teléfono:</label>
+                            <input
+                                ref={phoneRef}
+                                type="text"
+                                placeholder="Introduce el teléfono"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                className={errors.phone ? "input-error" : ""}
+                            />
+                            {errors.phone && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Correo Electrónico</Form.Label>
-                        <Form.Control
-                            ref={emailRef}
-                            type="email"
-                            placeholder="Introduce tu correo electrónico"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
-                        {errors.email && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
+                        <div className="form-group">
+                            <label>Correo Electrónico:</label>
+                            <input
+                                ref={emailRef}
+                                type="email"
+                                placeholder="Introduce tu correo electrónico"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className={errors.email ? "input-error" : ""}
+                            />
+                            {errors.email && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Tipo de Tienda</Form.Label>
-                        <Form.Control
+                        <div className="form-group">
+                        <label>Tipo de Negocio:</label>
+                        <select
                             ref={typeRef}
-                            as="select"
                             name="type"
                             value={formData.type}
                             onChange={handleChange}
+                            className={errors.type ? "input-error" : ""}
                         >
-                            <option value="">Seleccione un tipo</option>
-                            <option value="0">Retail</option>
-                            <option value="1">Service</option>
-                            {/* Nose si faltan agregar tipos */}
-                        </Form.Control>
-                        {errors.type && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
+                            <option value="">Selecciona un tipo</option>
+                            <option value="0">Tienda</option>
+                            <option value="1">Servicio</option>
+                        </select>
+                        {errors.type && (
+                            <div className="alert alert-warning">Completa el campo.</div>
+                        )}
+                    </div>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Frecuencia de Cita (minutos)</Form.Label>
-                        <Form.Control
-                            ref={appointmentFrequencyRef}
-                            type="number"
-                            placeholder="Frecuencia de citas"
-                            name="appointmentFrequency"
-                            value={formData.appointmentFrequency}
-                            onChange={handleChange}
-                        />
-                        {errors.appointmentFrequency && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
-
-                    <Form.Group className="mt-4">
-                        <Form.Label>Hora de Inicio</Form.Label>
-                        <div className="d-flex">
-                            <Form.Control
-                                ref={timeStartHourRef}
+                        <div className="form-group">
+                            <label>Frecuencia de Citas:</label>
+                            <input
+                                ref={appointmentFrequencyRef}
                                 type="number"
-                                placeholder="HH"
-                                name="timeStart-hours"
-                                min="0"
-                                max="23"
-                                style={{ width: "70px", marginRight: "10px" }}
-                                onChange={(e) => {
-                                    handleChange({
-                                        target: {
-                                            name: "timeStart",
-                                            value: { ...formData.timeStart, hours: e.target.value }
-                                        }
-                                    });
-                                }}
+                                placeholder="Introduce la frecuencia de citas"
+                                name="appointmentFrequency"
+                                value={formData.appointmentFrequency}
+                                onChange={handleChange}
+                                className={errors.appointmentFrequency ? "input-error" : ""}
                             />
-                            <Form.Control
-                                ref={timeStartMinRef}
-                                type="number"
-                                placeholder="MM"
-                                name="timeStart-minutes"
-                                min="0"
-                                max="59"
-                                style={{ width: "70px" }}
-                                onChange={(e) => {
-                                    handleChange({
-                                        target: {
-                                            name: "timeStart",
-                                            value: { ...formData.timeStart, minutes: e.target.value }
-                                        }
-                                    });
-                                }}
-                            />
+                            {errors.appointmentFrequency && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
                         </div>
-                        {errors.timeStart && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Hora de Fin</Form.Label>
-                        <div className="d-flex">
-                            <Form.Control
-                                ref={timeEndHourRef}
-                                type="number"
-                                placeholder="HH"
-                                name="timeEnd-hours"
-                                min="0"
-                                max="23"
-                                style={{ width: "70px", marginRight: "10px" }}
-                                onChange={(e) => {
-                                    handleChange({
-                                        target: {
-                                            name: "timeEnd",
-                                            value: { ...formData.timeEnd, hours: e.target.value }
-                                        }
-                                    });
-                                }}
-                            />
-                            <Form.Control
-                                ref={timeEndMinRef}
-                                type="number"
-                                placeholder="MM"
-                                name="timeEnd-minutes"
-                                min="0"
-                                max="59"
-                                style={{ width: "70px" }}
-                                onChange={(e) => {
-                                    handleChange({
-                                        target: {
-                                            name: "timeEnd",
-                                            value: { ...formData.timeEnd, minutes: e.target.value }
-                                        }
-                                    });
-                                }}
-                            />
+                        <div className="form-group">
+                            <label>Hora de Inicio:</label>
+                            <div className="time-picker">
+                                <input
+                                    ref={timeStartHourRef}
+                                    type="number"
+                                    placeholder="Horas"
+                                    name="timeStart-hours"
+                                    value={formData.timeStart.hours}
+                                    onChange={handleChange}
+                                    className={errors.timeStart ? "input-error" : ""}
+                                />
+                                <input
+                                    ref={timeStartMinRef}
+                                    type="number"
+                                    placeholder="Minutos"
+                                    name="timeStart-minutes"
+                                    value={formData.timeStart.minutes}
+                                    onChange={handleChange}
+                                    className={errors.timeStart ? "input-error" : ""}
+                                />
+                            </div>
+                            {errors.timeStart && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
                         </div>
-                        {errors.timeEnd && <span className="text-danger">Completa el campo.</span>}
-                    </Form.Group>
 
-                    <Form.Group className="mt-4">
-                        <Form.Label>Días de Trabajo</Form.Label>
-                        {daysOfWeek.map((day) => (
-                            <Form.Check
-                                key={day.value}
-                                type="checkbox"
-                                label={day.label}
-                                checked={formData.workDays.includes(day.value)}
-                                onChange={() => handleWorkDaysChange(day.value)}
-                            />
-                        ))}
-                    </Form.Group>
+                        <div className="form-group">
+                            <label>Hora de Fin:</label>
+                            <div className="time-picker">
+                                <input
+                                    ref={timeEndHourRef}
+                                    type="number"
+                                    placeholder="Horas"
+                                    name="timeEnd-hours"
+                                    value={formData.timeEnd.hours}
+                                    onChange={handleChange}
+                                    className={errors.timeEnd ? "input-error" : ""}
+                                />
+                                <input
+                                    ref={timeEndMinRef}
+                                    type="number"
+                                    placeholder="Minutos"
+                                    name="timeEnd-minutes"
+                                    value={formData.timeEnd.minutes}
+                                    onChange={handleChange}
+                                    className={errors.timeEnd ? "input-error" : ""}
+                                />
+                            </div>
+                            {errors.timeEnd && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
-                    <Button variant="primary" type="submit" className="mt-4">
-                        Registrar Tienda
-                    </Button>
-                </Form>
-            </Container>
+                        <div className="form-group">
+                            <label>Días de Trabajo:</label>
+                            <div className="days-container">
+                                {daysOfWeek.map((day) => (
+                                    <label key={day.value}>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.workDays.includes(day.value)}
+                                            onChange={() => handleWorkDaysChange(day.value)}
+                                        />
+                                        {day.label}
+                                    </label>
+                                ))}
+                            </div>
+                            {errors.workDays && (
+                                <div className="alert alert-warning">Selecciona al menos un día de trabajo.</div>
+                            )}
+                        </div>
+
+                        <button type="submit" className="register-button">Registrar Negocio</button>
+                    </form>
+                </div>
+            </div>
         </>
     );
 };
