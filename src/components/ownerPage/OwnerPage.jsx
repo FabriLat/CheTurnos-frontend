@@ -103,30 +103,40 @@ const OwnerPage = () => {
     };
 
     const getMyShopLastAppointment = async () => {
-        await fetch(`https://localhost:7276/api/Appointment/GetMyLastShopAppointment/${user.id}`, {
+        await fetch(`https://localhost:7276/api/Appointment/GetMyLastShopAppointment`, {
             method: "GET",
-            mode: "cors"
-
-            // headers: {
-            //     "content-type": "application/json",
-            //     "authorization": `Bearer ${token}`
-            // }
+            headers: {
+                "content-type": "application/json",
+                "authorization": `Bearer ${token}`
+            }
         })
-            .then((response) => {
-                if (response.ok) return response.json();
-            })
-            .then((data) => {
-                if (data[0] != null) {
-                    console.log(`My shop last appointment: ${data[0].dateAndHour}`);
-                    const auxDate1 = data[0].dateAndHour.split("T")
-                    setHypenLastShopApp(auxDate1[0])
-                    const auxDate2 = auxDate1[0].split("-")
-                    setSlashLastShopApp(`${auxDate2[2]}/${auxDate2[1]}/${auxDate2[0]}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
                 } else {
-                    console.log("No hay turnos almacenados (null)")
+                    // Manejo de errores según el código de estado
+                    if (response.status === 404) {
+                        throw new Error('Not Found (404)');
+                    } else if (response.status === 401) {
+                        throw new Error('Unauthorized (401)');
+                    } else {
+                        throw new Error('Error: ' + response.status);
+                    }
                 }
             })
-            .catch((error) => console.log(error))
+            .then((data) => {
+                // Procesar los datos aquí
+                console.log(data)
+                console.log(`My shop last appointment: ${data.dateAndHour}`);
+                const auxDate1 = data.dateAndHour.split("T")
+                setHypenLastShopApp(auxDate1[0])
+                const auxDate2 = auxDate1[0].split("-")
+                setSlashLastShopApp(`${auxDate2[2]}/${auxDate2[1]}/${auxDate2[0]}`)
+            })
+            .catch((error) => {
+                // Manejo del error aquí
+                console.log(error)
+            })
     };
 
 
@@ -177,12 +187,14 @@ const OwnerPage = () => {
         }
     };
 
-
-
     useEffect(() => {
         if (user.role == "Owner") {
-            getMyShopEmployees();
-            getMyShopLastAppointment();
+            if (!myShopEmployees) {
+                getMyShopEmployees();
+            }
+            if (!hypenLastShopApp) {
+                getMyShopLastAppointment();
+            }
         }
     }, [lastAppFlag]);
 
