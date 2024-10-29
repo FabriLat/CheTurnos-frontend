@@ -44,9 +44,9 @@ const ClientsAppointmentList = () => {
                             {appointments.map(a => (
                                 <ClientsAppointmentItem
                                     key={a.id}
-                                    shopName={a.shopId}
-                                    serviceName={a.serviceId}
-                                    dateAndhour={a.dateAndhour}
+                                    shopName={a.shopName}
+                                    serviceName={a.serviceName}
+                                    dateAndHour={a.dateAndHour}
                                 />
                             ))}
                         </div>
