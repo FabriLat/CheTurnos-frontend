@@ -44,17 +44,12 @@ const OwnersEmployeeList = () => {
         }
     };
 
-
-
-
-
     const handleButton = () => {
         navegate("/OwnersEmployeeRegister");
     }
 
     return (
         <div>
-
             <div>
                 {loading ? (
                     <Spiner />
@@ -65,7 +60,6 @@ const OwnersEmployeeList = () => {
                                 <h1 className="service-title">Lista de Empleados</h1> {/* Changed title for clarity */}
                             </div>
                             <Button variant="primary" onClick={handleButton}>
-
                                 Agregar nuevo empleado
                             </Button>
 

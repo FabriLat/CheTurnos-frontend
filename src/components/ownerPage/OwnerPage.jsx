@@ -19,7 +19,7 @@ const OwnerPage = () => {
     const [providerAppointments, setProviderAppointments] = useState("");
     const [providerFlag, setProviderFlag] = useState(false);
     const [showProvList, setShowProvList] = useState(false);
-
+    const [empFlag, setEmpFlag] = useState(false);
 
     const { token, user, setShopId } = useContext(AuthenticationContext);
 
@@ -38,13 +38,11 @@ const OwnerPage = () => {
             }
             const data = await response.json();
             setShopId(data.shopId);
+            //console.log("xxx")
         } catch (error) {
             console.error("Error:", error);
         }
     };
-
-
-
 
     const changeFlag = () => {
         if (lastAppFlag) {
@@ -56,9 +54,11 @@ const OwnerPage = () => {
 
     const onClickShowDateAppointmentsForm = () => {
         if (!showDateAppointmentForm) {
-            setShowDateAppointmentForm(true);
+            console.log("Te veo!");
+            getMyShopLastAppointment();
             setShowList(false);
             setShowProvList(false);
+            setShowDateAppointmentForm(true);
         }
     };
 
@@ -69,11 +69,11 @@ const OwnerPage = () => {
     };
 
     const onClickShowList = () => {
-        getMyShopAppointments()
         if (!showList) {
+            getMyShopAppointments()
             setShowProvList(false);
-            setShowList(true);
             setShowDateAppointmentForm(false);
+            setShowList(true);
         }
     };
 
@@ -187,19 +187,19 @@ const OwnerPage = () => {
         }
     };
 
-    useEffect(() => {
+    const applyAsync = async () => {
+        await fetchDataUser();
+        getMyShopEmployees()
+    };
+
+    /*useEffect(() => {
         if (user.role == "Owner") {
-            if (!myShopEmployees) {
-                getMyShopEmployees();
-            }
-            if (!hypenLastShopApp) {
-                getMyShopLastAppointment();
-            }
+            applyAsync();
         }
-    }, [lastAppFlag]);
+    }, [lastAppFlag]);*/
 
     useEffect(() => {
-        fetchDataUser();
+        applyAsync();
     }, []);
 
     return (
