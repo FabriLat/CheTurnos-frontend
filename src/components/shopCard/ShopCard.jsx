@@ -5,16 +5,38 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
-const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
+import useValidateUser from '../hookCustom/useValidateUser';
+
+
+const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop, onRemoveShop}) => {
   const {setShopId} = useContext (AuthenticationContext);
   const {dataForRequest, setDataForRequest} = useContext (AuthenticationContext);
   const navegate = useNavigate();
+  const { isAdmin, isClient } = useValidateUser();
 
   const handlebutton = ()=>{
     setShopId(idShop); 
     setDataForRequest({...dataForRequest, shopId: idShop});
     navegate('/serviceList')
   }
+
+  const deleteShop = (async () => {
+    try {
+      const response = await fetch(`https://localhost:7276/api/Shop/PermanentDeletionShop/${idShop}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error("Error in delete shop");
+      }
+      onRemoveShop(idShop);
+      console.log("Shop deleted successfully")
+    }
+    catch (error) {
+      console.error("Error:", error);
+    }
+  })
 
 
   const formatTime = (time)=>{
@@ -32,7 +54,8 @@ const ShopCard = ({name, address, phone, timeStart, timeEnd, idShop}) => {
             Abre: {formatTime(timeStart)}<br/>
             Cierra: {formatTime(timeEnd)}<br/>
           </Card.Text>
-          <Button variant="primary" onClick={handlebutton} style={{backgroundColor: '#6d21dd'}}>Pedi tu Turno!</Button>
+          {(isClient()) && <Button variant="primary" onClick={handlebutton} style={{backgroundColor: '#6d21dd'}}>Pedi tu Turno!</Button>}
+          {(isAdmin()) && <Button variant="danger" onClick={deleteShop} style={{backgroundColor: '#FF00D'}}>Eliminar Negocio en cascada</Button>}
         </Card.Body>
       </Card>
     )
@@ -45,6 +68,7 @@ ShopCard.propType = {
     timeStart: PropTypes.date,
     timeEnd: PropTypes.date,
     idShop: PropTypes.number,
+    onRemoveShop: PropTypes.func,
     key: PropTypes.number,
 
 }
