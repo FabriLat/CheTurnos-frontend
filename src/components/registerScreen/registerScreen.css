@@ -1,0 +1,60 @@
+.outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+ 
+  
+  .executive {
+    position: absolute;
+    top: 20px;  
+    right: 20px; 
+    width: 50vh;
+    height: 50vh;
+  }
+
+  .registerScreen{
+    max-width: 400px;
+    border: 1px solid #5cb0e0;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    color: black;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .registerScreenBusiness{
+    max-width: 400px;
+    border: 1px solid #1e235a;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    color: black;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .register-button-user {
+    background-color:#5cb0e0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .register-button-shop {
+    background-color:#1e235a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
