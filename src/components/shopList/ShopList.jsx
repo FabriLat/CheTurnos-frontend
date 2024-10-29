@@ -162,6 +162,11 @@ const ShopList = () => {
     shop.name.toLowerCase().includes(textSearched.toLowerCase())
   );
 
+
+  const removeShop = (id) => {
+    setShops((prevShops) => prevShops.filter((shop) => shop.id !== id));
+  };
+
   return (
     <>
       {loading ? (
@@ -192,7 +197,7 @@ const ShopList = () => {
                     timeEnd={s.timeEnd}
                     idShop={s.id}
                     key={s.id}
-                   
+                    onRemoveShop = {removeShop}
                   />
                 ))}
               </div>

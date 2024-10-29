@@ -53,27 +53,25 @@ const UserNav = () => {
           <Col md={6}>
             <Nav className="d-flex justify-content-end align-items-center">
 
-            {(isAdmin()) &&
-              <>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/Users")}>Usuarios</Button>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Negocios</Button>
-              </>
+              {(isAdmin()) &&
+                <>
+                  <Button variant="outline-light" className="mx-2" onClick={() => navigate("/Users")}>Usuarios</Button>
+                </>
               }
-
+              {(isClient() || isAdmin()) &&
+                <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/shopList")}>Negocios</Button></>
+              }
               {(isClient()) &&
-              <>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/shopList")}>Busca Negocio</Button>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/ClientAppointmentsList")}>Mis turnos</Button>
-              </>
+                <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/ClientAppointmentsList")}>Mis turnos</Button></>
               }
               {(isOwner()) &&
-              <>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/ownerPage")}>Info del Negocio</Button>
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/OwnersEmployeeList")}>Empleados</Button>
-              </>
+                <>
+                  <Button variant="outline-light" className="mx-2" onClick={() => navigate("/ownerPage")}>Info del Negocio</Button>
+                  <Button variant="outline-light" className="mx-2" onClick={() => navigate("/OwnersEmployeeList")}>Empleados</Button>
+                </>
               }
-              { (!isOwner()) &&
-              <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Sobre nosotros</Button>
+              {(!isOwner()) &&
+                <Button variant="outline-light" className="mx-2" onClick={() => navigate("/")}>Sobre nosotros</Button>
               }
               {(!(isClient() || isEmployee() || isOwner() || isAdmin())) &&
                 <>

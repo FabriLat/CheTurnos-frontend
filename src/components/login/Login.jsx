@@ -118,7 +118,10 @@ const Login = () => {
         navegate('/shopList');
       }
       if(user.role == "Employee"){
-        navegate('????');
+        navegate('/');
+      }
+      if(user.role == "SysAdmin"){
+        navegate('/Users');
       }
     }
   }, [user])
