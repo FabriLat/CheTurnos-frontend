@@ -162,6 +162,11 @@ const ShopList = () => {
     shop.name.toLowerCase().includes(textSearched.toLowerCase())
   );
 
+
+  const removeShop = (id) => {
+    setShops((prevShops) => prevShops.filter((shop) => shop.id !== id));
+  };
+
   return (
     <>
       {loading ? (
@@ -175,7 +180,7 @@ const ShopList = () => {
                   src={logo}
                   alt="Logo"
                 />
-              <h1 className="shop-title">¡Encuentra negocios online y agenda turnos al instante!</h1>
+              <h1 className="shop-title">¡Encuentra tu negocio!</h1>
             </div>
             <div className="search-input">
               <FontAwesomeIcon icon={faSearch} className="search-icon" />
@@ -192,7 +197,7 @@ const ShopList = () => {
                     timeEnd={s.timeEnd}
                     idShop={s.id}
                     key={s.id}
-                   
+                    onRemoveShop = {removeShop}
                   />
                 ))}
               </div>
