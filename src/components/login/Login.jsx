@@ -22,7 +22,7 @@ const Login = () => {
     navegate("/PassResetForm");
   }
 
-  const { dataLoginHandler, user } = useContext(AuthenticationContext);
+  const { dataLoginHandler, user, setToken } = useContext(AuthenticationContext);
 
   const emailHandler = (event) => {
     setErrors({ ...errors, email: false });
@@ -77,8 +77,9 @@ const Login = () => {
         const userRole = decodedToken.role;
         const userName = decodedToken.given_name;
 
-        dataLoginHandler(userName, userRole, userId, token);
-        
+        dataLoginHandler(userName, userRole, userId);
+        setToken(token);
+        console.log(`este es el token ${token}`);
       } else {
         setErrors({ ...errors, exists: true });
         setEnteredEmail("");
@@ -118,7 +119,7 @@ const Login = () => {
         navegate('/shopList');
       }
       if(user.role == "Employee"){
-        navegate('/');
+        navegate('/ClientAppointmentsList');
       }
       if(user.role == "SysAdmin"){
         navegate('/Users');

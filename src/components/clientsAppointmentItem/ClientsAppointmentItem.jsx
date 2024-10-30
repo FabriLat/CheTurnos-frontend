@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { Button, Card } from "react-bootstrap";
+import useValidateUser from '../hookCustom/useValidateUser';
 
-const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour }) => {
+const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemoveAppointment, clientName }) => {
     console.log(dateAndHour);
-    const formatDateTime = (dateTime) => {
+    const { isClient, isEmployee } = useValidateUser();
+    console.log("ClientsAppointmentItemClientsAppointmentItemClientsAppointmentItemClientsAppointmentItemClientsAppointmentItem")
 
+    const formatDateTime = (dateTime) => {
         const aux1 = dateTime.split('T');
         const aux2 = aux1[0].split('-');
         const newFormat = `${aux2[2]}/${aux2[1]}/${aux2[0]} - ${aux1[1].slice(0, -3)}`;
@@ -13,8 +16,31 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour }) => {
     };
 
     const handlebutton = () => {
-        console.log("Cancelar un turno?")
+        console.log(`Cancelar turno ${id}` )
+        DeleteAppointment();
+        //onRemoveAppointment(id) cuando se elimina/cancela el tunro se usa esta funcion 
+        //para que se acutalize la lista de turnos.
     };
+
+    const DeleteAppointment = async () => {
+        try {
+            const response = await fetch(`https://localhost:7276/api/Appointment/DeleteAppointment/${id}`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok) {
+                throw new Error("Error in delete Appointment");
+            }
+            onRemoveAppointment(id);
+            console.log("Appointment deleted successfully")
+        }
+        catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+
     return (
         <div>
             <Card key={id} style={{ border: '2px solid #0d6efd' }}>
@@ -26,8 +52,9 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour }) => {
                         Negocio: {shopName}
                         <br />
                         Fecha y hora: {formatDateTime(dateAndHour)}
+                        {(isEmployee()) && <><br/>Nombre del Cliente: {clientName}</>}
                     </Card.Title>
-                    <Button onClick={handlebutton} variant="primary">
+                    <Button onClick={handlebutton} variant="danger">
                         ¿Cancelar turno?
                     </Button>
                 </Card.Body>
@@ -42,6 +69,8 @@ ClientsAppointmentItem.propTypes = {
     shopName: PropTypes.string,
     serviceName: PropTypes.string,
     dateAndHour: PropTypes.string,
+    onRemoveAppointment: PropTypes.func,
+    clientName: PropTypes.string,
 }
 
 

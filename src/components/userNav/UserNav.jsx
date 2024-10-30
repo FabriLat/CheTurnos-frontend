@@ -61,9 +61,11 @@ const UserNav = () => {
               {(isClient() || isAdmin()) &&
                 <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/shopList")}>Negocios</Button></>
               }
-              {(isClient()) &&
+              {(isClient() || isEmployee()) &&
                 <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/ClientAppointmentsList")}>Mis turnos</Button></>
               }
+
+
               {(isOwner()) &&
                 <>
                   <Button variant="outline-light" className="mx-2" onClick={() => navigate("/ownerPage")}>Info del Negocio</Button>

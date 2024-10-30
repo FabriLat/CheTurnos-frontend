@@ -19,11 +19,9 @@ export const AuthenticationContextProvider = ({ children }) => {
       dateAndHour: null,
     });
 
-    const dataLoginHandler = (username, role, id, token) => {
+    const dataLoginHandler = (username, role, id) => {
         localStorage.setItem("userData", JSON.stringify({ username, role, id }));
         setUser({ username, role, id});
-        setToken(token);
-        console.log(token);
         console.log(user);
     };
 
@@ -42,6 +40,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     <AuthenticationContext.Provider
       value={{
         token,
+        setToken,
         user,
         dataLoginHandler,
         logoutHandler,
