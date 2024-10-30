@@ -52,7 +52,8 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
                         Negocio: {shopName}
                         <br />
                         Fecha y hora: {formatDateTime(dateAndHour)}
-                        {(isEmployee()) && <><br/>Nombre del Cliente: {clientName}</>}
+                        <br/>
+                        {(isEmployee()&& clientName) ? (<>Nombre del Cliente: {(clientName)}</>):(<> Turno Libre </>) }
                     </Card.Title>
                     <Button onClick={handlebutton} variant="danger">
                         ¿Cancelar turno?
