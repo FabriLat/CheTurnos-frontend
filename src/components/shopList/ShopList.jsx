@@ -127,11 +127,17 @@ import './shopList.css';
 import logo from './CheTurnosIco.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
+import { useContext } from 'react';
+
 
 const ShopList = () => {
   const [shops, setShops] = useState([]);
   const [textSearched, setTextSearched] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const { user, token, shopId } = useContext(AuthenticationContext);
+ console.log(`este es el token`, token);
 
   useEffect(() => {
     fetchShop();
