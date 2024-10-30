@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Card, Row, Form, Button, Modal } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
+import { ShopContext } from "../../services/shop/ShopContext";
 
-const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, token, changeFlag, onClickOccultForm }) => {
+const AddNewAppointmensForm = ({ token, onClickOccultForm }) => {
     const [dateStart, setDateStart] = useState("");
     const [dateEnd, setDateEnd] = useState("");
     const [errors, setErrors] = useState({
@@ -16,6 +17,8 @@ const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, token, chan
     const [showModal, setShowModal] = useState(false);
     const [responseMessagge, setResponseMessagge] = useState("")
     const [styleMessagge, setStyleMessagge] = useState("")
+
+    const { hypenLastShopApp, slashLastShopApp, setAppFlag, setLastAppFlag } = useContext(ShopContext);
 
     const dateStartRef = useRef(null);
     const dateEndRef = useRef(null);
@@ -107,15 +110,16 @@ const AddNewAppointmensForm = ({ hypenLastShopApp, slashLastShopApp, token, chan
         })
             .then((response) => {
                 if (response.ok) {
-                    setStyleMessagge("text-success")
-                    setResponseMessagge("Operación exitosa!")
-                    changeFlag()
-                    showModalHandler()
+                    setStyleMessagge("text-success");
+                    setResponseMessagge("Operación exitosa!");
+                    setLastAppFlag(true);
+                    setAppFlag(true);
+                    showModalHandler();
                 } else {
                     throw new Error("The response has some errors");
                 }
             })
-            .then((data) => console.log(data))
+            //.then((data) => console.log(data))
             .catch((error) => {
                 console.log(error)
                 setStyleMessagge("text-danger")

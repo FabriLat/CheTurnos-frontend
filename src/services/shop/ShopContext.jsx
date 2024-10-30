@@ -11,12 +11,16 @@ export const ShopContextProvider = ({ children }) => {
 
     //my shop global states section
     const [myShopAppointments, setMyShopAppointments] = useState("");
-    //const [myShopLastApp, setMyShopLastApp] = useState("");
+    
+    const [hypenLastShopApp, setHypenLastShopApp] = useState(""); //las appointment date of my shop with "-"
+    const [slashLastShopApp, setSlashLastShopApp] = useState(""); //las appointment date of my shop with "/"
+
     const [myShopEmployees, setMyShopEmployees] = useState("");
     const [myShopData, setMyShopData] = useState("");
 
     //flags for requests section
     const [appFlag, setAppFlag] = useState(true);
+    const [lastAppFlag, setLastAppFlag] = useState(true);
     const [empFlag, setEmpFlag] = useState(true);
     const [dataFlag, setDataFlag] = useState(false);
 
@@ -36,12 +40,18 @@ export const ShopContextProvider = ({ children }) => {
         }
     };
 
+    const reqLastAppHandler = () => {
+        if (lastAppFlag) {
+            getMyShopLastAppointment();
+        }
+    };
+
     const reqShopDataHandler = () => {
         //fetch aquí
     };
 
     //request functions section
-    /*const getMyShopLastAppointment = async () => {
+    const getMyShopLastAppointment = async () => {
         await fetch(`https://localhost:7276/api/Appointment/GetMyLastShopAppointment`, {
             method: "GET",
             headers: {
@@ -71,12 +81,13 @@ export const ShopContextProvider = ({ children }) => {
                 setHypenLastShopApp(auxDate1[0])
                 const auxDate2 = auxDate1[0].split("-")
                 setSlashLastShopApp(`${auxDate2[2]}/${auxDate2[1]}/${auxDate2[0]}`)
+                setLastAppFlag(false);
             })
             .catch((error) => {
                 // Manejo del error aquí
                 console.log(error)
             })
-    };*/
+    };
 
     const getMyShopAppointments = async () => { //devuevle nombres de proveedores, clientes, y servicios//
 
@@ -156,8 +167,13 @@ export const ShopContextProvider = ({ children }) => {
             value={{
                 myShopAppointments,
                 myShopEmployees,
+                hypenLastShopApp,
+                slashLastShopApp,
                 reqEmpHandler,
-                reqAppHandler
+                reqAppHandler,
+                reqLastAppHandler,
+                setAppFlag,
+                setLastAppFlag
             }}
         >
             {children}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
+//import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 import { useContext, useEffect } from 'react';
 import { ShopContext } from '../../services/shop/ShopContext';
 import { Button } from 'react-bootstrap';
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const OwnersEmployeeList = () => {
 
-    const { user, token } = useContext(AuthenticationContext);
+    //const { user, token } = useContext(AuthenticationContext);
     const { myShopEmployees } = useContext(ShopContext);
 
     const [loading, setLoading] = useState(false);
