@@ -49,6 +49,32 @@ const Users = () => {
   };
 
   const handleDeleteUser = async () => {
+    deleteUser();
+//if o algo para que identificque que es dueño y eliminar en cascada. 
+  }
+
+
+  const deleteOwner = async () => {
+    if (userIdToDelete) {
+      try {
+        const response = await fetch(`https://localhost:7276/api/Shop/PermanentDeletionShop/${idShop}`, {
+          method: "DELETE",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error("Error in delete shop - Owner - employee - service");
+        }
+        onRemoveShop(idShop);
+        console.log("Shop - Owner - employee - service -  deleted successfully");
+      } catch (error) {
+        console.error("Error:", error);
+      }
+      setShowModal(false);
+    }
+  }
+
+  const deleteUser = async () => {
     if (userIdToDelete) {
       try {
         const response = await fetch(`https://localhost:7276/api/SysAdmin/Delete/${userIdToDelete}`, {
@@ -132,7 +158,7 @@ const Users = () => {
             ))}
           </ListGroup>
 
-         
+
           <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton>
               <Modal.Title>Confirmar Eliminación</Modal.Title>
