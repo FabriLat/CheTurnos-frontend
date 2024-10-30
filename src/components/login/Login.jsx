@@ -69,17 +69,17 @@ const Login = () => {
       });
 
       const token = await response.text();
-
+      console.log("Token DENTRO DEL FETCH:", token);
       if (response.ok) {
         const decodedToken = parseJwt(token);
         // ID, ROL y el nombre.
         const userId = decodedToken.sub;
         const userRole = decodedToken.role;
         const userName = decodedToken.given_name;
+        const userEmail = decodedToken.email;
 
-        dataLoginHandler(userName, userRole, userId);
-        setToken(token);
-        console.log(`este es el token ${token}`);
+        dataLoginHandler(userName, userRole, userId, token, userEmail);
+        
       } else {
         setErrors({ ...errors, exists: true });
         setEnteredEmail("");

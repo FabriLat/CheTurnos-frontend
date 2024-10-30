@@ -8,33 +8,38 @@ const userValueString = localStorage.getItem("userData");
 const userValue = userValueString ? JSON.parse(userValueString) : null;
 
 export const AuthenticationContextProvider = ({ children }) => {
-    const [token, setToken] = useState("");
-    const [user, setUser] = useState(userValue);
-    const [shopId, setShopId] = useState(null);
-    const [dataForRequest, setDataForRequest] = useState({
-      shopId: null,
-      serviceId: null,
-      providerId: null,
-      clientId: null,
-      dateAndHour: null,
-    });
+  const [token, setToken] = useState("");
+  const [user, setUser] = useState(userValue);
+  const [shopId, setShopId] = useState(null);
+  const [dataForRequest, setDataForRequest] = useState({
+    shopId: null,
+    serviceId: null,
+    providerId: null,
+    clientId: null,
+    dateAndHour: null,
+  });
 
-    const dataLoginHandler = (username, role, id) => {
-        localStorage.setItem("userData", JSON.stringify({ username, role, id }));
-        setUser({ username, role, id});
-        console.log(user);
-    };
+  const dataLoginHandler = (username, role, id, token, email) => {
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ username, role, id, email })
+    );
+    setUser({ username, role, id, email });
+    console.log("user", user);
+    setToken(token);
+    console.log("TOKEN DENTRO DEL CONTEXTO: ", token);
+  };
 
-    const setShopIdHandler = (id)=>{
-        setShopId(id); //Actualiza el id del shop
-    };
+  const setShopIdHandler = (id) => {
+    setShopId(id); //Actualiza el id del shop
+  };
 
-    const logoutHandler = () => {
-        localStorage.removeItem("userData");
-        setUser(null);
-        setToken("");
-        setShopId(null);
-    };
+  const logoutHandler = () => {
+    localStorage.removeItem("userData");
+    setUser(null);
+    setToken("");
+    setShopId(null);
+  };
 
   return (
     <AuthenticationContext.Provider
@@ -42,6 +47,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         token,
         setToken,
         user,
+        setUser,
         dataLoginHandler,
         logoutHandler,
         shopId,
