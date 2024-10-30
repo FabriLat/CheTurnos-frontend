@@ -115,7 +115,7 @@ const RegisterForm = () => {
           alt="Logo"
         />
         <div className="register">
-          <h2>Registración <img
+          <h2>Registro Usuario <img
             className="calendar"
             src={logo}
             alt="Logo"
