@@ -24,10 +24,13 @@ export const ShopContextProvider = ({ children }) => {
     const { user, token } = useContext(AuthenticationContext);
 
     //normal function section
-    const reqAppEmpHandler = async () => {
+    const reqEmpHandler = () => {
         if (empFlag) {
-            await getMyShopEmployees();
+            getMyShopEmployees();
         }
+    };
+
+    const reqAppHandler = () => {
         if (appFlag) {
             getMyShopAppointments();
         }
@@ -112,13 +115,14 @@ export const ShopContextProvider = ({ children }) => {
 
     const getMyShopEmployees = async () => {
 
-        await fetch(`https://localhost:7276/api/Employee/GetMyShopEmployees`,
+        await fetch(`https://localhost:7276/api/Employee/GetMyShopEmployees/${user.id}`,
             {
                 method: "GET",
-                headers: {
+                mode: "cors"
+                /*headers: {
                     "content-type": "application/json",
                     "authorization": `Bearer ${token}`
-                }
+                }*/
             })
                 .then(response => {
                     if (response.ok) {
@@ -152,7 +156,8 @@ export const ShopContextProvider = ({ children }) => {
             value={{
                 myShopAppointments,
                 myShopEmployees,
-                reqAppEmpHandler
+                reqEmpHandler,
+                reqAppHandler
             }}
         >
             {children}

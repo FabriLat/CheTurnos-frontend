@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import AddNewAppointmensForm from "../addNewAppointmentsForm/AddNewAppointmentsForm";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import { ShopContext } from "../../services/shop/ShopContext";
 import OwnerAppointmentsList from "../ownerAppointmentsList/OwnerAppointmentsList";
 import OwnerProviderButtonList from "../ownerProviderButtonList/OwnerProviderButtonList";
 import './Sidebar.css';
@@ -14,17 +15,18 @@ const OwnerPage = () => {
     const [slashLastShopApp, setSlashLastShopApp] = useState("");
     const [lastAppFlag, setLastAppFlag] = useState(false);
     const [showList, setShowList] = useState(false);
-    const [myShopAppointments, setMyShopAppointments] = useState("");
-    const [myShopEmployees, setMyShopEmployees] = useState("");
+    //const [myShopAppointments, setMyShopAppointments] = useState("");
+    //const [myShopEmployees, setMyShopEmployees] = useState("");
     const [providerAppointments, setProviderAppointments] = useState("");
     const [providerFlag, setProviderFlag] = useState(false);
     const [showProvList, setShowProvList] = useState(false);
     const [empFlag, setEmpFlag] = useState(false);
 
     const { token, user, setShopId } = useContext(AuthenticationContext);
+    const { myShopAppointments, myShopEmployees, reqEmpHandler, reqAppHandler } = useContext(ShopContext);
 
     //Guardar el shopId del Owner
-    const fetchDataUser = async () => {
+    /*const fetchDataUser = async () => {
         try {
             const response = await fetch(
                 `https://localhost:7276/api/Owner/GetOwnerById/${user.id}`,
@@ -42,7 +44,7 @@ const OwnerPage = () => {
         } catch (error) {
             console.error("Error:", error);
         }
-    };
+    };*/
 
     const changeFlag = () => {
         if (lastAppFlag) {
@@ -139,7 +141,6 @@ const OwnerPage = () => {
             })
     };
 
-
     const getMyShopAppointments = async () => { //devuevle nombres de proveedores, clientes, y servicios//
 
         await fetch(`https://localhost:7276/api/Appointment/GetAllApointmentsOfMyShop`, {
@@ -170,10 +171,10 @@ const OwnerPage = () => {
                 {
                     method: "GET",
                     mode: "cors"
-                    // headers: {
-                    //     "content-type": "application/json",
-                    //     "authorization": `Bearer ${token}`
-                    // }
+                    /*headers: {
+                        "content-type": "application/json",
+                        "authorization": `Bearer ${token}`
+                    }*/
                 })
             if (!response.ok) {
                 throw new Error("Error in obtaining user");
@@ -187,9 +188,8 @@ const OwnerPage = () => {
         }
     };
 
-    const applyAsync = async () => {
-        await fetchDataUser();
-        getMyShopEmployees()
+    const applyAsync = () => {
+        //await fetchDataUser();
     };
 
     /*useEffect(() => {
@@ -199,7 +199,7 @@ const OwnerPage = () => {
     }, [lastAppFlag]);*/
 
     useEffect(() => {
-        applyAsync();
+        reqEmpHandler();
     }, []);
 
     return (
