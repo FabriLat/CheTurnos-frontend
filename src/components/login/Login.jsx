@@ -95,6 +95,7 @@ const Login = () => {
         setErrors({ ...errors, exists: true });
         setEnteredEmail("");
         setEnteredPass("");
+        setLoading(false);
         return;
       }
     } catch (error) {
@@ -102,6 +103,7 @@ const Login = () => {
       setErrors({ ...errors, exists: true });
       setEnteredEmail("");
       setEnteredPass("");
+      setLoading(false);
       return;
     }
   };
