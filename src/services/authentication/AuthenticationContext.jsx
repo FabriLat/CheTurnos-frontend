@@ -8,8 +8,6 @@ const userValueString = localStorage.getItem("userData");
 const userValue = userValueString ? JSON.parse(userValueString) : null;
 const tokenValue = localStorage.getItem("token");
 
-
-
 export const AuthenticationContextProvider = ({ children }) => {
   const [token, setToken] = useState(tokenValue);  
   const [user, setUser] = useState(userValue);
@@ -30,7 +28,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     localStorage.setItem("token", token);
     setUser({ username, role, id, email, shopId });
     console.log("user", user);
-    setToken(tokenValue?.token);
+    setToken(tokenValue ? tokenValue : token);
   };
 
   const setShopIdHandler = (id) => {
