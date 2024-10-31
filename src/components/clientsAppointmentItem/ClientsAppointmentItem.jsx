@@ -16,7 +16,7 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
     };
 
     const handlebutton = () => {
-        console.log(`Cancelar turno ${id}` )
+        console.log(`Cancelar turno ${id}`)
         DeleteAppointment();
         //onRemoveAppointment(id) cuando se elimina/cancela el tunro se usa esta funcion 
         //para que se acutalize la lista de turnos.
@@ -40,7 +40,6 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
         }
     }
 
-
     return (
         <div>
             <Card key={id} style={{ border: '2px solid #0d6efd' }}>
@@ -52,12 +51,14 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
                         Negocio: {shopName}
                         <br />
                         Fecha y hora: {formatDateTime(dateAndHour)}
-                        <br/>
-                        {(isEmployee()&& clientName) ? (<>Nombre del Cliente: {(clientName)}</>):(<> Turno Libre </>) }
+                        <br />
+                        {(isEmployee()) &&
+                            (<> {(clientName) ? (<>Nombre del Cliente: {(clientName)}</>) : (<> Turno Libre </>)}</>)
+                        }
                     </Card.Title>
-                    <Button onClick={handlebutton} variant="danger">
+                    {(isEmployee()) && (<><Button onClick={handlebutton} variant="danger">
                         ¿Cancelar turno?
-                    </Button>
+                    </Button></>)}
                 </Card.Body>
             </Card>
 
