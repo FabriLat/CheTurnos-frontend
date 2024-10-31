@@ -11,32 +11,43 @@ const UserProfileModal = ({
   errorPassword,
 }) => {
   const [newName, setNewName] = useState(user.username);
-  const [password, setPassword] = useState("");
+  const [actualPassword,setActualPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     setNewName(user.username);
   }, [user]);
 
-  const handleInputChange = (e) => {
-    setNewName(e.target.value);
-  };
 
   const handleCancel = () => {
     setNewName(user.username);
-    setPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
     handleClose();
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setConfirmPassword(e.target.value);
+  const handleNewPasswordChange = (e) => {
+    setNewPassword(e.target.value);
+  };
+
+  const handleConfirmNewPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmNewPassword(value);
   };
 
   const submitHandler = () => {
-      handleConfirm(newName, password, confirmPassword);
+    if (newPassword !== confirmNewPassword) {
+      setErrorConfirmPassword("Las contraseñas no coinciden");
+    } else {
+      handleConfirm(user.username,newPassword, actualPassword);
       handleClose();
+    }
+  };
+
+  const handleActualPassword = (e) => {
+    setActualPassword(e.target.value);
   };
 
   return (
@@ -70,28 +81,52 @@ const UserProfileModal = ({
               type="text"
               name="username"
               value={newName}
-              onChange={handleInputChange}
-              isInvalid={!!errorUsername}
+              disabled
             />
             <Form.Control.Feedback type="invalid">
               {errorUsername}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label>Contraseña actual</Form.Label>
             <Form.Control
               type="password"
-              name="password"
-              value={password}
-              onChange={handlePasswordChange}
+              name="newPassword"
+              value={actualPassword}
+              onChange={handleActualPassword}
               isInvalid={!!errorPassword}
               required
             />
+
             <Form.Control.Feedback type="invalid">
               {errorPassword || "Debe ingresar una contraseña"}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Nueva contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              name="newPassword"
+              value={newPassword}
+              onChange={handleNewPasswordChange}
+              isInvalid={!!errorPassword}
+              required
+            />
+
+            <Form.Control.Feedback type="invalid">
+              {errorPassword || "Debe ingresar una contraseña"}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Confirmar nueva contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              name="confirmNewPassword"
+              value={confirmNewPassword}
+              onChange={handleConfirmNewPasswordChange}
+              isInvalid={!!errorConfirmPassword}
+              required
+            />
             <Form.Control.Feedback type="invalid">
               {errorConfirmPassword}
             </Form.Control.Feedback>
