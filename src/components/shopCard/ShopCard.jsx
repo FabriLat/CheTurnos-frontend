@@ -7,7 +7,7 @@ import { AuthenticationContext } from '../../services/authentication/Authenticat
 import { useNavigate } from 'react-router-dom';
 import useValidateUser from '../hookCustom/useValidateUser';
 
-const ShopCard = ({ name, address, phone, timeStart, timeEnd, idShop, onRemoveShop }) => {
+const ShopCard = ({ name, address, phone, timeStart, timeEnd, idShop, onRemoveShop,key }) => {
   const { setShopId } = useContext(AuthenticationContext);
   const { dataForRequest, setDataForRequest } = useContext(AuthenticationContext);
   const navigate = useNavigate();
