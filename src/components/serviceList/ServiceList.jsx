@@ -40,7 +40,7 @@ const ServiceList = () => {
       {loading ? (
         <Spiner />
       ) : (
-        <div className="outer-container">
+        <div className="outer-container-service-list">
           <div className="shop-list-container">
             <div className="title-service">
               <h1 className="service-title">
@@ -52,7 +52,6 @@ const ServiceList = () => {
               {services.map((s) => (
                 <ServiceCard
                   key={s.serviceId}
-                  idService={s.serviceId}
                   nameService={s.serviceName}
                   description={s.description}
                   duration={s.duration}

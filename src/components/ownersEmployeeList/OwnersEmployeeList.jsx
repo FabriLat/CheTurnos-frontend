@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import Spiner from '../spiner/Spiner';
 import OwnersEmployeeCard from '../ownersEmployeeCart/OwnersEmployeeCart';
 import { useNavigate } from 'react-router-dom';
+import './ownersEmployeeList.css'
 
 const OwnersEmployeeList = () => {
 
@@ -25,10 +26,10 @@ const OwnersEmployeeList = () => {
                 {loading ? (
                     <Spiner />
                 ) : (
-                    <div className="outer-container">
+                    <div className="outer-container-employees-list">
                         <div className="shop-list-container">
                             <div className="title-service">
-                                <h1 className="service-title">Lista de Empleados</h1> {/* Changed title for clarity */}
+                                <h1 className="service-title">Lista de Empleados:</h1> 
                             </div>
                             <Button variant="primary" onClick={handleButton}>
                                 Agregar nuevo empleado

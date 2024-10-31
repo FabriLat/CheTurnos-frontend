@@ -58,7 +58,7 @@ const ShopList = () => {
       {loading ? (
         <Spiner />
       ) : (
-        <div className="outer-container">
+        <div className="outer-container-shop-list">
           <div className="shop-list-container">
             <div className="title-container">
             <img

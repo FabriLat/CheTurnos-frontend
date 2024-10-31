@@ -42,20 +42,17 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
 
     return (
         <div>
-            <Card key={id} style={{ border: '2px solid #0d6efd' }}>
-                <Card.Header as="h5">Turno </Card.Header>
+            <Card key={id} style={{ border: '5px solid #0d6efd', borderRadius: '10%', backgroundColor:'#fcf7f7' }}>
+                <Card.Header as="h5" style={{ borderBottom: '5px solid #0d6efd', backgroundColor:'#fcf7f7', color: '#0d6efd' }}>Turno </Card.Header>
                 <Card.Body>
-                    <Card.Title>
-                        Servicio: {serviceName}
-                        <br />
-                        Negocio: {shopName}
-                        <br />
-                        Fecha y hora: {formatDateTime(dateAndHour)}
-                        <br />
-                        {(isEmployee()) &&
-                            (<> {(clientName) ? (<>Nombre del Cliente: {(clientName)}</>) : (<> Turno Libre </>)}</>)
-                        }
-                    </Card.Title>
+                <h6 style={{ color: '#0d6efd' }}>Servicio:</h6>
+                    <Card.Text>{serviceName}</Card.Text>
+
+                    <h6 style={{ color: '#0d6efd' }}>Negocio:</h6>
+                    <Card.Text>{shopName}</Card.Text>
+
+                    <h6 style={{ color: '#0d6efd' }}>Fecha y hora:</h6>
+                    <Card.Text>{formatDateTime(dateAndHour)}</Card.Text>
                     {(isEmployee()) && (<><Button onClick={handlebutton} variant="danger">
                         ¿Cancelar turno?
                     </Button></>)}

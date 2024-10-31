@@ -46,8 +46,8 @@ const ShopCard = ({ name, address, phone, timeStart, timeEnd, idShop, onRemoveSh
 
   return (
     <>
-      <Card key={idShop} style={{ border: '1px solid #6d21dd' }}>
-        <Card.Header style={{ color: '#6d21dd', backgroundColor: 'white', borderBottom: '3px solid #6d21dd' }} as="h5">{name}</Card.Header>
+      <Card key={idShop} style={{ border: '5px solid #6d21dd', borderRadius: '10%', backgroundColor:'#fcf7f7'}}>
+        <Card.Header style={{ color: '#6d21dd', backgroundColor: '#fcf7f7', borderBottom: '3px solid #6d21dd' }} as="h5">{name}</Card.Header>
         <Card.Body>
           <Card.Title>{address}</Card.Title>
           <Card.Text>
