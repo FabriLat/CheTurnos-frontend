@@ -6,6 +6,7 @@ import ShopList from "./components/shopList/ShopList";
 import ShopForm from "./components/shopForm/ShopForm";
 
 import { AuthenticationContextProvider } from "./services/authentication/AuthenticationContext";
+import { ShopContextProvider } from "./services/shop/ShopContext";
 import Homepage from "./components/homepage/Homepage";
 
 import ServiceList from "./components/serviceList/ServiceList";
@@ -172,7 +173,9 @@ function App() {
 
   return (
     <AuthenticationContextProvider>
-      <RouterProvider router={router} />
+      <ShopContextProvider>
+        <RouterProvider router={router} />
+      </ShopContextProvider>
     </AuthenticationContextProvider>
   );
 }
