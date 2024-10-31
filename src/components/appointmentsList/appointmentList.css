@@ -1,0 +1,16 @@
+.outer-container-appointment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e9ecef;
+  }
+
+  .appointment-list-container {
+    text-align: center;
+    width: 90%; 
+    background-color: #e9ecef; 
+    padding: 20px;
+    border-radius: 8px;
+    height: 95%;
+  }

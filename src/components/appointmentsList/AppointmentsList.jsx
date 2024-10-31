@@ -39,7 +39,7 @@ const AppointmentsList = () => {
         {loading ? (
           <Spiner />
         ) : (
-          <div className="outer-container">
+          <div className="outer-container-appointment">
             <div className="shop-list-container">
               <div className="title-service">
                 <h1 className="service-title">Turnos disponibles del empleado</h1>

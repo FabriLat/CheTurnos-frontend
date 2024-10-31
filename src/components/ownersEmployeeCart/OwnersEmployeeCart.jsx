@@ -34,13 +34,14 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onRemoveEmployee }) => {
 
     return (
         <div className="mt-4">
-            <Card key={employeeId} style={{border: '2px solid #0d6efd'}}>
-                <Card.Header as="h5">{name}</Card.Header>
+            <Card key={employeeId} style={{border: '5px solid #0d6efd', borderRadius: '10%', backgroundColor:'#fcf7f7'}}>
+                <Card.Header as="h5" style={{color:'#0d6efd',backgroundColor: '#fcf7f7', borderBottom: '3px solid #0d6efd'}}>{name}</Card.Header>
                 <Card.Body>
-                    <Card.Title>Email: {email}</Card.Title>
+                    <Card.Title>Email:</Card.Title>
+                    <Card.Text> {email}</Card.Text>
                     <Card.Text>
                         <br />
-                        <Button variant="primary" onClick={handlebutton}>
+                        <Button variant="danger" onClick={handlebutton}>
                             Eliminar Empleado
                         </Button>
                     </Card.Text>

@@ -36,7 +36,7 @@ const UserNav = () => {
     <Navbar className={`navbar-custom ${navActive ? 'active' : ''}`} variant="light">
       <Container fluid>
         <Row className="w-100 align-items-center">
-          <Col md={5}>
+          <Col md={3}>
             <Nav className="d-flex align-items-center">
               <Navbar.Brand>
                 <img
@@ -50,7 +50,7 @@ const UserNav = () => {
             </Nav>
           </Col>
           <Col md={1}></Col>
-          <Col md={6}>
+          <Col md={8}>
             <Nav className="d-flex justify-content-end align-items-center">
 
               {(isAdmin()) &&

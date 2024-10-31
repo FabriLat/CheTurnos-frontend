@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 import ClientsAppointmentItem from '../clientsAppointmentItem/ClientsAppointmentItem';
 import Spiner from '../spiner/Spiner';
 import useValidateUser from '../hookCustom/useValidateUser';
+import './clientAppointments.css'
 
 
 const ClientsAppointmentList = () => {
@@ -65,8 +66,8 @@ const ClientsAppointmentList = () => {
             {loading ? (
                 <Spiner />
             ) : (
-                <div className="outer-container">
-                    <div className="shop-list-container">
+                <div className="outer-container-appointment">
+                    <div className="appointment-list-container">
                         <div className="title-service">
                             <h1 className="service-title">Mis turnos</h1>
                         </div>

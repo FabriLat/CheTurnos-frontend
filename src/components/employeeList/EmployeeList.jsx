@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import Spiner from "../spiner/Spiner";
 import EmployeeCard from "../employeeCard/EmployeeCard";
+import './employeeList.css'
 
 const EmployeeList = () => {
   const { shopId, token } = useContext(AuthenticationContext);
@@ -73,7 +74,7 @@ const EmployeeList = () => {
       {loading ? (
         <Spiner />
       ) : (
-        <div className="outer-container">
+        <div className="outer-container-employee-list">
           <div className="shop-list-container">
             <div className="title-service">
               <h1 className="service-title"> Selecciona un empleado de {shopName.name}</h1>

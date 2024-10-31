@@ -15,8 +15,8 @@ const EmployeeCard = ({ employeeId, name, email, state }) => {
   
   return (
     <div className="mt-4">
-      <Card style={{border: '2px solid #2d9ae3'}}key={employeeId}>
-        <Card.Header style={{color:'#2d9ae3',backgroundColor: 'white', borderBottom: '3px solid #2d9ae3'}}as="h5">{name}</Card.Header>
+      <Card style={{border: '5px solid #2d9ae3', borderRadius: '10%', backgroundColor:'#fcf7f7'}}key={employeeId}>
+        <Card.Header style={{color:'#2d9ae3',backgroundColor: '#fcf7f7', borderBottom: '3px solid #2d9ae3'}}as="h5">{name}</Card.Header>
         <Card.Body>
           <Card.Text>
           </Card.Text>
