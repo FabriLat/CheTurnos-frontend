@@ -6,9 +6,12 @@ export const AuthenticationContext = createContext({});
 
 const userValueString = localStorage.getItem("userData");
 const userValue = userValueString ? JSON.parse(userValueString) : null;
+const tokenValue = localStorage.getItem("token");
+
+
 
 export const AuthenticationContextProvider = ({ children }) => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(tokenValue);  
   const [user, setUser] = useState(userValue);
   const [shopId, setShopId] = useState(null);
   const [dataForRequest, setDataForRequest] = useState({
@@ -18,16 +21,16 @@ export const AuthenticationContextProvider = ({ children }) => {
     clientId: null,
     dateAndHour: null,
   });
-
-  const dataLoginHandler = (username, role, id, token, email) => {
+  const dataLoginHandler = (username, role, id, token, email, shopId) => {
+    console.log("SHOP ID LOCO; ",shopId)
     localStorage.setItem(
       "userData",
-      JSON.stringify({ username, role, id, email })
+      JSON.stringify({ username, role, id, email,shopId })
     );
-    setUser({ username, role, id, email });
+    localStorage.setItem("token", token);
+    setUser({ username, role, id, email, shopId });
     console.log("user", user);
-    setToken(token);
-    console.log("TOKEN DENTRO DEL CONTEXTO: ", token);
+    setToken(tokenValue?.token);
   };
 
   const setShopIdHandler = (id) => {
@@ -36,6 +39,7 @@ export const AuthenticationContextProvider = ({ children }) => {
 
   const logoutHandler = () => {
     localStorage.removeItem("userData");
+    localStorage.removeItem("token");
     setUser(null);
     setToken("");
     setShopId(null);
