@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import logo from "./CheTurnosIco.png";
 import executive from "./executive.png";
+import Spiner from "../spiner/Spiner";
+
 
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPass, setEnteredPass] = useState("");
   const userEmailRef = useRef(null);
   const passRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+
   const [errors, setErrors] = useState({
     email: false,
     pass: false,
@@ -22,7 +26,7 @@ const Login = () => {
     navegate("/PassResetForm");
   };
 
-  const { dataLoginHandler, user} = useContext(
+  const { dataLoginHandler, user } = useContext(
     AuthenticationContext
   );
 
@@ -58,6 +62,7 @@ const Login = () => {
 
   const fetchUser = async () => {
     try {
+      setLoading(true)
       const response = await fetch(
         "https://localhost:7276/api/Authentication",
         {
@@ -85,6 +90,7 @@ const Login = () => {
         const shopId = decodedToken.shopId;
         console.log("shopId DESDE LOGIN", shopId);
         dataLoginHandler(userName, userRole, userId, token, email, shopId);
+        setLoading(false);
       } else {
         setErrors({ ...errors, exists: true });
         setEnteredEmail("");
@@ -134,55 +140,61 @@ const Login = () => {
 
   return (
     <>
-      <div className="outer-container-login">
-        <img className="executive" src={executive} alt="Logo" />
-        <div className="login">
-          <img className="calendar" src={logo} alt="Logo" />
-          <form className="form-login" onSubmit={loginHandler}>
-            <div className="form-group">
-              <label>Email:</label>
-              <input
-                ref={userEmailRef}
-                value={enteredEmail}
-                type="text"
-                placeholder="usuario@ejemplo.com"
-                onChange={emailHandler}
-                className={errors.email ? "input-error" : ""}
-              />
+      {loading ? (
+        <Spiner />
+      ) :
+        (
+          <div className="outer-container-login">
+            <img className="executive" src={executive} alt="Logo" />
+            <div className="login">
+              <img className="calendar" src={logo} alt="Logo" />
+              <form className="form-login" onSubmit={loginHandler}>
+                <div className="form-group">
+                  <label>Email:</label>
+                  <input
+                    ref={userEmailRef}
+                    value={enteredEmail}
+                    type="text"
+                    placeholder="usuario@ejemplo.com"
+                    onChange={emailHandler}
+                    className={errors.email ? "input-error" : ""}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Contraseña:</label>
+                  <input
+                    ref={passRef}
+                    value={enteredPass}
+                    type="password"
+                    placeholder="Contraseña"
+                    onChange={passHandler}
+                    className={errors.pass ? "input-error" : ""}
+                  />
+                </div>
+                <button type="submit" className="login-button">
+                  Login
+                </button>
+                <br />
+                <a
+                  href="#"
+                  onClick={handlebuttonForgotPassword}
+                  className="forgot-password-link"
+                >
+                  ¿Olvidaste tu contraseña?
+                </a>
+                {errors.exists && (
+                  <div className="alert alert-danger">Credenciales inválidas</div>
+                )}
+                {(errors.email || errors.pass) && (
+                  <div className="alert alert-warning">
+                    Debes completar todos los campos
+                  </div>
+                )}
+              </form>
             </div>
-            <div className="form-group">
-              <label>Contraseña:</label>
-              <input
-                ref={passRef}
-                value={enteredPass}
-                type="password"
-                placeholder="Contraseña"
-                onChange={passHandler}
-                className={errors.pass ? "input-error" : ""}
-              />
-            </div>
-            <button type="submit" className="login-button">
-              Login
-            </button>
-            <br />
-            <a
-              href="#"
-              onClick={handlebuttonForgotPassword}
-              className="forgot-password-link"
-            >
-              ¿Olvidaste tu contraseña?
-            </a>
-            {errors.exists && (
-              <div className="alert alert-danger">Credenciales inválidas</div>
-            )}
-            {(errors.email || errors.pass) && (
-              <div className="alert alert-warning">
-                Debes completar todos los campos
-              </div>
-            )}
-          </form>
-        </div>
-      </div>
+          </div>
+        )
+      }
     </>
   );
 };
