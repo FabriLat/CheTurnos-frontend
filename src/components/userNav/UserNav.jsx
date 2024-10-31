@@ -59,10 +59,12 @@ const UserNav = () => {
                 </>
               }
               {(isClient() || isAdmin()) &&
-                <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/shopList")}>Negocios</Button></>
+                <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/shopList")}>Negocios</Button>
+                </>
               }
               {(isClient() || isEmployee()) &&
-                <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/ClientAppointmentsList")}>Mis turnos</Button></>
+                <><Button variant="outline-light" className="mx-2" onClick={() => navigate("/ClientAppointmentsList")}>Mis turnos</Button>
+                </>
               }
 
 
@@ -82,7 +84,10 @@ const UserNav = () => {
                 </>
               }
               {(isClient() || isEmployee() || isOwner() || isAdmin()) &&
-                <Button variant="light" className="mx-2" onClick={handleLogoutButton}>Cerrar Sesión</Button>
+                <>
+                  <Button variant="outline-light" className="mx-2" onClick={() => navigate("/userProfile")}>Perfil</Button>
+                  <Button variant="light" className="mx-2" onClick={handleLogoutButton}>Cerrar Sesión</Button>
+                </>
               }
             </Nav>
           </Col>

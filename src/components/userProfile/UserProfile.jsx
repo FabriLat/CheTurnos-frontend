@@ -1,16 +1,22 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import { Button } from "react-bootstrap";
 import UserProfileModal from "./userProfileModal/UserProfileModal";
 import UserProfilePass from "./userProfileModal/UserProfilePass";
 
 const UserProfile = () => {
-  const { user, token, setUser } = useContext(AuthenticationContext);
-  console.log("User:", user);
-  console.log("Token:", token);
-  const shopId = user.shopId;
-  const email = user.email;
+  const { user, token, setUser, setToken } = useContext(AuthenticationContext);
   console.log(user.shopId);
+
+  useEffect(() => {
+    const tokenValue = localStorage.getItem("token");
+    const userValueString = localStorage.getItem("userData");
+    const userValue = userValueString ? JSON.parse(userValueString) : null;
+    if (tokenValue && userValue) {
+      setToken(tokenValue);
+      setUser(userValue);
+    }
+  }, []);
 
   const [showModal, setShowModal] = useState(false);
   const [passShowModal, setPassShowModal] = useState(false);
@@ -36,9 +42,9 @@ const UserProfile = () => {
     setErrorPassword("");
   };
 
-  const updateClientData = async (username, actualPassword, newPassword) => {
+  const updateClientData = async (username, newPassword, confirmationPassword) => {
     const endpoint = "https://localhost:7276/api/Client/ModifyClientData";
-    console.log("dentro del fetch: ", username, actualPassword, newPassword);
+    console.log("dentro del fetch: ", username, newPassword, confirmationPassword);
     try {
       const response = await fetch(endpoint, {
         method: "PUT",
@@ -48,8 +54,8 @@ const UserProfile = () => {
         },
         body: JSON.stringify({
           name: username,
-          actualPassword: actualPassword,
           newPassword: newPassword,
+          confirmationPassword: confirmationPassword,
         }),
       });
       if (!response.ok) {
@@ -63,8 +69,8 @@ const UserProfile = () => {
     }
   };
 
-  const updateEmployeeData = async (username, actualPassword, newPassword) => {
-    const endpoint = `https://localhost:7276/api/Employee/Update/${user.id}`;
+  const updateEmployeeData = async (username, newPassword, confirmationPassword) => {
+    const endpoint = `https://localhost:7276/api/Employee/Update`;
     try {
       const response = await fetch(endpoint, {
         method: "PUT",
@@ -74,8 +80,8 @@ const UserProfile = () => {
         },
         body: JSON.stringify({
           name: username,
-          actualPassword: actualPassword,
           newPassword: newPassword,
+          confirmationPassword: confirmationPassword,
           
         }),
       });
@@ -90,7 +96,7 @@ const UserProfile = () => {
     }
   };
 
-  const updateOwnerData = async (username, actualPassword, newPassword) => {
+  const updateOwnerData = async (username, newPassword, confirmationPassword) => {
     const endpoint = "https://localhost:7276/api/Owner/ModifyOwnerData";
 
     try {
@@ -102,8 +108,8 @@ const UserProfile = () => {
         },
         body: JSON.stringify({
           name: username,
-          actualPassword: actualPassword,
           newPassword: newPassword,
+          confirmationPassword: confirmationPassword,
         }),
       });
       if (!response.ok) {
@@ -133,7 +139,7 @@ const UserProfile = () => {
     } else if (!actualPassword) {
       setErrorPassword("La contraseña es obligatoria");
     } else {
-      updateUserData(username, newPassword, actualPassword);
+      updateUserData(username,actualPassword, newPassword );
       setNewUserName(username);
       handleClose();
     }

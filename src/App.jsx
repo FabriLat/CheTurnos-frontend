@@ -24,7 +24,6 @@ import Users from "./components/users/Users";
 import RegisterScreen from "./components/registerScreen/RegisterScreen";
 import UserProfile from "./components/userProfile/UserProfile";
 
-
 function App() {
   const router = createBrowserRouter([
     {
@@ -111,7 +110,7 @@ function App() {
       path: "/OwnerEmployeeAppointments",
       element: (
         <MainLayout>
-          <OwnerAppointmentsList/>
+          <OwnerAppointmentsList />
         </MainLayout>
       ),
     },
@@ -119,7 +118,7 @@ function App() {
       path: "/ClientAppointmentsList",
       element: (
         <MainLayout>
-          <ClientsAppointmentList/>
+          <ClientsAppointmentList />
         </MainLayout>
       ),
     },
@@ -127,7 +126,7 @@ function App() {
       path: "/OwnersEmployeeList",
       element: (
         <MainLayout>
-          <OwnersEmployeeList/>
+          <OwnersEmployeeList />
         </MainLayout>
       ),
     },
@@ -135,22 +134,21 @@ function App() {
       path: "/OwnersEmployeeRegister",
       element: (
         <MainLayout>
-          <OwnersEmployeeRegister/>
+          <OwnersEmployeeRegister />
         </MainLayout>
       ),
     },
-    {path: "/userProfile",
+    {
+      path: "/userProfile",
       element: (
         <MainLayout>
-          <UserProfile/>
+          <UserProfile />
         </MainLayout>
-      )
-     },
+      ),
+    },
     {
       path: "/*",
-      element: (
-        <NotFound />
-      ),
+      element: <NotFound />,
     },
     {
       path: "/appointmentList",
@@ -164,11 +162,18 @@ function App() {
       path: "/Users",
       element: (
         <MainLayout>
-          <Users/>
+          <Users />
         </MainLayout>
       ),
     },
-    
+    {
+      path: "/userProfile",
+      element: (
+        <MainLayout>
+          <UserProfile />
+        </MainLayout>
+      ),
+    },
   ]);
 
   return (
