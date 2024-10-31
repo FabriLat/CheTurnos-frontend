@@ -4,8 +4,8 @@ import Spiner from "../spiner/Spiner";
 import EmployeeCard from "../employeeCard/EmployeeCard";
 
 const EmployeeList = () => {
-  const { shopId } = useContext(AuthenticationContext);
-
+  const { shopId, token } = useContext(AuthenticationContext);
+  
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [shopName, setShopName] = useState("");
@@ -26,6 +26,10 @@ const EmployeeList = () => {
         `https://localhost:7276/api/Shop/GetById/${shopId}`,
         {
           method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`, // Agregar el token aquí
+          },
           mode: "cors",
         }
       );
@@ -46,6 +50,10 @@ const EmployeeList = () => {
         `https://localhost:7276/api/Employee/GetAllByShopId/${shopId}`,
         {
           method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`, 
+          },
           mode: "cors",
         }
       );
