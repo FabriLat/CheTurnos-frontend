@@ -22,6 +22,7 @@ import OwnersEmployeeList from "./components/ownersEmployeeList/OwnersEmployeeLi
 import OwnersEmployeeRegister from "./components/ownersEmployeeRegister/ownersEmployeeRegister";
 import Users from "./components/users/Users";
 import RegisterScreen from "./components/registerScreen/RegisterScreen";
+import UserProfile from "./components/userProfile/UserProfile";
 
 
 function App() {
@@ -138,6 +139,13 @@ function App() {
         </MainLayout>
       ),
     },
+    {path: "/userProfile",
+      element: (
+        <MainLayout>
+          <UserProfile/>
+        </MainLayout>
+      )
+     },
     {
       path: "/*",
       element: (

@@ -5,6 +5,7 @@ import Carousel from "./carousel/Carousel";
 import Card from "./card/Card"
 import CarouselCheTurnos from "./carousel2/CarouselCheTurnos";
 import FAQ from "./faq/FAQ";
+import { useContext } from "react";
 
 const Homepage = () => {
   return (

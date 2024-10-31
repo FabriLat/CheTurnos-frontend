@@ -2,8 +2,8 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import logo from './CheTurnosIco.png';
-import executive from './executive.png';
+import logo from "./CheTurnosIco.png";
+import executive from "./executive.png";
 
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -20,9 +20,11 @@ const Login = () => {
 
   const handlebuttonForgotPassword = () => {
     navegate("/PassResetForm");
-  }
+  };
 
-  const { dataLoginHandler, user, setToken } = useContext(AuthenticationContext);
+  const { dataLoginHandler, user} = useContext(
+    AuthenticationContext
+  );
 
   const emailHandler = (event) => {
     setErrors({ ...errors, email: false });
@@ -56,17 +58,20 @@ const Login = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch("https://localhost:7276/api/Authentication", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPass,
-        }),
-      });
+      const response = await fetch(
+        "https://localhost:7276/api/Authentication",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: enteredEmail,
+            password: enteredPass,
+          }),
+        }
+      );
 
       const token = await response.text();
 
@@ -76,10 +81,10 @@ const Login = () => {
         const userId = decodedToken.sub;
         const userRole = decodedToken.role;
         const userName = decodedToken.given_name;
-
-        dataLoginHandler(userName, userRole, userId);
-        setToken(token);
-        console.log(`este es el token ${token}`);
+        const email = decodedToken.email;
+        const shopId = decodedToken.shopId;
+        console.log("shopId DESDE LOGIN", shopId);
+        dataLoginHandler(userName, userRole, userId, token, email, shopId);
       } else {
         setErrors({ ...errors, exists: true });
         setEnteredEmail("");
@@ -113,34 +118,26 @@ const Login = () => {
   useEffect(() => {
     if (user != null) {
       if (user.role == "Owner") {
-        navegate("/ownerPage")
+        navegate("/ownerPage");
       }
-      if(user.role == "Client"){
-        navegate('/shopList');
+      if (user.role == "Client") {
+        navegate("/shopList");
       }
-      if(user.role == "Employee"){
-        navegate('/ClientAppointmentsList');
+      if (user.role == "Employee") {
+        navegate("/ClientAppointmentsList");
       }
-      if(user.role == "SysAdmin"){
-        navegate('/Users');
+      if (user.role == "SysAdmin") {
+        navegate("/Users");
       }
     }
-  }, [user])
+  }, [user]);
 
   return (
     <>
       <div className="outer-container-login">
-      <img
-                  className="executive"
-                  src={executive}
-                  alt="Logo"
-                />
+        <img className="executive" src={executive} alt="Logo" />
         <div className="login">
-        <img
-                  className="calendar"
-                  src={logo}
-                  alt="Logo"
-                />
+          <img className="calendar" src={logo} alt="Logo" />
           <form className="form-login" onSubmit={loginHandler}>
             <div className="form-group">
               <label>Email:</label>
@@ -168,9 +165,21 @@ const Login = () => {
               Login
             </button>
             <br />
-            <a href="#" onClick={handlebuttonForgotPassword} className="forgot-password-link">¿Olvidaste tu contraseña?</a>
-            {errors.exists && <div className="alert alert-danger">Credenciales inválidas</div>}
-            {(errors.email || errors.pass) && <div className="alert alert-warning">Debes completar todos los campos</div>}
+            <a
+              href="#"
+              onClick={handlebuttonForgotPassword}
+              className="forgot-password-link"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+            {errors.exists && (
+              <div className="alert alert-danger">Credenciales inválidas</div>
+            )}
+            {(errors.email || errors.pass) && (
+              <div className="alert alert-warning">
+                Debes completar todos los campos
+              </div>
+            )}
           </form>
         </div>
       </div>
