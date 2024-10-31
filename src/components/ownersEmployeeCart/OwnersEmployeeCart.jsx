@@ -3,12 +3,11 @@ import { AuthenticationContext } from "../../services/authentication/Authenticat
 import { useContext } from "react";
 import PropTypes from 'prop-types';
 
-const OwnersEmployeeCard = ({ employeeId, name, email, onfetch }) => {
+const OwnersEmployeeCard = ({ employeeId, name, email, onRemoveEmployee }) => {
     const { token } = useContext(AuthenticationContext);
     const handlebutton = () => {
         //Llamar a la api para eleiminar empleado.
         deleteEmployee()
-        //onfetch();
     };
 
     const deleteEmployee = async () => {
@@ -27,6 +26,7 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onfetch }) => {
             if (!response.ok) {
                 throw new Error("Error deleting employee");
             }
+            onRemoveEmployee(employeeId);
         } catch (error) {
             console.error("Error:", error);
         }
@@ -54,7 +54,7 @@ OwnersEmployeeCard.propTypes = {
     employeeId: PropTypes.number,
     name: PropTypes.string,
     email: PropTypes.string,
-    onfetch: PropTypes.func
+    onRemoveEmployee: PropTypes.func
 }
 
 export default OwnersEmployeeCard;
