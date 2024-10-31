@@ -19,9 +19,7 @@ const OwnersEmployeeList = () => {
         navegate("/OwnersEmployeeRegister");
     }
 
-    return (
-        <div>
-            <div>
+    return (<>
                 {loading ? (
                     <Spiner />
                 ) : (
@@ -47,8 +45,7 @@ const OwnersEmployeeList = () => {
                         </div>
                     </div>
                 )}
-            </div>
-        </div>
+           </>
     );
 };
 

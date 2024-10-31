@@ -1,10 +1,10 @@
 import { Button, Card } from "react-bootstrap";
-
+import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import { useContext } from "react";
 import PropTypes from 'prop-types';
 
 const OwnersEmployeeCard = ({ employeeId, name, email, onfetch }) => {
-
+    const { token } = useContext(AuthenticationContext);
     const handlebutton = () => {
         //Llamar a la api para eleiminar empleado.
         deleteEmployee()
@@ -17,6 +17,10 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onfetch }) => {
                 `https://localhost:7276/api/employee/delete/${employeeId}`,
                 {
                     method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: `Bearer ${token}`,
+                      },
                     mode: "cors"
                 }
             );
