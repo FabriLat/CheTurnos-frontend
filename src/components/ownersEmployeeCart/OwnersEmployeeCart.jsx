@@ -8,7 +8,7 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onfetch }) => {
     const handlebutton = () => {
         //Llamar a la api para eleiminar empleado.
         deleteEmployee()
-        onfetch();
+        //onfetch();
     };
 
     const deleteEmployee = async () => {
