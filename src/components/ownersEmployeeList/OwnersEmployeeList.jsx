@@ -76,10 +76,10 @@ const OwnersEmployeeList = () => {
         {loading ? (
             <Spiner />
         ) : (
-            <div className="outer-container">
+            <div className="outer-container-employees-list">
                 <div className="shop-list-container">
                     <div className="title-service">
-                        <h1 className="service-title">Lista de Empleados</h1> {/* Changed title for clarity */}
+                        <h1 className="service-title">Lista de Empleados:</h1> 
                     </div>
                     <Button variant="primary" onClick={handleButton}>
                         Agregar nuevo empleado
