@@ -23,6 +23,8 @@ import OwnersEmployeeRegister from "./components/ownersEmployeeRegister/ownersEm
 import Users from "./components/users/Users";
 import RegisterScreen from "./components/registerScreen/RegisterScreen";
 import UserProfile from "./components/userProfile/UserProfile";
+import ServiceForm from "./components/serviceForm/serviceForm";
+import OwnerForm from "./components/ownerForm/ownerForm";
 
 function App() {
   const router = createBrowserRouter([
@@ -171,6 +173,22 @@ function App() {
       element: (
         <MainLayout>
           <UserProfile />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/OwnerForm",
+      element: (
+        <MainLayout>
+          <OwnerForm/>
+        </MainLayout>
+      ),
+    },
+    {
+      path: "/ServiceForm",
+      element: (
+        <MainLayout>
+          <ServiceForm />
         </MainLayout>
       ),
     },
