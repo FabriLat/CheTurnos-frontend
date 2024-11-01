@@ -81,7 +81,7 @@ const OwnersEmployeeList = () => {
                     <div className="title-service">
                         <h1 className="service-title">Lista de Empleados:</h1> 
                     </div>
-                    <Button variant="primary" onClick={handleButton}>
+                    <Button style={{backgroundColor:'#6d21dd'}} onClick={handleButton}>
                         Agregar nuevo empleado
                     </Button>
 
