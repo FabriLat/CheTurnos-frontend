@@ -55,16 +55,14 @@ const OwnerAppointmentsList = ({ appointmentsArray, employeesArray }) => {
             <OwnerAppointmentItem
               key={a.id}
               diaYHora={formatDateTime(a.dateAndHour)}
-
+              status={a.status}
               proveedor={a.providerId}
               servicio={a.serviceName}
               cliente={a.clientName}
-
             />
           ))}
         </div>
       ) : (
-        
         <div className="no-appointments-container">
           <h3 className="no-appointments">No hay turnos almacenados</h3>
         </div>
