@@ -48,7 +48,7 @@ const OwnersEmployeeList = () => {
                 // Procesar los datos aquí
                 console.log(data);
                 setMyShopEmployees(data);
-                setEmpFlag(false);
+                //setEmpFlag(false);
                 console.log(`My shop employees: ${data}`);
             })
             .catch((error) => {

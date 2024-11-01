@@ -7,7 +7,6 @@ const userValueString = localStorage.getItem("userData");
 const userValue = userValueString ? JSON.parse(userValueString) : null;
 
 export const ShopContextProvider = ({ children }) => {
-    const [storedUser, setStoredUser] = useState(userValue);
 
     //my shop global states section
     const [myShopAppointments, setMyShopAppointments] = useState("");
@@ -48,6 +47,10 @@ export const ShopContextProvider = ({ children }) => {
 
     const reqShopDataHandler = () => {
         //fetch aquí
+    };
+
+    const deleteAppHandler = (newArray) => {
+        setMyShopAppointments(newArray);
     };
 
     //request functions section
@@ -172,6 +175,7 @@ export const ShopContextProvider = ({ children }) => {
                 reqEmpHandler,
                 reqAppHandler,
                 reqLastAppHandler,
+                deleteAppHandler,
                 setAppFlag,
                 setLastAppFlag
             }}
