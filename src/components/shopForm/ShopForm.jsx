@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import logo from './CheTurnosIco.png';
 import './shopForm.css';
 import { useNavigate } from "react-router-dom";
+import Spiner from "../spiner/Spiner";
 
 const daysOfWeek = [
     { value: 1, label: "Lunes" },
@@ -28,6 +29,7 @@ const ShopForm = () => {
     const timeEndMinRef = useRef(null);
     const navegate = useNavigate();
 
+    const [loading, setLoading] = useState(false);
 
 
     const [formData, setFormData] = useState({
@@ -35,10 +37,10 @@ const ShopForm = () => {
         address: "",
         phone: "",
         email: "",
-        type: "",
+        type: "1",
         imgUrl: "",
         isPremium: false,
-        appointmentFrequency: "",
+        appointmentFrequency: "30", //por defecot son 30 minutos, esto no se usa en el front. 
         timeStart: { hours: "", minutes: "" },
         timeEnd: { hours: "", minutes: "" },
         //startHour: "",
@@ -53,8 +55,8 @@ const ShopForm = () => {
         address: false,
         phone: false,
         email: false,
-        type: false,
-        appointmentFrequency: false,
+        //type: false,
+        //appointmentFrequency: false,
         timeStart: false,
         timeEnd: false,
         workDays: false,
@@ -90,6 +92,7 @@ const ShopForm = () => {
     };
 
     const registerShop = async () => {
+        setLoading(true)
         try {
             const response = await fetch("https://localhost:7276/api/Shop/Create", {
                 method: "POST",
@@ -118,6 +121,7 @@ const ShopForm = () => {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error("Datos del error:", errorData.errors);
+                setLoading(false);
                 const errorMessages = Object.values(errorData.errors)
                     .flat()
                     .join(", ");
@@ -126,11 +130,14 @@ const ShopForm = () => {
 
             const data = await response.json();
             console.log("Tienda registrada:", data);
+            setLoading(false);
             alert("Tienda registrada exitosamente");
+            navegate("/OwnerForm");
 
         } catch (error) {
             console.error("Error al registrar la tienda:", error);
             alert(error.message);
+            setLoading(false);
         }
     };
 
@@ -141,8 +148,8 @@ const ShopForm = () => {
         const address = addressRef.current.value;
         const phone = phoneRef.current.value;
         const email = emailRef.current.value;
-        const type = typeRef.current.value;
-        const appointmentFrequency = appointmentFrequencyRef.current.value;
+        // const type = typeRef.current.value;
+        //const appointmentFrequency = appointmentFrequencyRef.current.value;
         const timeStartHours = timeStartHourRef.current.value;
         const timeStartMinutes = timeStartMinRef.current.value;
         const timeEndHours = timeEndHourRef.current.value;
@@ -179,19 +186,19 @@ const ShopForm = () => {
             setErrors((prevErrors) => ({ ...prevErrors, email: false }));
         }
 
-        if (!type) {
-            setErrors((prevErrors) => ({ ...prevErrors, type: true }));
-            formIsValid = false;
-        } else {
-            setErrors((prevErrors) => ({ ...prevErrors, type: false }));
-        }
+        // if (!type) {
+        //     setErrors((prevErrors) => ({ ...prevErrors, type: true }));
+        //     formIsValid = false;
+        // } else {
+        //     setErrors((prevErrors) => ({ ...prevErrors, type: false }));
+        // }
 
-        if (!appointmentFrequency || isNaN(appointmentFrequency)) {
-            setErrors((prevErrors) => ({ ...prevErrors, appointmentFrequency: true }));
-            formIsValid = false;
-        } else {
-            setErrors((prevErrors) => ({ ...prevErrors, appointmentFrequency: false }));
-        }
+        // if (!appointmentFrequency || isNaN(appointmentFrequency)) {
+        //     setErrors((prevErrors) => ({ ...prevErrors, appointmentFrequency: true }));
+        //     formIsValid = false;
+        // } else {
+        //     setErrors((prevErrors) => ({ ...prevErrors, appointmentFrequency: false }));
+        // }
 
         if (!timeStartHours || !timeStartMinutes) {
             setErrors((prevErrors) => ({ ...prevErrors, timeStart: true }));
@@ -222,12 +229,13 @@ const ShopForm = () => {
 
         if (formIsValid) {
             registerShop();
-            navegate("/OwnerForm");
         }
     };
 
     return (
-        <>
+        <>{loading ? (
+            <Spiner />
+        ) : (
             <div className="outer-container-shop-register">
                 <img
                     className="executive"
@@ -322,7 +330,7 @@ const ShopForm = () => {
                             )}
                         </div>
 
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label>Tipo de Negocio:</label>
                             <select
                                 ref={typeRef}
@@ -338,9 +346,9 @@ const ShopForm = () => {
                             {errors.type && (
                                 <div className="alert alert-warning">Completa el campo.</div>
                             )}
-                        </div>
+                        </div> */}
 
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label>Frecuencia de Citas:</label>
                             <input
                                 ref={appointmentFrequencyRef}
@@ -354,7 +362,7 @@ const ShopForm = () => {
                             {errors.appointmentFrequency && (
                                 <div className="alert alert-warning">Completa el campo.</div>
                             )}
-                        </div>
+                        </div> */}
 
                         <div className="form-group">
                             <label>Hora de Inicio:</label>
@@ -428,6 +436,7 @@ const ShopForm = () => {
                     </form>
                 </div>
             </div>
+        )}
         </>
     );
 };

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Spiner from "../spiner/Spiner";
 
 const ServiceForm = () => {
     const nameRef = useRef(null);
@@ -10,8 +11,10 @@ const ServiceForm = () => {
     const durationMinutesRef = useRef(null);
     const shopIdRef = useRef(null);
     const navegate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    
 
-    const [newShopId, setShopId] = useState();
+    const [newShopId, setShopId] = useState('0');
 
 
     const [formData, setFormData] = useState({
@@ -53,6 +56,8 @@ const ServiceForm = () => {
     };
 
     const registerService = async () => {
+        setLoading(true)
+        const durationString = `${formData.duration.hours || "00"}:${formData.duration.minutes || "00"}:00`;
         try {
             const response = await fetch("https://localhost:7276/api/Service/Create", {
                 method: 'POST',
@@ -63,16 +68,14 @@ const ServiceForm = () => {
                     name: formData.name,
                     description: formData.description,
                     price: parseFloat(formData.price),
-                    duration: {
-                        hours: parseInt(formData.duration.hours, 10),
-                        minutes: parseInt(formData.duration.minutes, 10),
-                    },
+                    duration: durationString,
                     shopId: parseInt(formData.shopId, 10),
                 }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
+                setLoading(false)
                 const errorMessages = Object.values(errorData.errors)
                     .flat()
                     .join(", ");
@@ -80,6 +83,7 @@ const ServiceForm = () => {
             }
 
             alert("Servicio registrado exitosamente");
+            setLoading(false);
             setFormData({
                 name: "",
                 description: "",
@@ -87,40 +91,14 @@ const ServiceForm = () => {
                 duration: { hours: "", minutes: "" },
                 shopId: "",
             });
+
+            navegate("/login");
+
         } catch (error) {
             alert(error.message);
+            setLoading(false);
         }
     };
-
-    const getIdShop = async ()=> {
-        try {
-            const response = await fetch("", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                mode: "cors",
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                const errorMessages = Object.values(errorData.errors)
-                    .flat()
-                    .join(", ");
-                throw new Error(`Errores de validación: ${errorMessages}`);
-            }
-            const NewShopData = await response.json();
-            setShopId(NewShopData.Id); //Guarda el id del ultimo shop creado.
-            console.log(NewShopData);
-        } catch (error) {
-            alert(error.message);
-        }
-    }
-    
-    useEffect(()=>{
-        getIdShop();
-    },[])
-
 
 
 
@@ -166,83 +144,85 @@ const ServiceForm = () => {
 
         if (formIsValid) {
             registerService();
-            
-            navegate("/login");
         }
     };
 
     return (
-        <div className="service-form-container">
-            <h2>Registrar Servicio</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Nombre del Servicio:</label>
-                    <input
-                        ref={nameRef}
-                        type="text"
-                        placeholder="Introduce el nombre del servicio"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className={errors.name ? "input-error" : ""}
-                    />
-                    {errors.name && <div className="alert alert-warning">Completa el campo.</div>}
-                </div>
+        <>
+            {loading ? (
+                <Spiner />
+            ) : (
+                <div className="service-form-container">
+                    <h2>Registrar Servicio</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>Nombre del Servicio:</label>
+                            <input
+                                ref={nameRef}
+                                type="text"
+                                placeholder="Introduce el nombre del servicio"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className={errors.name ? "input-error" : ""}
+                            />
+                            {errors.name && <div className="alert alert-warning">Completa el campo.</div>}
+                        </div>
 
-                <div className="form-group">
-                    <label>Descripción:</label>
-                    <input
-                        ref={descriptionRef}
-                        type="text"
-                        placeholder="Introduce la descripción"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        className={errors.description ? "input-error" : ""}
-                    />
-                    {errors.description && <div className="alert alert-warning">Completa el campo.</div>}
-                </div>
+                        <div className="form-group">
+                            <label>Descripción:</label>
+                            <input
+                                ref={descriptionRef}
+                                type="text"
+                                placeholder="Introduce la descripción"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                className={errors.description ? "input-error" : ""}
+                            />
+                            {errors.description && <div className="alert alert-warning">Completa el campo.</div>}
+                        </div>
 
-                <div className="form-group">
-                    <label>Precio:</label>
-                    <input
-                        ref={priceRef}
-                        type="number"
-                        placeholder="Introduce el precio"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        className={errors.price ? "input-error" : ""}
-                    />
-                    {errors.price && <div className="alert alert-warning">Completa el campo.</div>}
-                </div>
+                        <div className="form-group">
+                            <label>Precio:</label>
+                            <input
+                                ref={priceRef}
+                                type="number"
+                                placeholder="Introduce el precio"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleChange}
+                                className={errors.price ? "input-error" : ""}
+                            />
+                            {errors.price && <div className="alert alert-warning">Completa el campo.</div>}
+                        </div>
 
-                <div className="form-group">
-                    <label>Duración:</label>
-                    <div className="time-picker">
-                        <input
-                            ref={durationHoursRef}
-                            type="number"
-                            placeholder="Horas"
-                            name="hours"
-                            value={formData.duration.hours}
-                            onChange={(e) => handleDurationChange(e, "hours")}
-                            className={errors.duration ? "input-error" : ""}
-                        />
-                        <input
-                            ref={durationMinutesRef}
-                            type="number"
-                            placeholder="Minutos"
-                            name="minutes"
-                            value={formData.duration.minutes}
-                            onChange={(e) => handleDurationChange(e, "minutes")}
-                            className={errors.duration ? "input-error" : ""}
-                        />
-                    </div>
-                    {errors.duration && <div className="alert alert-warning">Completa el campo.</div>}
-                </div>
+                        <div className="form-group">
+                            <label>Duración:</label>
+                            <div className="time-picker">
+                                <input
+                                    ref={durationHoursRef}
+                                    type="number"
+                                    placeholder="Horas"
+                                    name="hours"
+                                    value={formData.duration.hours}
+                                    onChange={(e) => handleDurationChange(e, "hours")}
+                                    className={errors.duration ? "input-error" : ""}
+                                />
+                                <input
+                                    ref={durationMinutesRef}
+                                    type="number"
+                                    placeholder="Minutos"
+                                    name="minutes"
+                                    value={formData.duration.minutes}
+                                    onChange={(e) => handleDurationChange(e, "minutes")}
+                                    className={errors.duration ? "input-error" : ""}
+                                />
+                            </div>
+                            {errors.duration && <div className="alert alert-warning">Completa el campo.</div>}
+                        </div>
 
-                {/* <div className="form-group">
+                        {/* <div className="form-group">
                     <label>ID de la Tienda:</label>
                     <input
                         ref={shopIdRef}
@@ -256,11 +236,13 @@ const ServiceForm = () => {
                     {errors.shopId && <div className="alert alert-warning">Completa el campo.</div>}
                 </div> */}
 
-                <button type="submit" className="register-button">
-                    Registrar Servicio
-                </button>
-            </form>
-        </div>
+                        <button type="submit" className="register-button">
+                            Registrar Servicio
+                        </button>
+                    </form>
+                </div>
+            )}
+        </>
     );
 };
 
