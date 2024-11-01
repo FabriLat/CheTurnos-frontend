@@ -6,20 +6,31 @@ import './employeeList.css'
 
 const EmployeeList = () => {
   const { shopId, token } = useContext(AuthenticationContext);
-  
+
   const [employees, setEmployees] = useState([]);
+  const [owner, setOwner] = useState([]);
   const [loading, setLoading] = useState(true);
   const [shopName, setShopName] = useState("");
+  const [allEmployees, setAllEmployees] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       await fetchNameShop();
       await fetchEmployees();
+      await fetchOwner();
       setLoading(false);
     };
-
     fetchData();
   }, [shopId]);
+
+  useEffect(() => {
+    if (employees || owner) {
+      setAllEmployees([owner, ...employees]);
+    } else {
+      setAllEmployees(owner);
+    }
+  }, [employees, owner]);
+
 
   const fetchNameShop = async () => {
     try {
@@ -53,7 +64,7 @@ const EmployeeList = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${token}`, 
+            authorization: `Bearer ${token}`,
           },
           mode: "cors",
         }
@@ -69,32 +80,61 @@ const EmployeeList = () => {
       console.error("Error:", error);
     }
   };
-  return (
-    <div>
-      {loading ? (
-        <Spiner />
-      ) : (
-        <div className="outer-container-employee-list">
-          <div className="shop-list-container">
-            <div className="title-service">
-              <h1 className="service-title"> Selecciona un empleado de {shopName.name}</h1>
-            </div>
-            <div className="card-service">
-              {employees.map((e) => (
-                <EmployeeCard
-                  key={e.id}
-                  employeeId={e.id}
-                  name={e.name}
-                  email={e.email}
-                  state={e.status}
-                />
-              ))}
-            </div>
+
+  const fetchOwner = async () => {
+    try {
+      const response = await fetch(
+        `https://localhost:7276/api/Owner/GetOwnerByShopId/${shopId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          mode: "cors",
+        });
+      if (!response.ok) {
+        throw new Error("Error in obtaining Owner");
+      }
+      const ownerData = await response.json();
+      setOwner(ownerData);
+      console.log(owner);
+      setLoading(false); // desactiva el spiners
+    }
+    catch (error) {
+      console.error("Error:", error);
+    }
+
+  }
+
+
+
+return (
+  <>
+    {loading ? (
+      <Spiner />
+    ) : (
+      <div className="outer-container-employee-list">
+        <div className="shop-list-container">
+          <div className="title-service">
+            <h1 className="service-title"> Selecciona un empleado de {shopName.name}</h1>
+          </div>
+          <div className="card-service">
+            {allEmployees.map((e) => (
+              <EmployeeCard
+                key={e.id}
+                employeeId={e.id}
+                name={e.name}
+                email={e.email}
+                state={e.status}
+              />
+            ))}
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </>
+);
 };
 
 export default EmployeeList;
