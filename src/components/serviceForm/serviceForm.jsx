@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const ServiceForm = () => {
     const nameRef = useRef(null);
@@ -8,6 +9,10 @@ const ServiceForm = () => {
     const durationHoursRef = useRef(null);
     const durationMinutesRef = useRef(null);
     const shopIdRef = useRef(null);
+    const navegate = useNavigate();
+
+    const [newShopId, setShopId] = useState();
+
 
     const [formData, setFormData] = useState({
         name: "",
@@ -17,7 +22,7 @@ const ServiceForm = () => {
             hours: "",
             minutes: "",
         },
-        shopId: "",
+        shopId: newShopId,
     });
 
     const [errors, setErrors] = useState({
@@ -87,6 +92,38 @@ const ServiceForm = () => {
         }
     };
 
+    const getIdShop = async ()=> {
+        try {
+            const response = await fetch("", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                mode: "cors",
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                const errorMessages = Object.values(errorData.errors)
+                    .flat()
+                    .join(", ");
+                throw new Error(`Errores de validación: ${errorMessages}`);
+            }
+            const NewShopData = await response.json();
+            setShopId(NewShopData.Id); //Guarda el id del ultimo shop creado.
+            console.log(NewShopData);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+    
+    useEffect(()=>{
+        getIdShop();
+    },[])
+
+
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -120,15 +157,17 @@ const ServiceForm = () => {
             setErrors((prev) => ({ ...prev, duration: false }));
         }
 
-        if (!formData.shopId) {
-            setErrors((prev) => ({ ...prev, shopId: true }));
-            formIsValid = false;
-        } else {
-            setErrors((prev) => ({ ...prev, shopId: false }));
-        }
+        // if (!formData.shopId) {
+        //     setErrors((prev) => ({ ...prev, shopId: true }));
+        //     formIsValid = false;
+        // } else {
+        //     setErrors((prev) => ({ ...prev, shopId: false }));
+        // }
 
         if (formIsValid) {
             registerService();
+            
+            navegate("/login");
         }
     };
 
@@ -203,7 +242,7 @@ const ServiceForm = () => {
                     {errors.duration && <div className="alert alert-warning">Completa el campo.</div>}
                 </div>
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label>ID de la Tienda:</label>
                     <input
                         ref={shopIdRef}
@@ -215,7 +254,7 @@ const ServiceForm = () => {
                         className={errors.shopId ? "input-error" : ""}
                     />
                     {errors.shopId && <div className="alert alert-warning">Completa el campo.</div>}
-                </div>
+                </div> */}
 
                 <button type="submit" className="register-button">
                     Registrar Servicio
