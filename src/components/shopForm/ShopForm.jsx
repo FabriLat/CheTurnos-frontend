@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import executive from './executive.png';
-import { Form} from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import logo from './CheTurnosIco.png';
-import './shopForm.css'
+import './shopForm.css';
+import { useNavigate } from "react-router-dom";
 
 const daysOfWeek = [
     { value: 1, label: "Lunes" },
@@ -25,6 +26,9 @@ const ShopForm = () => {
     const timeStartMinRef = useRef(null);
     const timeEndHourRef = useRef(null);
     const timeEndMinRef = useRef(null);
+    const navegate = useNavigate();
+
+
 
     const [formData, setFormData] = useState({
         name: "",
@@ -53,7 +57,7 @@ const ShopForm = () => {
         appointmentFrequency: false,
         timeStart: false,
         timeEnd: false,
-        workDays: false, 
+        workDays: false,
         imgUrl: false,
     });
 
@@ -143,7 +147,7 @@ const ShopForm = () => {
         const timeStartMinutes = timeStartMinRef.current.value;
         const timeEndHours = timeEndHourRef.current.value;
         const timeEndMinutes = timeEndMinRef.current.value;
-        
+
 
         let formIsValid = true;
 
@@ -218,6 +222,7 @@ const ShopForm = () => {
 
         if (formIsValid) {
             registerShop();
+            navegate("/OwnerForm");
         }
     };
 
@@ -230,13 +235,13 @@ const ShopForm = () => {
                     alt="Logo"
                 />
                 <div className="registerShop">
-                    <h2>Registro Negocio      
-                    <img
-                    style={{marginLeft: '5%'}}
-                    className="calendar"
-                    src={logo}
-                    alt="Logo"
-          />
+                    <h2>Registro Negocio
+                        <img
+                            style={{ marginLeft: '5%' }}
+                            className="calendar"
+                            src={logo}
+                            alt="Logo"
+                        />
                     </h2>
                     <form className="form-register" onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -303,37 +308,37 @@ const ShopForm = () => {
                             )}
                         </div>
                         <div className="form-group">
-    <label>URL de la Imagen:</label>
-    <input
-        type="text"
-        placeholder="Introduce la URL de la imagen"
-        name="imgUrl"
-        value={formData.imgUrl}
-        onChange={handleChange}
-        className={errors.imgUrl ? "input-error" : ""}
-    />
-    {errors.imgUrl && (
-        <div className="alert alert-warning">Completa el campo.</div>
-    )}
-</div>
+                            <label>URL de la Imagen:</label>
+                            <input
+                                type="text"
+                                placeholder="Introduce la URL de la imagen"
+                                name="imgUrl"
+                                value={formData.imgUrl}
+                                onChange={handleChange}
+                                className={errors.imgUrl ? "input-error" : ""}
+                            />
+                            {errors.imgUrl && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
                         <div className="form-group">
-                        <label>Tipo de Negocio:</label>
-                        <select
-                            ref={typeRef}
-                            name="type"
-                            value={formData.type}
-                            onChange={handleChange}
-                            className={errors.type ? "input-error" : ""}
-                        >
-                            <option value="">Selecciona un tipo</option>
-                            <option value="0">Tienda</option>
-                            <option value="1">Servicio</option>
-                        </select>
-                        {errors.type && (
-                            <div className="alert alert-warning">Completa el campo.</div>
-                        )}
-                    </div>
+                            <label>Tipo de Negocio:</label>
+                            <select
+                                ref={typeRef}
+                                name="type"
+                                value={formData.type}
+                                onChange={handleChange}
+                                className={errors.type ? "input-error" : ""}
+                            >
+                                <option value="">Selecciona un tipo</option>
+                                <option value="0">Tienda</option>
+                                <option value="1">Servicio</option>
+                            </select>
+                            {errors.type && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
 
                         <div className="form-group">
                             <label>Frecuencia de Citas:</label>
@@ -355,70 +360,70 @@ const ShopForm = () => {
                             <label>Hora de Inicio:</label>
                             <div className="time-picker">
                                 <input
-                                ref={timeStartHourRef}
-                                type="number"
-                                placeholder="Horas"
-                                name="hours"
-                                value={formData.timeStart.hours}
-                                onChange={(e) => handleTimeChange(e, "timeStart")}
-                                className={errors.timeStart ? "input-error" : ""}
+                                    ref={timeStartHourRef}
+                                    type="number"
+                                    placeholder="Horas"
+                                    name="hours"
+                                    value={formData.timeStart.hours}
+                                    onChange={(e) => handleTimeChange(e, "timeStart")}
+                                    className={errors.timeStart ? "input-error" : ""}
                                 />
                                 <input
-                                ref={timeStartMinRef}
-                                type="number"
-                                placeholder="Minutos"
-                                name="minutes"
-                                value={formData.timeStart.minutes}
-                                onChange={(e) => handleTimeChange(e, "timeStart")}
-                                className={errors.timeStart ? "input-error" : ""}
+                                    ref={timeStartMinRef}
+                                    type="number"
+                                    placeholder="Minutos"
+                                    name="minutes"
+                                    value={formData.timeStart.minutes}
+                                    onChange={(e) => handleTimeChange(e, "timeStart")}
+                                    className={errors.timeStart ? "input-error" : ""}
                                 />
-                                </div>
-                                {errors.timeStart && (
-                                    <div className="alert alert-warning">Completa el campo.</div>
-                                    )}
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Hora de Fin:</label>
-                                        <div className="time-picker">
-                                            <input
-                                            ref={timeEndHourRef}
-                                            type="number"
-                                            placeholder="Horas"
-                                            name="hours"
-                                            value={formData.timeEnd.hours}
-                                            onChange={(e) => handleTimeChange(e, "timeEnd")}
-                                            className={errors.timeEnd ? "input-error" : ""}
-                                             />
-                                             <input
-                                             ref={timeEndMinRef}
-                                             type="number"
-                                             placeholder="Minutos"
-                                             name="minutes"
-                                             value={formData.timeEnd.minutes}
-                                             onChange={(e) => handleTimeChange(e, "timeEnd")}
-                                             className={errors.timeEnd ? "input-error" : ""}
-                                             />
-                                             </div>
-                                             {errors.timeEnd && (
-                                                <div className="alert alert-warning">Completa el campo.</div>
-                                                )}
-                                                </div>
-                                                <div className="form-group">
-                                                    <label>Días de Trabajo:</label>
-                                                    {daysOfWeek.map((day) => (
-                                                        <Form.Check
-                                                        key={day.value}
-                                                        type="checkbox"
-                                                        label={day.label}
-                                                        checked={formData.workDays.includes(day.value)}
-                                                        onChange={() => handleWorkDaysChange(day.value)}
-                                                        className={errors.workDays ? "input-error" : ""}
-                                                         />
-                                                         ))}
-                                                         {errors.workDays && (
-                                                            <div className="alert alert-warning">Completa el campo.</div>
-                                                            )}
-                                                            </div>
+                            </div>
+                            {errors.timeStart && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
+                        <div className="form-group">
+                            <label>Hora de Fin:</label>
+                            <div className="time-picker">
+                                <input
+                                    ref={timeEndHourRef}
+                                    type="number"
+                                    placeholder="Horas"
+                                    name="hours"
+                                    value={formData.timeEnd.hours}
+                                    onChange={(e) => handleTimeChange(e, "timeEnd")}
+                                    className={errors.timeEnd ? "input-error" : ""}
+                                />
+                                <input
+                                    ref={timeEndMinRef}
+                                    type="number"
+                                    placeholder="Minutos"
+                                    name="minutes"
+                                    value={formData.timeEnd.minutes}
+                                    onChange={(e) => handleTimeChange(e, "timeEnd")}
+                                    className={errors.timeEnd ? "input-error" : ""}
+                                />
+                            </div>
+                            {errors.timeEnd && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
+                        <div className="form-group">
+                            <label>Días de Trabajo:</label>
+                            {daysOfWeek.map((day) => (
+                                <Form.Check
+                                    key={day.value}
+                                    type="checkbox"
+                                    label={day.label}
+                                    checked={formData.workDays.includes(day.value)}
+                                    onChange={() => handleWorkDaysChange(day.value)}
+                                    className={errors.workDays ? "input-error" : ""}
+                                />
+                            ))}
+                            {errors.workDays && (
+                                <div className="alert alert-warning">Completa el campo.</div>
+                            )}
+                        </div>
                         <button type="submit" className="register-button">Registrar Negocio</button>
                     </form>
                 </div>

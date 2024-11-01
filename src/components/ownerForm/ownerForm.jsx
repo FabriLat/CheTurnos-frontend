@@ -1,16 +1,22 @@
-import { useState, useRef } from "react";
-import './ownerForm.css';
+import { useState, useRef, useEffect } from "react";
+//import './ownerForm.css';
+import { useNavigate } from "react-router-dom";
+
 
 const OwnerForm = () => {
+    const [newShopId, setShopId] = useState();
+
     const nameRef = useRef(null);
     const shopIdRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const imgUrlRef = useRef(null);
+    const navegate = useNavigate();
+
 
     const [formData, setFormData] = useState({
         name: "",
-        shopId: "",
+        shopId: newShopId,
         email: "",
         password: "",
         imgUrl: "",
@@ -18,7 +24,7 @@ const OwnerForm = () => {
 
     const [errors, setErrors] = useState({
         name: false,
-        shopId: false,
+        //shopId: false,
         email: false,
         password: false,
         imgUrl: false,
@@ -56,6 +62,36 @@ const OwnerForm = () => {
         }
     };
 
+    const getIdShop = async ()=> {
+        try {
+            const response = await fetch("", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                mode: "cors",
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                const errorMessages = Object.values(errorData.errors)
+                    .flat()
+                    .join(", ");
+                throw new Error(`Errores de validación: ${errorMessages}`);
+            }
+            const NewShopData = await response.json();
+            setShopId(NewShopData.Id); //Guarda el id del ultimo shop creado.
+            console.log(NewShopData);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+    
+    useEffect(()=>{
+        getIdShop();
+    },[])
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -68,12 +104,12 @@ const OwnerForm = () => {
             setErrors((prev) => ({ ...prev, name: false }));
         }
 
-        if (!formData.shopId) {
-            setErrors((prev) => ({ ...prev, shopId: true }));
-            formIsValid = false;
-        } else {
-            setErrors((prev) => ({ ...prev, shopId: false }));
-        }
+        // if (!formData.shopId) {
+        //     setErrors((prev) => ({ ...prev, shopId: true }));
+        //     formIsValid = false;
+        // } else {
+        //     setErrors((prev) => ({ ...prev, shopId: false }));
+        // }
 
         if (!formData.email) {
             setErrors((prev) => ({ ...prev, email: true }));
@@ -98,6 +134,7 @@ const OwnerForm = () => {
 
         if (formIsValid) {
             registerOwner();
+            navegate("/ServiceForm");
         }
     };
 
@@ -119,7 +156,7 @@ const OwnerForm = () => {
                     {errors.name && <div className="alert alert-warning">Completa este campo.</div>}
                 </div>
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label>ID de la Tienda:</label>
                     <input
                         ref={shopIdRef}
@@ -131,7 +168,7 @@ const OwnerForm = () => {
                         className={errors.shopId ? "input-error" : ""}
                     />
                     {errors.shopId && <div className="alert alert-warning">Completa este campo.</div>}
-                </div>
+                </div> */}
 
                 <div className="form-group">
                     <label>Correo Electrónico:</label>
