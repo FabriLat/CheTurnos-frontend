@@ -148,34 +148,37 @@ const UserProfile = () => {
 
   return (
     <>
+    <div className="outer-container-profile">
        <div className="d-flex flex-column align-items-center">
-      <div className="user-profile-title">
-        <h1 >Datos de {user?.username}:</h1>
+       <div className="user-title-service">
+        <h1 className="datos-title" >Datos de: <br /></h1>
       </div>
 
-      <Card className="user-profile-card shadow-sm">
-        <Card.Body>
-          <div className="info-row">
-            <div>
-              <Card.Title className="info-title">Usuario:</Card.Title>
-              <p className="info-content">{user?.username}</p>
-            </div>
-            <Button size="sm" variant="primary" onClick={handleShow}>
-              Modificar
-            </Button>
-          </div>
+      <Card className="user-profile-card shadow-sm" style={{border: '5px solid #0d6efd', borderRadius: '5%', backgroundColor:'#fcf7f7'}}>
+      <Card.Body>
+      <h1 className="name-title"> {user?.username}</h1>
+  <div className="info-row">
+    <div className="info-details">
+      <Card.Title className="info-title">Usuario:</Card.Title>
+      <p className="info-content">{user?.username}</p>
+    </div>
+    <Button size="sm" variant="primary" onClick={handleShow}>
+      Modificar
+    </Button>
+  </div>
 
-          <div className="info-row">
-            <div>
-              <Card.Title className="info-title">Email:</Card.Title>
-              <p className="info-content">{user?.email}</p>
-            </div>
-            <Button size="sm" variant="primary" onClick={handlePassShow}>
-              Modificar
-            </Button>
-          </div>
-        </Card.Body>
+  <div className="info-row">
+    <div className="info-details">
+      <Card.Title className="info-title">Email:</Card.Title>
+      <p className="info-content">{user?.email}</p>
+    </div>
+    <Button size="sm" variant="primary" onClick={handlePassShow}>
+      Modificar
+    </Button>
+  </div>
+</Card.Body>
       </Card>
+    </div>
     </div>
       <UserProfileModal
         show={showModal}
