@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
-import { Button } from "react-bootstrap";
+import { Button , Card} from "react-bootstrap";
 import UserProfileModal from "./userProfileModal/UserProfileModal";
 import UserProfilePass from "./userProfileModal/UserProfilePass";
+import './userProfile.css'
 
 const UserProfile = () => {
   const { user, token, setUser, setToken } = useContext(AuthenticationContext);
@@ -147,28 +148,38 @@ const UserProfile = () => {
 
   return (
     <>
-      <div className="userProfile d-flex flex-column align-items-center">
-        <h1>Datos del usuario</h1>
-        <p>
-          {user?.role === "Owner"
-            ? "Id dueño"
-            : user?.role === "Employee"
-            ? "Id empleado"
-            : "Id cliente"}
-          : {user?.id}
-        </p>
-        {user.shopId && <p>Id del negocio: {user?.shopId}</p>}
-        <p>Rol: {user?.role}</p>
-        <p>Usuario: {user?.username}</p>
-        <p>Email: {user?.email}</p>
-        <Button className="btn btn-primary" onClick={handleShow}>
-          Modificar usuario
-        </Button>
-
-        <Button className="btn btn-primary" onClick={handlePassShow}>
-          Modificar contraseña
-        </Button>
+    <div className="outer-container-profile">
+       <div className="d-flex flex-column align-items-center">
+       <div className="user-title-service">
+        <h1 className="datos-title" >Datos de: <br /></h1>
       </div>
+
+      <Card className="user-profile-card shadow-sm" style={{border: '5px solid #0d6efd', borderRadius: '5%', backgroundColor:'#fcf7f7'}}>
+      <Card.Body>
+      <h1 className="name-title"> {user?.username}</h1>
+  <div className="info-row">
+    <div className="info-details">
+      <Card.Title className="info-title">Usuario:</Card.Title>
+      <p className="info-content">{user?.username}</p>
+    </div>
+    <Button size="sm" variant="primary" onClick={handleShow}>
+      Modificar
+    </Button>
+  </div>
+
+  <div className="info-row">
+    <div className="info-details">
+      <Card.Title className="info-title">Email:</Card.Title>
+      <p className="info-content">{user?.email}</p>
+    </div>
+    <Button size="sm" variant="primary" onClick={handlePassShow}>
+      Modificar
+    </Button>
+  </div>
+</Card.Body>
+      </Card>
+    </div>
+    </div>
       <UserProfileModal
         show={showModal}
         handleClose={handleClose}

@@ -56,8 +56,7 @@ const Login = () => {
 
     // Llamar a la API
     fetchUser();
-    setEnteredEmail("");
-    setEnteredPass("");
+    
   };
 
   const fetchUser = async () => {

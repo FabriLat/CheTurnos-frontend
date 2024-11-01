@@ -54,26 +54,6 @@ const Users = () => {
   }
 
 
-  const deleteOwner = async () => {
-    if (userIdToDelete) {
-      try {
-        const response = await fetch(`https://localhost:7276/api/Shop/PermanentDeletionShop/${idShop}`, {
-          method: "DELETE",
-          mode: "cors",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!response.ok) {
-          throw new Error("Error in delete shop - Owner - employee - service");
-        }
-        onRemoveShop(idShop);
-        console.log("Shop - Owner - employee - service -  deleted successfully");
-      } catch (error) {
-        console.error("Error:", error);
-      }
-      setShowModal(false);
-    }
-  }
-
   const deleteUser = async () => {
     if (userIdToDelete) {
       try {

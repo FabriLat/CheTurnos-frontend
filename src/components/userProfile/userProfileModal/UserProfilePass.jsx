@@ -58,25 +58,11 @@ const UserProfileModal = ({
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Id</Form.Label>
-            <Form.Control type="text" value={user?.id} disabled />
-          </Form.Group>
-          {user?.role === "Owner" || user?.role === "Employee" ? (
-            <Form.Group className="mb-3">
-              <Form.Label>Id negocio</Form.Label>
-              <Form.Control type="text" value={user?.shopId} disabled />
-            </Form.Group>
-          ) : null}
-          <Form.Group className="mb-3">
-            <Form.Label>Rol</Form.Label>
-            <Form.Control type="text" value={user?.role} disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Email:</Form.Label>
             <Form.Control type="text" value={user?.email} disabled />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Nombre de usuario</Form.Label>
+            <Form.Label>Nombre de usuario:</Form.Label>
             <Form.Control
               type="text"
               name="username"
@@ -88,7 +74,7 @@ const UserProfileModal = ({
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Contraseña actual</Form.Label>
+            <Form.Label>Contraseña actual:</Form.Label>
             <Form.Control
               type="password"
               name="newPassword"
@@ -103,7 +89,7 @@ const UserProfileModal = ({
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Nueva contraseña</Form.Label>
+            <Form.Label>Nueva contraseña:</Form.Label>
             <Form.Control
               type="password"
               name="newPassword"
@@ -118,7 +104,7 @@ const UserProfileModal = ({
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Confirmar nueva contraseña</Form.Label>
+            <Form.Label>Confirmar nueva contraseña:</Form.Label>
             <Form.Control
               type="password"
               name="confirmNewPassword"

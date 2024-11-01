@@ -41,31 +41,17 @@ const UserProfileModal = ({
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
+      <Modal.Header closeButton >
         <Modal.Title>Modificar datos</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Id</Form.Label>
-            <Form.Control type="text" value={user?.id} disabled />
-          </Form.Group>
-          {user?.role === "Owner" || user?.role === "Employee" ? (
-            <Form.Group className="mb-3">
-              <Form.Label>Id negocio</Form.Label>
-              <Form.Control type="text" value={user?.shopId} disabled />
-            </Form.Group>
-          ) : null}
-          <Form.Group className="mb-3">
-            <Form.Label>Rol</Form.Label>
-            <Form.Control type="text" value={user?.role} disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Email:</Form.Label>
             <Form.Control type="text" value={user?.email} disabled />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Nombre de usuario</Form.Label>
+            <Form.Label>Nombre de usuario:</Form.Label>
             <Form.Control
               type="text"
               name="username"
@@ -78,7 +64,7 @@ const UserProfileModal = ({
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label>Contraseña:</Form.Label>
             <Form.Control
               type="password"
               name="password"
