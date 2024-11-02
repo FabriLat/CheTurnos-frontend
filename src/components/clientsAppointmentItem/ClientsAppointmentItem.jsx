@@ -57,9 +57,11 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
                     </>)}
                     <h6 style={{ color: '#0d6efd' }}>Fecha y hora:</h6>
                     <Card.Text>{formatDateTime(dateAndHour)}</Card.Text>
-                    {(isEmployee()) && (<><Button onClick={handlebutton} variant="danger">
+                    {/* {(isEmployee()) && (<> */}
+                    <Button onClick={handlebutton} variant="danger">
                         ¿Cancelar turno?
-                    </Button></>)}
+                    </Button>
+                    {/* </>)} */}
                 </Card.Body>
             </Card>
 
