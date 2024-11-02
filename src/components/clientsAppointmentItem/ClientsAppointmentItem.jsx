@@ -42,20 +42,26 @@ const ClientsAppointmentItem = ({ id, shopName, serviceName, dateAndHour, onRemo
 
     return (
         <div>
-            <Card key={id} style={{ border: '5px solid #0d6efd', borderRadius: '10%', backgroundColor:'#fcf7f7' }}>
-                <Card.Header as="h5" style={{ borderBottom: '5px solid #0d6efd', backgroundColor:'#fcf7f7', color: '#0d6efd' }}>Turno </Card.Header>
+            <Card key={id} style={{ border: '5px solid #0d6efd', borderRadius: '10%', backgroundColor: '#fcf7f7' }}>
+                <Card.Header as="h5" style={{ borderBottom: '5px solid #0d6efd', backgroundColor: '#fcf7f7', color: '#0d6efd' }}>Turno </Card.Header>
                 <Card.Body>
-                <h6 style={{ color: '#0d6efd' }}>Servicio:</h6>
+                    <h6 style={{ color: '#0d6efd' }}>Servicio:</h6>
                     <Card.Text>{serviceName}</Card.Text>
 
                     <h6 style={{ color: '#0d6efd' }}>Negocio:</h6>
                     <Card.Text>{shopName}</Card.Text>
-
+                    {/* ESTE COMPONENTE SE COMPARTE ENTRE EL CLIENTE Y EL EMPELADO POR ESTO LOS TERNARIOS */}
+                    {(isEmployee()) && (<> 
+                        <h6 style={{ color: '#0d6efd' }}>Cliente:</h6>
+                        <Card.Text>{clientName}</Card.Text>
+                    </>)}
                     <h6 style={{ color: '#0d6efd' }}>Fecha y hora:</h6>
                     <Card.Text>{formatDateTime(dateAndHour)}</Card.Text>
-                    {(isEmployee()) && (<><Button onClick={handlebutton} variant="danger">
+                    {/* {(isEmployee()) && (<> */}
+                    <Button onClick={handlebutton} variant="danger">
                         ¿Cancelar turno?
-                    </Button></>)}
+                    </Button>
+                    {/* </>)} */}
                 </Card.Body>
             </Card>
 
