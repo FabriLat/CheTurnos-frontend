@@ -19,6 +19,13 @@ export const AuthenticationContextProvider = ({ children }) => {
     clientId: null,
     dateAndHour: null,
   });
+
+// para assignClient
+const [assignClient, setAssignClient] = useState(() => {
+  const savedData = localStorage.getItem('assignClient');
+  return savedData ? JSON.parse(savedData) : null;
+});
+
   const dataLoginHandler = (username, role, id, token, email, shopId) => {
     console.log("SHOP ID LOCO; ",shopId)
     localStorage.setItem(
@@ -41,6 +48,12 @@ export const AuthenticationContextProvider = ({ children }) => {
     setUser(null);
     setToken("");
     setShopId(null);
+    setAssignClient(null);
+  };
+
+  const saveAssignClient = (data) => {
+    setAssignClient(data);
+    localStorage.setItem('assignClient', JSON.stringify(data));
   };
 
   return (
@@ -56,6 +69,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         setShopId: setShopIdHandler,
         dataForRequest,
         setDataForRequest,
+        assignClient, 
+        saveAssignClient,
       }}
     >
       {children}

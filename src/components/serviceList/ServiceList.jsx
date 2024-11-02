@@ -56,6 +56,7 @@ const ServiceList = () => {
                   description={s.description}
                   duration={s.duration}
                   price={s.price}
+                  idService={s.serviceId}
                 />
               ))}
             </div>

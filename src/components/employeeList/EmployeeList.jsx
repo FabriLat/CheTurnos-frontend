@@ -107,8 +107,6 @@ const EmployeeList = () => {
 
   }
 
-
-
 return (
   <>
     {loading ? (
