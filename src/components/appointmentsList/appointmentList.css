@@ -1,9 +1,10 @@
 .outer-container-appointment {
-    display: flex;
+   
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #e9ecef;
+    width: 90%;
   }
 
   .appointment-list-container {
@@ -13,4 +14,16 @@
     padding: 20px;
     border-radius: 8px;
     height: 95%;
+  }
+
+
+  .service-title {
+    margin-bottom: 30px;
+    color: #381a82;
+    font-weight:400;
+    width:70%;
+    margin-left: 15%;
+ 
+    
+
   }

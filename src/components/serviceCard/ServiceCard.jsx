@@ -35,7 +35,6 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
 
     return (
         <div>
-            <h1>{idService}</h1>
             <Card key={idService} style={{ border: '5px solid #33d4c3', borderRadius: '10%', backgroundColor: '#fcf7f7' }}>
                 <Card.Header style={{ color: '#33d4c3', backgroundColor: '#fcf7f7', borderBottom: '3px solid #33d4c3' }} as="h5">{nameService}</Card.Header>
                 <Card.Body>
