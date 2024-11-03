@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useValidateUser from '../hookCustom/useValidateUser';
 
 
-const ServiceCard = ({ nameService, description, price, duration, idService }) => {
+const ServiceCard = ({ nameService, description, price, duration, idService, onRemoveService }) => {
     const { dataForRequest, setDataForRequest, saveAssignClient } = useContext(AuthenticationContext);
     const navegate = useNavigate();
     const { isClient, isOwner } = useValidateUser();
@@ -35,7 +35,7 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
         navegate("/EmployeeList");
     }
 
-    const handleButtonDelete = async () => {
+    const serviceDelete = async () => {
         try {
             const response = await fetch(`https://localhost:7276/api/Service/Delete/${idService}`, {
                 method: "DELETE",
@@ -45,14 +45,18 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
             if (!response.ok) {
                 throw new Error("Error in delete Service");
             }
-            onRemoveAppointment(id);
-            console.log("Service deleted successfully")
+            console.log("Service deleted successfully");
+            onRemoveService(idService);
         }
         catch (error) {
             console.error("Error:", error);
         }
     }
 
+    const handleButtonDelete = () => {
+        serviceDelete();
+
+    }
 
     return (
         <div>
@@ -86,6 +90,7 @@ ServiceCard.propTypes = {
     price: PropTypes.number,
     duration: PropTypes.string,
     idService: PropTypes.number,
+    onRemoveService: PropTypes.func,
 }
 
 export default ServiceCard
