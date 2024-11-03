@@ -6,10 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useValidateUser from '../hookCustom/useValidateUser';
+
 
 const ServiceCard = ({ nameService, description, price, duration, idService }) => {
     const { dataForRequest, setDataForRequest, saveAssignClient } = useContext(AuthenticationContext);
     const navegate = useNavigate();
+    const { isClient, isOwner } = useValidateUser();
 
     const handlebutton = () => {
         console.log(idService);
@@ -17,8 +20,8 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
 
         const clientData = localStorage.getItem('userData');
         const userValue = clientData ? JSON.parse(clientData) : null;
-        const clientId = userValue ? userValue.id : null; 
-        
+        const clientId = userValue ? userValue.id : null;
+
         const transformedData = {
             "idAppointment": null,
             "serviceId": idService,
@@ -30,6 +33,24 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
         localStorage.setItem('assignClient', JSON.stringify(transformedData));
 
         navegate("/EmployeeList");
+    }
+
+    const handleButtonDelete = async () => {
+        try {
+            const response = await fetch(`https://localhost:7276/api/Service/Delete/${idService}`, {
+                method: "DELETE",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok) {
+                throw new Error("Error in delete Service");
+            }
+            onRemoveAppointment(id);
+            console.log("Service deleted successfully")
+        }
+        catch (error) {
+            console.error("Error:", error);
+        }
     }
 
 
@@ -45,7 +66,14 @@ const ServiceCard = ({ nameService, description, price, duration, idService }) =
                     <Card.Text>
                         {description} <br /> Precio:  <FontAwesomeIcon icon={faDollarSign} />{price}<br /><br />
                     </Card.Text>
-                    <Button style={{ backgroundColor: '#33d4c3', border: '#45a69d' }} variant="primary" onClick={handlebutton}>Elegir Servicio</Button>
+
+                    {(isOwner()) && (<>
+                        <Button style={{ backgroundColor: '#ff0800', border: '#45a69d' }} variant="danger" onClick={handleButtonDelete}>Borrar Servicio</Button>
+                    </>)}
+                    {(isClient()) && (<>
+                        <Button style={{ backgroundColor: '#33d4c3', border: '#45a69d' }} variant="primary" onClick={handlebutton}>Elegir Servicio</Button>
+                    </>)}
+
                 </Card.Body>
             </Card>
         </div>
