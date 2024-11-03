@@ -5,19 +5,23 @@ import ServiceCard from "../serviceCard/ServiceCard";
 import Spiner from "../spiner/Spiner";
 import "./serviceList.css";
 const ServiceList = () => {
-  const { shopId } = useContext(AuthenticationContext);
+  const { shopId, user } = useContext(AuthenticationContext);
+
+  const ownerClientShopId = shopId || (user?.role === 'Owner' ? user.shopId : null);
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+ 
   useEffect(() => {
-    fetchServices();
-  }, []);
+      fetchServices();
+  }, [ownerClientShopId]);
 
   const shopName = services.map(item => item.shopName)[0];
 
   const fetchServices = async () => {
+    console.log(ownerClientShopId);
     try {
-      const response = await fetch(`https://localhost:7276/api/Service/GetAllServicesByShopWithNameShop/${shopId}`,
+      const response = await fetch(`https://localhost:7276/api/Service/GetAllServicesByShopWithNameShop/${ownerClientShopId}`,
         {
           method: "GET",
           mode: "cors",
