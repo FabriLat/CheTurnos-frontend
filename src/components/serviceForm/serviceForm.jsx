@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Spiner from "../spiner/Spiner";
 import useValidateUser from "../hookCustom/useValidateUser";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import '../shopForm/shopForm.css';
 
 const ServiceForm = () => {
     const nameRef = useRef(null);
@@ -16,7 +17,7 @@ const ServiceForm = () => {
     const [loading, setLoading] = useState(false);
 
     const { isClient, isOwner } = useValidateUser();
-    const {user} =useContext(AuthenticationContext);
+    const { user } = useContext(AuthenticationContext);
 
     const [newShopId, setShopId] = useState('0');
 
@@ -29,7 +30,7 @@ const ServiceForm = () => {
             hours: "",
             minutes: "",
         },
-        shopId: (user?.role === 'Owner' ? user.shopId : null),
+        shopId: (user?.role === 'Owner' ? user.shopId : 0),
     });
 
     const [errors, setErrors] = useState({
@@ -105,6 +106,7 @@ const ServiceForm = () => {
     };
 
     const registerServiceOwner = async () => {
+        console.log(formData)
         setLoading(true)
         const durationString = `${formData.duration.hours || "00"}:${formData.duration.minutes || "00"}:00`;
         console.log(durationString)
@@ -115,11 +117,11 @@ const ServiceForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
+                    shopId: parseInt(formData.shopId, 10),
                     name: formData.name,
                     description: formData.description,
                     price: parseFloat(formData.price),
                     duration: durationString,
-                    shopId: parseInt(formData.shopId, 10),
                 }),
             });
 
@@ -197,9 +199,11 @@ const ServiceForm = () => {
             if (isOwner()) {
                 registerServiceOwner()
             }
-            if (isClient()) {
+            else {
+
                 registerService();
             }
+
         }
     };
 
@@ -208,9 +212,9 @@ const ServiceForm = () => {
             {loading ? (
                 <Spiner />
             ) : (
-                <div className="service-form-container">
-                    <h2>Registrar Servicio</h2>
-                    <form onSubmit={handleSubmit}>
+                <div className="outer-container-shop-register">
+                    <form onSubmit={handleSubmit} className="registerShop">
+                        <h2>Registrar Servicio</h2>
                         <div className="form-group">
                             <label>Nombre del Servicio:</label>
                             <input

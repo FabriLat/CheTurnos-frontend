@@ -5,7 +5,7 @@ import Spiner from "../spiner/Spiner";
 
 
 const OwnerForm = () => {
-    const [newShopId, setShopId] = useState('0');
+    const [newShopId, setShopId] = useState(0);
 
     const nameRef = useRef(null);
     const shopIdRef = useRef(null);
@@ -22,7 +22,7 @@ const OwnerForm = () => {
         shopId: newShopId,
         email: "",
         password: "",
-        imgUrl: "none",
+        imgUrl: "string",
         confirmPassword: "",
     });
 
@@ -45,13 +45,16 @@ const OwnerForm = () => {
 
     const registerOwner = async () => {
         setLoading(true)
+        console.log(formData);
+        const { confirmPassword, ...dataToSend } = formData;
         try {
+            console.log(dataToSend);
             const response = await fetch("https://localhost:7276/api/Owner/CreateNewOwner", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(dataToSend),
             });
 
             if (!response.ok) {
@@ -126,7 +129,7 @@ const OwnerForm = () => {
             registerOwner();
         }
     };
-
+//!!!!!Debe tener comporbacion de 8 caracteres, una letra y un numero.}
     return (
         <>
             {loading ? (
