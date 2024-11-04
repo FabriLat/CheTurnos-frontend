@@ -52,7 +52,7 @@ const ServiceList = () => {
   }
 
   const removeService = (id) => {
-    setServices((prevService) => prevService.filter((s) => s.id !== id));
+    setServices((prevService) => prevService.filter((s) => s.serviceId !== id));
   }
 
   return (
