@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import './ownerForm.css';
+import '../shopForm/shopForm.css';
 import { useNavigate } from "react-router-dom";
 import Spiner from "../spiner/Spiner";
 
 
 const OwnerForm = () => {
-    const [newShopId, setShopId] = useState('0');
+    const [newShopId, setShopId] = useState(0);
 
     const nameRef = useRef(null);
     const shopIdRef = useRef(null);
@@ -22,7 +22,7 @@ const OwnerForm = () => {
         shopId: newShopId,
         email: "",
         password: "",
-        imgUrl: "none",
+        imgUrl: "string",
         confirmPassword: "",
     });
 
@@ -45,13 +45,16 @@ const OwnerForm = () => {
 
     const registerOwner = async () => {
         setLoading(true)
+        console.log(formData);
+        const { confirmPassword, ...dataToSend } = formData;
         try {
+            console.log(dataToSend);
             const response = await fetch("https://localhost:7276/api/Owner/CreateNewOwner", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(dataToSend),
             });
 
             if (!response.ok) {
@@ -126,15 +129,15 @@ const OwnerForm = () => {
             registerOwner();
         }
     };
-
+//!!!!!Debe tener comporbacion de 8 caracteres, una letra y un numero.}
     return (
         <>
             {loading ? (
                 <Spiner />
             ) : (
-                <div className="owner-form-container">
-                    <h2>Registrar Propietario</h2>
-                    <form onSubmit={handleSubmit}>
+                <div className="outer-container-shop-register">
+                    <form onSubmit={handleSubmit} className="registerShop">
+                        <h2>Registrar Propietario</h2>
                         <div className="form-group">
                             <label>Nombre:</label>
                             <input

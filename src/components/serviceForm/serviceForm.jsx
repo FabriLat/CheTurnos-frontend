@@ -1,7 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Spiner from "../spiner/Spiner";
+import useValidateUser from "../hookCustom/useValidateUser";
+import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
+import '../shopForm/shopForm.css';
 
 const ServiceForm = () => {
     const nameRef = useRef(null);
@@ -12,7 +15,9 @@ const ServiceForm = () => {
     const shopIdRef = useRef(null);
     const navegate = useNavigate();
     const [loading, setLoading] = useState(false);
-    
+
+    const { isClient, isOwner } = useValidateUser();
+    const { user } = useContext(AuthenticationContext);
 
     const [newShopId, setShopId] = useState('0');
 
@@ -25,7 +30,7 @@ const ServiceForm = () => {
             hours: "",
             minutes: "",
         },
-        shopId: newShopId,
+        shopId: (user?.role === 'Owner' ? user.shopId : 0),
     });
 
     const [errors, setErrors] = useState({
@@ -100,6 +105,54 @@ const ServiceForm = () => {
         }
     };
 
+    const registerServiceOwner = async () => {
+        console.log(formData)
+        setLoading(true)
+        const durationString = `${formData.duration.hours || "00"}:${formData.duration.minutes || "00"}:00`;
+        console.log(durationString)
+        try {
+            const response = await fetch("https://localhost:7276/api/Service/CreateOwnerService", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    shopId: parseInt(formData.shopId, 10),
+                    name: formData.name,
+                    description: formData.description,
+                    price: parseFloat(formData.price),
+                    duration: durationString,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                setLoading(false)
+                const errorMessages = Object.values(errorData.errors)
+                    .flat()
+                    .join(", ");
+                throw new Error(`Errores de validación: ${errorMessages}`);
+            }
+
+            alert("Servicio registrado exitosamente");
+            setLoading(false);
+            setFormData({
+                name: "",
+                description: "",
+                price: "",
+                duration: { hours: "", minutes: "" },
+                shopId: "",
+            });
+
+            navegate("/serviceList");
+
+        } catch (error) {
+            alert(error.message);
+            setLoading(false);
+        }
+
+    }
+
 
 
     const handleSubmit = (e) => {
@@ -143,7 +196,14 @@ const ServiceForm = () => {
         // }
 
         if (formIsValid) {
-            registerService();
+            if (isOwner()) {
+                registerServiceOwner()
+            }
+            else {
+
+                registerService();
+            }
+
         }
     };
 
@@ -152,9 +212,9 @@ const ServiceForm = () => {
             {loading ? (
                 <Spiner />
             ) : (
-                <div className="service-form-container">
-                    <h2>Registrar Servicio</h2>
-                    <form onSubmit={handleSubmit}>
+                <div className="outer-container-shop-register">
+                    <form onSubmit={handleSubmit} className="registerShop">
+                        <h2>Registrar Servicio</h2>
                         <div className="form-group">
                             <label>Nombre del Servicio:</label>
                             <input

@@ -4,20 +4,31 @@ import { AuthenticationContext } from "../../services/authentication/Authenticat
 import ServiceCard from "../serviceCard/ServiceCard";
 import Spiner from "../spiner/Spiner";
 import "./serviceList.css";
+import { Button } from "react-bootstrap";
+import useValidateUser from "../hookCustom/useValidateUser";
+import { useNavigate } from "react-router-dom";
+
 const ServiceList = () => {
-  const { shopId } = useContext(AuthenticationContext);
+  const { shopId, user } = useContext(AuthenticationContext);
+
+  const ownerClientShopId = shopId || (user?.role === 'Owner' ? user.shopId : null);
+  const { isClient, isOwner } = useValidateUser();
+  const navegate = useNavigate();
+
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetchServices();
-  }, []);
+  }, [ownerClientShopId]);
 
   const shopName = services.map(item => item.shopName)[0];
 
   const fetchServices = async () => {
+    console.log(ownerClientShopId);
     try {
-      const response = await fetch(`https://localhost:7276/api/Service/GetAllServicesByShopWithNameShop/${shopId}`,
+      const response = await fetch(`https://localhost:7276/api/Service/GetAllServicesByShopWithNameShop/${ownerClientShopId}`,
         {
           method: "GET",
           mode: "cors",
@@ -29,11 +40,20 @@ const ServiceList = () => {
       const data = await response.json();
       setServices(data);
       setLoading(false);
-    } 
-    catch(error){
+    }
+    catch (error) {
       console.error("Error:", error)
     }
   };
+
+
+  const handleButtonAddService = () => {
+    navegate('/ServiceForm');
+  }
+
+  const removeService = (id) => {
+    setServices((prevService) => prevService.filter((s) => s.serviceId !== id));
+  }
 
   return (
     <div>
@@ -42,12 +62,21 @@ const ServiceList = () => {
       ) : (
         <div className="outer-container-service-list">
           <div className="shop-list-container">
-            <div className="title-service">
-              <h1 className="service-title">
-                {" "}
-                Selecciona un servicio de {shopName}
-              </h1>
-            </div>
+
+            {(isClient()) && (<>
+              <div className="title-service">
+                <h1 className="service-title">
+                  {" "}
+                  Selecciona un servicio de {shopName}
+                </h1>
+              </div>
+            </>)}
+
+            {(isOwner()) && (<>
+              <Button style={{ backgroundColor: '#6d21dd' }} onClick={handleButtonAddService}>
+                Agregar nuevo Servicio
+              </Button>
+            </>)}
             <div className="card-service">
               {services.map((s) => (
                 <ServiceCard
@@ -57,6 +86,7 @@ const ServiceList = () => {
                   duration={s.duration}
                   price={s.price}
                   idService={s.serviceId}
+                  onRemoveService={removeService}
                 />
               ))}
             </div>
