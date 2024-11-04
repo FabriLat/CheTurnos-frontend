@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import './ownerForm.css';
+import '../shopForm/shopForm.css';
 import { useNavigate } from "react-router-dom";
 import Spiner from "../spiner/Spiner";
 
@@ -132,9 +132,9 @@ const OwnerForm = () => {
             {loading ? (
                 <Spiner />
             ) : (
-                <div className="owner-form-container">
-                    <h2>Registrar Propietario</h2>
-                    <form onSubmit={handleSubmit}>
+                <div className="outer-container-shop-register">
+                    <form onSubmit={handleSubmit} className="registerShop">
+                        <h2>Registrar Propietario</h2>
                         <div className="form-group">
                             <label>Nombre:</label>
                             <input
