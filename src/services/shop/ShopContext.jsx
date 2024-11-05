@@ -132,11 +132,11 @@ export const ShopContextProvider = ({ children }) => {
         await fetch(`https://localhost:7276/api/Employee/GetMyShopEmployees/${user.id}`,
             {
                 method: "GET",
-                //mode: "cors",
                 headers: {
                     "content-type": "application/json",
                     "authorization": `Bearer ${token}`
-                }
+                },
+                mode: "cors",
             })
                 .then(response => {
                     if (response.ok) {

@@ -72,6 +72,7 @@ const UserNav = () => {
                 <>
                   <Button variant="outline-light" className="mx-2" onClick={() => navigate("/ownerPage")}>Info del Negocio</Button>
                   <Button variant="outline-light" className="mx-2" onClick={() => navigate("/OwnersEmployeeList")}>Empleados</Button>
+                  <Button variant="outline-light" className="mx-2" onClick={() => navigate("/serviceList")}>Servicios</Button>
                 </>
               }
               {(!isOwner()) &&
