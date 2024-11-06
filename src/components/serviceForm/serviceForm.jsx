@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Spiner from "../spiner/Spiner";
 import useValidateUser from "../hookCustom/useValidateUser";
@@ -15,6 +15,23 @@ const ServiceForm = () => {
     const shopIdRef = useRef(null);
     const navegate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+
+    const [errorMessagge, setErrorMessagge] = useState("")
+    const [showModal, setShowModal] = useState(false);
+    const [responseMessagge, setResponseMessagge] = useState("")
+    const [styleMessagge, setStyleMessagge] = useState("")
+    
+    const showModalHandler = () => {
+        if (showModal) {
+            setShowModal(true)
+            setStyleMessagge("")
+            setResponseMessagge("")
+            setErrorMessagge("");
+        } else {
+            setShowModal(false)
+        }
+    };
 
     const { isClient, isOwner } = useValidateUser();
     const { user } = useContext(AuthenticationContext);
@@ -80,14 +97,17 @@ const ServiceForm = () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                setLoading(false)
-                const errorMessages = Object.values(errorData.errors)
-                    .flat()
-                    .join(", ");
-                throw new Error(`Errores de validación: ${errorMessages}`);
+                setLoading(false);
+                const errorMessages = Object.values(errorData.errors).flat().join(", ");
+                setResponseMessagge(`Errores de validación: ${errorMessages}`);
+                setStyleMessagge("text-danger");
+                return
             }
 
-            alert("Servicio registrado exitosamente");
+            //alert("Servicio registrado exitosamente");
+            setStyleMessagge("text-success");
+            setResponseMessagge("Operación exitosa!");
+            showModalHandler();
             setLoading(false);
             setFormData({
                 name: "",
@@ -100,7 +120,10 @@ const ServiceForm = () => {
             navegate("/login");
 
         } catch (error) {
-            alert(error.message);
+            //alert(error.message);
+            setStyleMessagge("text-danger")
+            setResponseMessagge("Error de Conexion!")
+            showModalHandler()
             setLoading(false);
         }
     };
@@ -302,6 +325,16 @@ const ServiceForm = () => {
                     </form>
                 </div>
             )}
+            <Modal show={showModal} onHide={showModalHandler} centered>
+                <Modal.Body>
+                    <h3 className={styleMessagge}>{responseMessagge}</h3>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={showModalHandler}>
+                        CERRAR
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 };

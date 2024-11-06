@@ -131,12 +131,12 @@ const ShopForm = () => {
             const data = await response.json();
             console.log("Tienda registrada:", data);
             setLoading(false);
-            alert("Tienda registrada exitosamente");
+            //alert("Tienda registrada exitosamente");
             navegate("/OwnerForm");
 
         } catch (error) {
             console.error("Error al registrar la tienda:", error);
-            alert(error.message);
+            //alert(error.message);
             setLoading(false);
         }
     };
