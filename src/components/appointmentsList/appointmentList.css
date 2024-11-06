@@ -1,29 +1,97 @@
-.outer-container-appointment {
+.outer-container-appointment-list {
    
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
     background-color: #e9ecef;
-    width: 90%;
+    width: 100%;
+    
   }
+  
 
   .appointment-list-container {
     text-align: center;
-    width: 90%; 
+    width: 100%; 
     background-color: #e9ecef; 
     padding: 20px;
     border-radius: 8px;
-    height: 95%;
+    height: 100%;
+    margin-bottom: 50px;
   }
 
 
-  .service-title {
+  .appointment-title {
     margin-bottom: 30px;
     color: #381a82;
     font-weight:400;
     width:70%;
-    margin-left: 15%;
- 
+    margin-left:30%;
+    margin-top: 15px;
     
 
   }
+
+  .date-title{
+    margin-bottom: 30px;
+    color: #381a82;
+    font-weight:400;
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .date-div{
+width: 100%;
+
+  }
+
+  /* Estilo general para el calendario */
+.react-calendar {
+  width: 100%;
+  max-width: 400px;
+  background-color: #f7f9fc;
+  color: #333;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Títulos de mes y días de la semana */
+.react-calendar__navigation button {
+  color:  #6d21dd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.react-calendar__month-view__weekdays {
+  font-size: 0.9em;
+  color: #6d21dd;
+  text-transform: uppercase;
+}
+
+/* Estilo para los días */
+.react-calendar__tile {
+  padding: 10px;
+  background-color: #e3f2fd;
+  border-radius: 5px;
+  color:#381a82;
+  font-weight: bold;
+}
+
+/* Día seleccionado */
+.react-calendar__tile--active {
+  background-color: #6d21dd;
+  color: white;
+
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.available-date {
+  background-color:  #51f6af;
+  font-weight: bold;
+}
+
