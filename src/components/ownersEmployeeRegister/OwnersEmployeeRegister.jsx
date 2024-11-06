@@ -10,7 +10,7 @@ import { ShopContext } from '../../services/shop/ShopContext';
 
 const OwnersEmployeeRegister = () => {
 
-    const {shopId} = useContext(AuthenticationContext);
+    const { token, user } = useContext(AuthenticationContext);
     const fullNameRef = useRef(null);
     const emailRef = useRef(null);
     const passRef = useRef(null);
@@ -46,17 +46,19 @@ const OwnersEmployeeRegister = () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           name: formData.fullName,
           email: formData.email,
           password: formData.password,
-          shopId: shopId
+          shopId: user.shopId
         }),
       })
         .then((response) => {
           if (response.ok) {
               setEmpFlag(true);
+              alert("Empleado registrado con éxito")
               navegate('/OwnersEmployeeList');
               return response.json();
           }
