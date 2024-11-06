@@ -220,12 +220,12 @@ const ShopForm = () => {
         } else {
             setErrors((prevErrors) => ({ ...prevErrors, workDays: false }));
         }
-        if (!formData.imgUrl) {
-            setErrors((prevErrors) => ({ ...prevErrors, imgUrl: true }));
-            formIsValid = false;
-        } else {
-            setErrors((prevErrors) => ({ ...prevErrors, imgUrl: false }));
-        }
+        // if (!formData.imgUrl) {
+        //     setErrors((prevErrors) => ({ ...prevErrors, imgUrl: true }));
+        //     formIsValid = false;
+        // } else {
+        //     setErrors((prevErrors) => ({ ...prevErrors, imgUrl: false }));
+        // }
 
         if (formIsValid) {
             registerShop();
@@ -315,7 +315,7 @@ const ShopForm = () => {
                                 <div className="alert alert-warning">Completa el campo.</div>
                             )}
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label>URL de la Imagen:</label>
                             <input
                                 type="text"
@@ -328,7 +328,7 @@ const ShopForm = () => {
                             {errors.imgUrl && (
                                 <div className="alert alert-warning">Completa el campo.</div>
                             )}
-                        </div>
+                        </div> */}
 
                         {/* <div className="form-group">
                             <label>Tipo de Negocio:</label>
