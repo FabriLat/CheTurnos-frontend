@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../register/CheTurnosIco.png";
 import executive from '../register/executive.png';
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
+import { ShopContext } from '../../services/shop/ShopContext';
 
 const OwnersEmployeeRegister = () => {
 
@@ -15,6 +16,7 @@ const OwnersEmployeeRegister = () => {
     const passRef = useRef(null);
     const confirmPassRef = useRef(null);
   
+    const { setEmpFlag } = useContext(ShopContext);
     const navegate = useNavigate();
   
     const [formData, setFormData] = useState({
@@ -54,6 +56,7 @@ const OwnersEmployeeRegister = () => {
       })
         .then((response) => {
           if (response.ok) {
+              setEmpFlag(true);
               navegate('/OwnersEmployeeList');
               return response.json();
           }
