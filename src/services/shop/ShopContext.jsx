@@ -177,6 +177,7 @@ export const ShopContextProvider = ({ children }) => {
                 reqLastAppHandler,
                 deleteAppHandler,
                 setAppFlag,
+                setEmpFlag,
                 setLastAppFlag
             }}
         >

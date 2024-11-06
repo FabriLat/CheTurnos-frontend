@@ -2,12 +2,18 @@ import { Button, Card } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import { useContext } from "react";
 import PropTypes from 'prop-types';
+import { ShopContext } from "../../services/shop/ShopContext";
 
 const OwnersEmployeeCard = ({ employeeId, name, email, onRemoveEmployee }) => {
     const { token } = useContext(AuthenticationContext);
+    const { setEmpFlag } = useContext(ShopContext);
+
     const handlebutton = () => {
-        //Llamar a la api para eleiminar empleado.
-        deleteEmployee()
+        const result = confirm(`¿Confirma que desea eliminar de forma permanente el empleado ${name}?`);
+        if (result) {
+            //Llamar a la api para eleiminar empleado.
+            deleteEmployee();
+        }
     };
 
     const deleteEmployee = async () => {
@@ -26,7 +32,9 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onRemoveEmployee }) => {
             if (!response.ok) {
                 throw new Error("Error deleting employee");
             }
+            alert("Empleado eliminado con éxito");
             onRemoveEmployee(employeeId);
+            setEmpFlag(true);
         } catch (error) {
             console.error("Error:", error);
         }

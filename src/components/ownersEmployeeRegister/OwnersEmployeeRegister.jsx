@@ -6,15 +6,17 @@ import { useNavigate } from "react-router-dom";
 import logo from "../register/CheTurnosIco.png";
 import executive from '../register/executive.png';
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
+import { ShopContext } from '../../services/shop/ShopContext';
 
 const OwnersEmployeeRegister = () => {
 
-    const {shopId} = useContext(AuthenticationContext);
+    const { token, user } = useContext(AuthenticationContext);
     const fullNameRef = useRef(null);
     const emailRef = useRef(null);
     const passRef = useRef(null);
     const confirmPassRef = useRef(null);
   
+    const { setEmpFlag } = useContext(ShopContext);
     const navegate = useNavigate();
   
     const [formData, setFormData] = useState({
@@ -44,16 +46,19 @@ const OwnersEmployeeRegister = () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
+          "authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
           name: formData.fullName,
           email: formData.email,
           password: formData.password,
-          shopId: shopId
+          shopId: user.shopId
         }),
       })
         .then((response) => {
           if (response.ok) {
+              setEmpFlag(true);
+              alert("Empleado registrado con éxito")
               navegate('/OwnersEmployeeList');
               return response.json();
           }

@@ -3,6 +3,8 @@ import './ownerAppointmentItem.css';
 import { useContext } from 'react';
 import { ShopContext } from "../../services/shop/ShopContext"
 import { AuthenticationContext } from '../../services/authentication/AuthenticationContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const OwnerAppointmentItem = ({ id, diaYHora, proveedor, servicio, cliente, status }) => {
 
@@ -70,11 +72,11 @@ const OwnerAppointmentItem = ({ id, diaYHora, proveedor, servicio, cliente, stat
         <div className="w-25 text-center appointment-item">{cliente ? cliente : "-"}</div>
       </div>
       <Button 
-        className='mx-1 my-1 p-1'
-        variant={status == "Active" ? "danger" : "success"}
+        className='mx-1 my-1 p-1 d-flex'
+        variant="danger"
         onClick={deleteButtonHandler}
       >
-        {status == "Active" ? "Borr." : "Rest."}
+        <FontAwesomeIcon title='Borrar turno' icon={faTrashCan} className='p-2'/>
       </Button>
     </div>
   );
