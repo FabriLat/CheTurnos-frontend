@@ -28,6 +28,7 @@ const ServiceForm = () => {
             setStyleMessagge("")
             setResponseMessagge("")
             setErrorMessagge("");
+            navegate("/login");
         } else {
             setShowModal(false)
         }
@@ -107,7 +108,8 @@ const ServiceForm = () => {
             //alert("Servicio registrado exitosamente");
             setStyleMessagge("text-success");
             setResponseMessagge("Operación exitosa!");
-            showModalHandler();
+            setShowModal(true);
+            //showModalHandler();
             setLoading(false);
             setFormData({
                 name: "",
@@ -117,13 +119,14 @@ const ServiceForm = () => {
                 shopId: "",
             });
 
-            navegate("/login");
+            
 
         } catch (error) {
             //alert(error.message);
             setStyleMessagge("text-danger")
             setResponseMessagge("Error de Conexion!")
-            showModalHandler()
+            //showModalHandler()
+            setShowModal(true)
             setLoading(false);
         }
     };
