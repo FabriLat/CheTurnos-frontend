@@ -220,6 +220,12 @@ const ShopForm = () => {
         } else {
             setErrors((prevErrors) => ({ ...prevErrors, workDays: false }));
         }
+        // if (!formData.imgUrl) {
+        //     setErrors((prevErrors) => ({ ...prevErrors, imgUrl: true }));
+        //     formIsValid = false;
+        // } else {
+        //     setErrors((prevErrors) => ({ ...prevErrors, imgUrl: false }));
+        // }
 
         if (formIsValid) {
             registerShop();
