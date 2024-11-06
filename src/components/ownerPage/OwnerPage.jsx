@@ -15,6 +15,7 @@ const OwnerPage = () => {
     const [providerAppointments, setProviderAppointments] = useState("");
     const [providerFlag, setProviderFlag] = useState(false);
     const [showProvList, setShowProvList] = useState(false);
+    //const [emptyProvList, setEmptyProvList] = useState(false);
 
     const { token, user } = useContext(AuthenticationContext);
     const { myShopAppointments, myShopEmployees, reqEmpHandler, reqAppHandler, reqLastAppHandler } = useContext(ShopContext);
@@ -81,6 +82,23 @@ const OwnerPage = () => {
         setShowProvList(true)
     };
 
+    const validateEmptyProvArray = (provArray) => {
+        if (provArray == "Aun no posee turnos") {
+            return (
+                <div className="no-appointments-container">
+                    <h3 className="no-appointments">El empleado aun no posee turnos asignados</h3>
+                </div>
+            )
+        } else {
+            return (
+                <OwnerAppointmentsList
+                    appointmentsArray={providerAppointments}
+                    employeesArray={myShopEmployees}
+                />
+            )
+        }
+    };
+
     const onClickShowAppByProvider = () => {
         if (!providerFlag) {
             setProviderFlag(true);
@@ -138,10 +156,7 @@ const OwnerPage = () => {
                         appointmentsArray={myShopAppointments}
                         employeesArray={myShopEmployees}
                     /> : ""}
-                    {showProvList ? <OwnerAppointmentsList
-                        appointmentsArray={providerAppointments}
-                        employeesArray={myShopEmployees}
-                    /> : ""}
+                    {showProvList ? validateEmptyProvArray(providerAppointments) : ""}
                 </div>
             </div>
         </>
