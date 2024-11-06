@@ -5,9 +5,13 @@ import PropTypes from 'prop-types';
 
 const OwnersEmployeeCard = ({ employeeId, name, email, onRemoveEmployee }) => {
     const { token } = useContext(AuthenticationContext);
+
     const handlebutton = () => {
-        //Llamar a la api para eleiminar empleado.
-        deleteEmployee()
+        const result = confirm(`¿Confirma que desea eliminar de forma permanente el empleado ${name}?`);
+        if (result) {
+            //Llamar a la api para eleiminar empleado.
+            deleteEmployee();
+        }
     };
 
     const deleteEmployee = async () => {
@@ -26,6 +30,7 @@ const OwnersEmployeeCard = ({ employeeId, name, email, onRemoveEmployee }) => {
             if (!response.ok) {
                 throw new Error("Error deleting employee");
             }
+            alert("Empleado eliminado con éxito");
             onRemoveEmployee(employeeId);
         } catch (error) {
             console.error("Error:", error);
