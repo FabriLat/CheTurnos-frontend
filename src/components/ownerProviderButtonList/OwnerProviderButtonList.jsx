@@ -16,14 +16,26 @@ const OwnerProviderButtonList = ({ me, myShopEmployees, token, setProviderAppArr
                 if (response.ok) {
                     return response.json()
                 } else {
-                    throw new Error("The response has some errors");
+                    // Manejo de errores según el código de estado
+                    if (response.status === 404) {
+                        console.log("Sí, not found")
+                        setProviderAppArray("Aun no posee turnos")
+                        throw new Error('Not Found (404)');
+                    } else if (response.status === 401) {
+                        throw new Error('Unauthorized (401)');
+                    } else {
+                        throw new Error(`Error: ${response.status}`);
+                    }
                 }
             })
             .then((data) => {
                 console.log(`provider appointments: ${data}`);
                 setProviderAppArray(data);
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                setProviderAppArray("Aun no posee turnos")
+                console.log(error)
+            })
     };
 
     return (
