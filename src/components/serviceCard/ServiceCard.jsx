@@ -46,6 +46,7 @@ const ServiceCard = ({ nameService, description, price, duration, idService, onR
                 throw new Error("Error in delete Service");
             }
             console.log("Service deleted successfully");
+            alert("Servicio eliminado con éxito");
             onRemoveService(idService);
         }
         catch (error) {
@@ -54,8 +55,10 @@ const ServiceCard = ({ nameService, description, price, duration, idService, onR
     }
 
     const handleButtonDelete = () => {
-        serviceDelete();
-
+        const result = confirm(`¿Confirma que desea eliminar de forma permanente el servicio ${nameService}?`);
+        if (result) {
+            serviceDelete();
+        }
     }
 
     return (

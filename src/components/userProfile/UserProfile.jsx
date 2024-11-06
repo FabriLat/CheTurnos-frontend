@@ -169,8 +169,8 @@ const UserProfile = () => {
 
   <div className="info-row">
     <div className="info-details">
-      <Card.Title className="info-title">Email:</Card.Title>
-      <p className="info-content">{user?.email}</p>
+      <Card.Title className="info-title">Contraseña:</Card.Title>
+      <p className="info-content">{"********"}</p>
     </div>
     <Button size="sm" variant="primary" onClick={handlePassShow}>
       Modificar
