@@ -77,7 +77,7 @@ const ServiceList = () => {
                 Agregar nuevo Servicio
               </Button>
             </>)}
-            <div className="card-service">
+            <div className="mt-4 card-service">
               {services.map((s) => (
                 <ServiceCard
                   key={s.serviceId}
