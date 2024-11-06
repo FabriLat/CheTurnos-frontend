@@ -67,13 +67,19 @@ const ServiceList = () => {
               <div className="title-service">
                 <h1 className="service-title">
                   {" "}
-                  Selecciona un servicio de {shopName}
+                  Selecciona un servicio de {shopName}:
                 </h1>
               </div>
             </>)}
 
             {(isOwner()) && (<>
-              <Button style={{ backgroundColor: '#6d21dd' }} onClick={handleButtonAddService}>
+              <div className="title-service">
+                <h1 className="service-title">
+                  
+                  Listado de Servicios:
+                </h1>
+              </div>
+              <Button style={{ backgroundColor: '#6d21dd', marginBottom:'2%' }} onClick={handleButtonAddService}>
                 Agregar nuevo Servicio
               </Button>
             </>)}
