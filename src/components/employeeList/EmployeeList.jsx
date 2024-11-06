@@ -115,7 +115,7 @@ return (
       <div className="outer-container-employee-list">
         <div className="shop-list-container">
           <div className="title-service">
-            <h1 className="service-title"> Selecciona un empleado de {shopName.name}</h1>
+            <h1 className="service-title"> Selecciona un empleado de {shopName.name}:</h1>
           </div>
           <div className="card-service">
             {allEmployees.map((e) => (

@@ -74,7 +74,7 @@ const ServiceCard = ({ nameService, description, price, duration, idService, onR
                     </Card.Text>
 
                     {(isOwner()) && (<>
-                        <Button style={{ backgroundColor: '#ff0800', border: '#45a69d' }} variant="danger" onClick={handleButtonDelete}>Borrar Servicio</Button>
+                        <Button style={{ border: '#45a69d' }} variant="danger" onClick={handleButtonDelete}>Borrar Servicio</Button>
                     </>)}
                     {(isClient()) && (<>
                         <Button style={{ backgroundColor: '#33d4c3', border: '#45a69d' }} variant="primary" onClick={handlebutton}>Elegir Servicio</Button>

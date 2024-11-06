@@ -45,6 +45,8 @@ const UserNav = () => {
                   className="d-block w-100 logo"
                   src={logo}
                   alt="Logo"
+                  onClick={() => navigate("/")}
+                  style={{cursor:'pointer'}}
                 />
               </Navbar.Brand>
             </Nav>

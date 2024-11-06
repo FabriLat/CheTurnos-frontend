@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitter, faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import {  faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './Footer.css';
 
@@ -9,9 +9,6 @@ const Footer = () => {
       <div className="footer-content">
         <h4>CheTurnos</h4>
         <div className="footer-icons">
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <FontAwesomeIcon icon={faTwitter} className="social-icon" />
-          </a>
           <a href="https://wa.me/XXXXXXXXX" target="_blank" rel="noopener noreferrer">
             <FontAwesomeIcon icon={faWhatsapp} className="social-icon" />
           </a>

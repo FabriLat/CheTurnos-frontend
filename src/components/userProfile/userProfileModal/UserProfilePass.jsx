@@ -53,7 +53,7 @@ const UserProfileModal = ({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modificar datos</Modal.Title>
+        <Modal.Title>Modificar datos:</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>

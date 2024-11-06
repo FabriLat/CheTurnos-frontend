@@ -10,6 +10,7 @@ const OwnerSection = () => {
         className="executive"
         src={executive}
         alt="Logo"
+        style={{marginTop:'5%'}}
       />
 
       <img
