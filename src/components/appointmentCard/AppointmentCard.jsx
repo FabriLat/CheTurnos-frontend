@@ -1,46 +1,30 @@
 import { useContext, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
-import { useNavigate } from "react-router-dom";
 
-const AppointmentCard = ({ idAppointment, date, id, onRemoveAppointment }) => {
-  const navigate = useNavigate();
-  
-  const { dataForRequest, setDataForRequest, user } = useContext(AuthenticationContext);
+const AppointmentCard = ({ idAppointment, date, onRemoveAppointment, handleAssignSuccess }) => {
+  const { dataForRequest } = useContext(AuthenticationContext);
   const dateObj = new Date(date);
-  const [serviceId, setServiceId] = useState(null);
-  const [clientId, setClientId] = useState(null);
-  const formattedDay = dateObj.toLocaleString("es-AR", { weekday: "long" });
-  const formattedMonth = dateObj.toLocaleString("es-AR", { month: "long" });
-  const formattedDate = `${formattedDay} ${formattedMonth} ${dateObj.getDate()}`;
   const formattedHour = dateObj.toLocaleString("es-AR", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  const assignClientString = localStorage.getItem("assignClient"); //Se trae el id del cliente, y del servicio.
+  const assignClientString = localStorage.getItem("assignClient");
   const assignClientData = assignClientString ? JSON.parse(assignClientString) : null;
-
-
-  const userValueString = localStorage.getItem("userData");
-  const userValue = userValueString ? JSON.parse(userValueString) : null;
-
-  
-  console.log("DATA PARA MANDAR AL ASSIGN", dataForRequest);
-
 
   const reserveAppointmentRequest = async () => {
     if (!assignClientData) {
-      console.error("No hay datos de assignClient disponibles????");
+      console.error("No hay datos de assignClient disponibles");
       return;
     }
 
     const transformedData = {
-      idAppointment: idAppointment,
+      idAppointment,
       serviceId: assignClientData.serviceId,
       clientId: assignClientData.clientId,
     };
-    console.log(`AAAAAAAAAAAAAAAAAAAAAA${JSON.stringify(transformedData)}`);
+
     try {
       const response = await fetch(
         "https://localhost:7276/api/Appointment/AssignClient",
@@ -54,42 +38,27 @@ const AppointmentCard = ({ idAppointment, date, id, onRemoveAppointment }) => {
         }
       );
       if (!response.ok) {
-
-        throw new Error("Error in assign appointment");
+        throw new Error("Error en la asignación del turno");
       }
-      console.log("DATA ENVIADA: ", JSON.stringify(transformedData));
-      onRemoveAppointment(idAppointment); //actualiza lista?
-      alert("Se ha asignado el turno correctamente");
-      navigate("/shoplist");
+      onRemoveAppointment(idAppointment);
+      handleAssignSuccess(); // Llamada para activar el modal en la lista
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const handlebutton = () => {
-    setDataForRequest({ ...dataForRequest, appointmentId: idAppointment });
-    setClientId(user.id);
-    setServiceId(dataForRequest.serviceId)
-    reserveAppointmentRequest();
-    setDataForRequest({ ...dataForRequest, dateAndHour: date });
-    console.log("la request se ha realizado con los datos enviados: " + dataForRequest);
-  };
-
   return (
-    <div>
-      <h1>{id}</h1>      
-      <Card key={idAppointment} style={{ border: ' 5px solid #51f6af', borderRadius:'5%', backgroundColor:'#fcf7f7' }} >
-        <Card.Body>
-          <Card.Title>
-           Hora: {formattedHour}
-            <br />
-          </Card.Title>
-          <Button style={{ backgroundColor: '#51f6af', borderColor:'#51f6af' }} onClick={handlebutton} variant="primary">
-            Elegir turno
-          </Button>
-        </Card.Body>
-      </Card>
-    </div>
+    <Card key={idAppointment} style={{ border: "5px solid #51f6af", borderRadius: "5%", backgroundColor: "#fcf7f7" }}>
+      <Card.Body>
+        <Card.Title>
+          Hora: {formattedHour}
+          <br />
+        </Card.Title>
+        <Button style={{ backgroundColor: "#51f6af", borderColor: "#51f6af" }} onClick={reserveAppointmentRequest} variant="primary">
+          Elegir turno
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 

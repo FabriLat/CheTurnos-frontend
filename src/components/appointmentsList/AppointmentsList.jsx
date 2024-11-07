@@ -5,12 +5,14 @@ import AppointmentCard from "../appointmentCard/AppointmentCard";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import './appointmentList.css';
+import { Modal, Button } from "react-bootstrap";
 
 const AppointmentsList = () => {
   const [appointments, setAppointments] = useState([]);
   const { dataForRequest } = useContext(AuthenticationContext);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showModal, setShowModal] = useState(false); // Estado del modal
   const providerId = dataForRequest.providerId;
 
   useEffect(() => {
@@ -23,12 +25,10 @@ const AppointmentsList = () => {
             mode: "cors",
           }
         );
-        if (!response.ok) throw new Error("Error in obtaining appointments");
+        if (!response.ok) throw new Error("Error en la obtención de turnos");
 
         const appointmentsData = await response.json();
-        setAppointments(
-          appointmentsData.filter((a) => a.status !== "Inactive")
-        );
+        setAppointments(appointmentsData.filter((a) => a.status !== "Inactive"));
         setLoading(false);
       } catch (error) {
         console.error("Error:", error);
@@ -38,14 +38,12 @@ const AppointmentsList = () => {
     fetchAppointments();
   }, [providerId]);
 
-  // Crear un conjunto de fechas con turnos activos
   const availableDates = new Set(
     appointments.map((appointment) =>
       new Date(appointment.dateAndHour).toDateString()
     )
   );
 
-  // Función para deshabilitar los días sin turnos
   const tileDisabled = ({ date }) => !availableDates.has(date.toDateString());
 
   const filteredAppointments = appointments.filter((appointment) => {
@@ -68,6 +66,11 @@ const AppointmentsList = () => {
   );
   const formattedDate = `Fecha: ${formattedDay} ${selectedDate.getDate()} de ${formattedMonth} de ${selectedDate.getFullYear()}`;
 
+  // Función para mostrar el modal
+  const handleAssignSuccess = () => setShowModal(true);
+
+  const handleCloseModal = () => setShowModal(false);
+
   return (
     <div>
       {loading ? (
@@ -77,13 +80,13 @@ const AppointmentsList = () => {
           <h1 className="appointment-title">Turnos disponibles del empleado:</h1>
           <div className="calendar-container">
             <Calendar
-               onChange={setSelectedDate}
-               value={selectedDate}
-               minDate={new Date()}
-               tileDisabled={tileDisabled}
-               tileClassName={({ date }) =>
-                 availableDates.has(date.toDateString()) ? 'available-date' : null
-               }
+              onChange={setSelectedDate}
+              value={selectedDate}
+              minDate={new Date()}
+              tileDisabled={tileDisabled}
+              tileClassName={({ date }) =>
+                availableDates.has(date.toDateString()) ? 'available-date' : null
+              }
             />
           </div>
           <div className="date-div">
@@ -103,6 +106,7 @@ const AppointmentsList = () => {
                         prev.filter((ap) => ap.id !== a.id)
                       )
                     }
+                    handleAssignSuccess={handleAssignSuccess} // Pasamos la función para mostrar el modal
                   />
                 ))
               ) : (
@@ -112,6 +116,19 @@ const AppointmentsList = () => {
           </div>
         </div>
       )}
+
+      {/* Modal de éxito */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>¡Turno asignado con éxito!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Se ha asignado el turno correctamente.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
