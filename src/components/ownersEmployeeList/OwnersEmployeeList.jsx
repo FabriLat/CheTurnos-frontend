@@ -154,7 +154,7 @@ const OwnersEmployeeList = () => {
         {/* Modal de éxito */}
         <Modal show={showSuccessModal} onHide={handleCloseSuccessModal}>
             <Modal.Header closeButton>
-                <Modal.Title>Operación Exitosa</Modal.Title>
+                <Modal.Title>¡Operación Exitosa!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 El empleado ha sido eliminado correctamente.

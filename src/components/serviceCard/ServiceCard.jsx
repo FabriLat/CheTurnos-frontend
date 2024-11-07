@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -7,16 +7,20 @@ import { AuthenticationContext } from '../../services/authentication/Authenticat
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useValidateUser from '../hookCustom/useValidateUser';
-
+import { Modal } from 'react-bootstrap';
 
 const ServiceCard = ({ nameService, description, price, duration, idService, onRemoveService }) => {
     const { dataForRequest, setDataForRequest, saveAssignClient } = useContext(AuthenticationContext);
     const navegate = useNavigate();
     const { isClient, isOwner } = useValidateUser();
+    
+    // Estado para manejar los modales
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handlebutton = () => {
         console.log(idService);
-        if (!idService) console.error("IDServicio no existe!")
+        if (!idService) console.error("IDServicio no existe!");
 
         const clientData = localStorage.getItem('userData');
         const userValue = clientData ? JSON.parse(clientData) : null;
@@ -26,14 +30,12 @@ const ServiceCard = ({ nameService, description, price, duration, idService, onR
             "idAppointment": null,
             "serviceId": idService,
             "clientId": clientId,
-        }
+        };
 
         setDataForRequest({ ...dataForRequest, serviceId: idService });
-
         localStorage.setItem('assignClient', JSON.stringify(transformedData));
-
         navegate("/EmployeeList");
-    }
+    };
 
     const serviceDelete = async () => {
         try {
@@ -46,20 +48,25 @@ const ServiceCard = ({ nameService, description, price, duration, idService, onR
                 throw new Error("Error in delete Service");
             }
             console.log("Service deleted successfully");
-            alert("Servicio eliminado con éxito");
             onRemoveService(idService);
-        }
-        catch (error) {
+            setShowConfirmModal(false); // Cerrar modal de confirmación
+            setShowSuccessModal(true); // Mostrar modal de éxito
+        } catch (error) {
             console.error("Error:", error);
         }
-    }
+    };
 
     const handleButtonDelete = () => {
-        const result = confirm(`¿Confirma que desea eliminar de forma permanente el servicio ${nameService}?`);
-        if (result) {
-            serviceDelete();
-        }
-    }
+        setShowConfirmModal(true); // Abrir modal de confirmación
+    };
+
+    const handleCloseConfirmModal = () => {
+        setShowConfirmModal(false); // Cerrar modal de confirmación
+    };
+
+    const handleCloseSuccessModal = () => {
+        setShowSuccessModal(false); // Cerrar modal de éxito
+    };
 
     return (
         <div>
@@ -73,18 +80,48 @@ const ServiceCard = ({ nameService, description, price, duration, idService, onR
                         {description} <br /> Precio:  <FontAwesomeIcon icon={faDollarSign} />{price}<br /><br />
                     </Card.Text>
 
-                    {(isOwner()) && (<>
-                        <Button style={{ border: '#45a69d' }} variant="danger" onClick={handleButtonDelete}>Eliminar Servicio</Button>
-                    </>)}
-                    {(isClient()) && (<>
-                        <Button style={{ backgroundColor: '#33d4c3', border: '#45a69d' }} variant="primary" onClick={handlebutton}>Elegir Servicio</Button>
-                    </>)}
-
+                    {(isOwner()) && (
+                        <>
+                            <Button style={{ border: '#45a69d' }} variant="danger" onClick={handleButtonDelete}>Eliminar Servicio</Button>
+                        </>
+                    )}
+                    {(isClient()) && (
+                        <>
+                            <Button style={{ backgroundColor: '#33d4c3', border: '#45a69d' }} variant="primary" onClick={handlebutton}>Elegir Servicio</Button>
+                        </>
+                    )}
                 </Card.Body>
             </Card>
+
+            {/* Modal de Confirmación */}
+            <Modal show={showConfirmModal} onHide={handleCloseConfirmModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmación de Eliminación</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    ¿Estás seguro de que deseas eliminar el servicio {nameService} de forma permanente?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseConfirmModal}>Cancelar</Button>
+                    <Button variant="danger" onClick={serviceDelete}>Eliminar</Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal de Éxito */}
+            <Modal show={showSuccessModal} onHide={handleCloseSuccessModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>¡Servicio Eliminado!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    El servicio {nameService} ha sido eliminado con éxito.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleCloseSuccessModal}>Cerrar</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
-    )
-}
+    );
+};
 
 ServiceCard.propTypes = {
     nameService: PropTypes.string,
@@ -93,7 +130,6 @@ ServiceCard.propTypes = {
     duration: PropTypes.string,
     idService: PropTypes.number,
     onRemoveService: PropTypes.func,
-}
+};
 
-export default ServiceCard
-
+export default ServiceCard;

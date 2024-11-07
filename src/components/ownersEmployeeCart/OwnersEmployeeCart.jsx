@@ -1,5 +1,6 @@
 import { Button, Card, Modal } from "react-bootstrap";
 import PropTypes from 'prop-types';
+import './ownersemployeecard.css'
 
 const OwnersEmployeeCard = ({ employeeId, name, email, showConfirmModal, handleCloseConfirmModal, handleDeleteButton, deleteEmployee }) => {
     
