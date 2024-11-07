@@ -5,6 +5,8 @@ import Spiner from "../spiner/Spiner";
 import useValidateUser from "../hookCustom/useValidateUser";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
 import '../shopForm/shopForm.css';
+import executive from './executive.png';
+import logo from './CheTurnosIco.png';
 
 const ServiceForm = () => {
     const nameRef = useRef(null);
@@ -21,7 +23,7 @@ const ServiceForm = () => {
     const [showModal, setShowModal] = useState(false);
     const [responseMessagge, setResponseMessagge] = useState("")
     const [styleMessagge, setStyleMessagge] = useState("")
-    
+
     const showModalHandler = () => {
         if (showModal) {
             setShowModal(true)
@@ -119,7 +121,7 @@ const ServiceForm = () => {
                 shopId: "",
             });
 
-            
+
 
         } catch (error) {
             //alert(error.message);
@@ -239,76 +241,88 @@ const ServiceForm = () => {
                 <Spiner />
             ) : (
                 <div className="outer-container-shop-register">
-                    <form onSubmit={handleSubmit} className="registerShop">
-                        <h2>Registrar Servicio</h2>
-                        <div className="form-group">
-                            <label>Nombre del Servicio:</label>
-                            <input
-                                ref={nameRef}
-                                type="text"
-                                placeholder="Introduce el nombre del servicio"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                className={errors.name ? "input-error" : ""}
-                            />
-                            {errors.name && <div className="alert alert-warning">Completa el campo.</div>}
-                        </div>
-
-                        <div className="form-group">
-                            <label>Descripción:</label>
-                            <input
-                                ref={descriptionRef}
-                                type="text"
-                                placeholder="Introduce la descripción"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                className={errors.description ? "input-error" : ""}
-                            />
-                            {errors.description && <div className="alert alert-warning">Completa el campo.</div>}
-                        </div>
-
-                        <div className="form-group">
-                            <label>Precio:</label>
-                            <input
-                                ref={priceRef}
-                                type="number"
-                                placeholder="Introduce el precio"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                className={errors.price ? "input-error" : ""}
-                            />
-                            {errors.price && <div className="alert alert-warning">Completa el campo.</div>}
-                        </div>
-
-                        <div className="form-group">
-                            <label>Duración:</label>
-                            <div className="time-picker">
+                    <img
+                        className="executive"
+                        src={executive}
+                        alt="Logo"
+                    />
+                    <div className="registerShop">
+                        <h2>Registrar Servicio
+                        <img
+                            style={{ marginLeft: '5%' }}
+                            className="calendar"
+                            src={logo}
+                            alt="Logo"
+                        /></h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label>Nombre del Servicio:</label>
                                 <input
-                                    ref={durationHoursRef}
-                                    type="number"
-                                    placeholder="Horas"
-                                    name="hours"
-                                    value={formData.duration.hours}
-                                    onChange={(e) => handleDurationChange(e, "hours")}
-                                    className={errors.duration ? "input-error" : ""}
+                                    ref={nameRef}
+                                    type="text"
+                                    placeholder="Introduce el nombre del servicio"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className={errors.name ? "input-error" : ""}
                                 />
-                                <input
-                                    ref={durationMinutesRef}
-                                    type="number"
-                                    placeholder="Minutos"
-                                    name="minutes"
-                                    value={formData.duration.minutes}
-                                    onChange={(e) => handleDurationChange(e, "minutes")}
-                                    className={errors.duration ? "input-error" : ""}
-                                />
+                                {errors.name && <div className="alert alert-warning">Completa el campo.</div>}
                             </div>
-                            {errors.duration && <div className="alert alert-warning">Completa el campo.</div>}
-                        </div>
 
-                        {/* <div className="form-group">
+                            <div className="form-group">
+                                <label>Descripción:</label>
+                                <input
+                                    ref={descriptionRef}
+                                    type="text"
+                                    placeholder="Introduce la descripción"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                    className={errors.description ? "input-error" : ""}
+                                />
+                                {errors.description && <div className="alert alert-warning">Completa el campo.</div>}
+                            </div>
+
+                            <div className="form-group">
+                                <label>Precio:</label>
+                                <input
+                                    ref={priceRef}
+                                    type="number"
+                                    placeholder="Introduce el precio"
+                                    name="price"
+                                    value={formData.price}
+                                    onChange={handleChange}
+                                    className={errors.price ? "input-error" : ""}
+                                />
+                                {errors.price && <div className="alert alert-warning">Completa el campo.</div>}
+                            </div>
+
+                            <div className="form-group">
+                                <label>Duración:</label>
+                                <div className="time-picker">
+                                    <input
+                                        ref={durationHoursRef}
+                                        type="number"
+                                        placeholder="Horas"
+                                        name="hours"
+                                        value={formData.duration.hours}
+                                        onChange={(e) => handleDurationChange(e, "hours")}
+                                        className={errors.duration ? "input-error" : ""}
+                                    />
+                                    <input
+                                        ref={durationMinutesRef}
+                                        type="number"
+                                        placeholder="Minutos"
+                                        name="minutes"
+                                        value={formData.duration.minutes}
+                                        onChange={(e) => handleDurationChange(e, "minutes")}
+                                        className={errors.duration ? "input-error" : ""}
+                                    />
+                                </div>
+                                {errors.duration && <div className="alert alert-warning">Completa el campo.</div>}
+                            </div>
+
+                            {/* <div className="form-group">
                     <label>ID de la Tienda:</label>
                     <input
                         ref={shopIdRef}
@@ -322,10 +336,11 @@ const ServiceForm = () => {
                     {errors.shopId && <div className="alert alert-warning">Completa el campo.</div>}
                 </div> */}
 
-                        <button type="submit" className="register-button">
-                            Registrar Servicio
-                        </button>
-                    </form>
+                            <button type="submit" className="register-button">
+                                Registrar Servicio
+                            </button>
+                        </form>
+                    </div>
                 </div>
             )}
             <Modal show={showModal} onHide={showModalHandler} centered>
