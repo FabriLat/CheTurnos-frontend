@@ -105,7 +105,7 @@ const ServiceForm = () => {
                 return
             }
 
-            //alert("Servicio registrado exitosamente");
+            
             setStyleMessagge("text-success");
             setResponseMessagge("Operación exitosa!");
             setShowModal(true);
@@ -122,7 +122,7 @@ const ServiceForm = () => {
             
 
         } catch (error) {
-            //alert(error.message);
+            
             setStyleMessagge("text-danger")
             setResponseMessagge("Error de Conexion!")
             //showModalHandler()
