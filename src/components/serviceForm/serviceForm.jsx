@@ -24,11 +24,11 @@ const ServiceForm = () => {
 
     const showModalHandler = () => {
         if (showModal) {
-            setShowModal(true)
+            setShowModal(false)
             setStyleMessagge("")
             setResponseMessagge("")
 
-            !user && ("/login");
+            !user && navegate("/login");
             if (user) {
                 setShowModal(false)
                 navegate("/serviceList");
