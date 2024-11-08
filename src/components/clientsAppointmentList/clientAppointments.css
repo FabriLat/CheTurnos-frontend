@@ -1,0 +1,19 @@
+.outer-container-shop-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    background-color: #e9ecef;
+    margin-bottom: 15px;
+  }
+  
+  .appointment-list-container {
+    text-align: center;
+    width: 100%; 
+    background-color: #e9ecef; 
+    padding: 20px;
+    border-radius: 8px;
+    height: 95%;
+    
+  }
+  

@@ -1,0 +1,24 @@
+
+.bg-appointment {
+  background-color: rgb(112, 195, 119); 
+  color: black; 
+}
+
+.bg-no-client {
+  background-color: #9da2c0; 
+  color: black;
+}
+
+.bg-inactive {
+  background-color: #da9393; 
+  color: black;
+}
+  
+.appointment-item {
+  font-weight: normal;
+}
+
+/*
+rgb(222, 121, 121)
+*/
+ 

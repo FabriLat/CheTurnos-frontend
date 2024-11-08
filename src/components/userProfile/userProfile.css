@@ -1,0 +1,67 @@
+.user-profile-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .user-profile-card .info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem; 
+  }
+  
+  .user-profile-card .info-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .user-profile-card .info-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+    margin: 0;
+  }
+  
+  .user-profile-card .info-content {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0;
+  }
+  
+  .user-profile-card .btn-primary {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    background-color: #007bff;
+    border-color: #007bff;
+    white-space: nowrap;
+    margin-left: 100PX;
+  }
+  
+  .user-profile-card .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+.name-title{
+    color: #555;
+    font-weight:400;
+    width:100%;
+    margin-bottom: 30px;
+    
+}
+
+.datos-title{
+    color: #381a82;
+    font-weight:400;
+    margin-top: 40px; 
+    justify-items: center; 
+    width: 100%;
+    margin-bottom: 15px;
+   
+}
