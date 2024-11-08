@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/authentication/AuthenticationContext";
-import { Button , Card} from "react-bootstrap";
+import { Button , Card, Modal } from "react-bootstrap";
 import UserProfileModal from "./userProfileModal/UserProfileModal";
 import UserProfilePass from "./userProfileModal/UserProfilePass";
 import './userProfile.css'
 
 const UserProfile = () => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const { user, token, setUser, setToken } = useContext(AuthenticationContext);
   console.log(user.shopId);
 
@@ -63,6 +65,7 @@ const UserProfile = () => {
         throw new Error("Error al actualizar usuario");
       } else {
         setUser({ ...user, username: username });
+        setShowSuccessModal(true);
         console.log("Se ha actualizado el usuario", response);
       }
     } catch (error) {
@@ -90,6 +93,7 @@ const UserProfile = () => {
         throw new Error("Error al actualizar usuario");
       } else {
         setUser({ ...user, username: username });
+        setShowSuccessModal(true);
         console.log("Se ha actualizado el usuario", response);
       }
     } catch (error) {
@@ -117,6 +121,7 @@ const UserProfile = () => {
         throw new Error("Error al actualizar usuario");
       } else {
         setUser({ ...user, username: username });
+        setShowSuccessModal(true);
         console.log("Se ha actualizado el usuario", response);
       }
     } catch (error) {
@@ -145,6 +150,8 @@ const UserProfile = () => {
       handleClose();
     }
   };
+
+  const handleCloseSuccessModal = () => setShowSuccessModal(false);
 
   return (
     <>
@@ -176,7 +183,7 @@ const UserProfile = () => {
       Modificar
     </Button>
   </div>
-</Card.Body>
+  </Card.Body>
       </Card>
     </div>
     </div>
@@ -196,7 +203,21 @@ const UserProfile = () => {
         errorUsername={errorUsername}
         errorPassword={errorPassword}
       />
-    </>
+
+      <Modal show={showSuccessModal} onHide={handleCloseSuccessModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Operación Exitosa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Los datos se han actualizado con éxito.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseSuccessModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  </>
   );
 };
 

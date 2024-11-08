@@ -13,11 +13,7 @@ const OwnerAppointmentItem = ({ id, diaYHora, proveedor, servicio, cliente, stat
   
   const [showConfirmModal, setShowConfirmModal] = useState(false);  
 
-  const selectBgColour = (client, state) => {
-    if (state === "Inactive") {
-      return "bg-inactive border-inactive";
-    }
-
+  const selectBgColour = (client) => {
     if (client) {
       return "bg-appointment border-appointment";
     } else {
