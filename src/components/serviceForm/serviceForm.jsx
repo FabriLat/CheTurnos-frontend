@@ -18,8 +18,6 @@ const ServiceForm = () => {
     const navegate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-
-    const [errorMessagge, setErrorMessagge] = useState("")
     const [showModal, setShowModal] = useState(false);
     const [responseMessagge, setResponseMessagge] = useState("")
     const [styleMessagge, setStyleMessagge] = useState("")
@@ -29,8 +27,12 @@ const ServiceForm = () => {
             setShowModal(true)
             setStyleMessagge("")
             setResponseMessagge("")
-            setErrorMessagge("");
-            navegate("/login");
+
+            !user && ("/login");
+            if (user) {
+                setShowModal(false)
+                navegate("/serviceList");
+            }
         } else {
             setShowModal(false)
         }
@@ -107,7 +109,7 @@ const ServiceForm = () => {
                 return
             }
 
-            
+
             setStyleMessagge("text-success");
             setResponseMessagge("Operación exitosa!");
             setShowModal(true);
@@ -124,7 +126,7 @@ const ServiceForm = () => {
 
 
         } catch (error) {
-            
+
             setStyleMessagge("text-danger")
             setResponseMessagge("Error de Conexion!")
             //showModalHandler()
@@ -162,8 +164,11 @@ const ServiceForm = () => {
                 throw new Error(`Errores de validación: ${errorMessages}`);
             }
 
-            alert("Servicio registrado exitosamente");
-            setLoading(false);
+            //alert("Servicio registrado exitosamente");
+            setStyleMessagge("text-success");
+            setResponseMessagge("Operación exitosa!");
+            setShowModal(true);
+            //setLoading(false);
             setFormData({
                 name: "",
                 description: "",
@@ -172,11 +177,14 @@ const ServiceForm = () => {
                 shopId: "",
             });
 
-            navegate("/serviceList");
 
         } catch (error) {
-            alert(error.message);
-            setLoading(false);
+            //alert(error.message);
+            setStyleMessagge("text-danger")
+            setResponseMessagge("Error de Conexion!")
+            //showModalHandler()
+            setShowModal(true)
+            //setLoading(false);
         }
 
     }
@@ -248,12 +256,12 @@ const ServiceForm = () => {
                     />
                     <div className="registerShop">
                         <h2>Registrar Servicio
-                        <img
-                            style={{ marginLeft: '5%' }}
-                            className="calendar"
-                            src={logo}
-                            alt="Logo"
-                        /></h2>
+                            <img
+                                style={{ marginLeft: '5%' }}
+                                className="calendar"
+                                src={logo}
+                                alt="Logo"
+                            /></h2>
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label>Nombre del Servicio:</label>
